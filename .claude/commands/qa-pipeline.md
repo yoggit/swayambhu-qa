@@ -101,6 +101,7 @@ Parse from `$ARGUMENTS`:
 - `--source` — `github` | `jira` | `ado` | `linear`  (default: `github`)
 - `--tool`   — comma-separated (default: `playwright`)
 - `--repo`   — `owner/repo` (required only for GitHub source)
+- `--tms`    — `xray` | `testrail` | `zephyr` | `markdown`  (**default: `xray`** — always run Phase 8 with `xray` unless overridden)
 - `--no-pr`  — skip Draft PR creation
 
 If `--issue` is missing, stop and ask:
@@ -384,6 +385,8 @@ If zero confirmed failures: print "✅ No bugs to log — all tests green."
 ## PHASE 8 — Update TMS & Comment on Issue
 
 **Always run this phase regardless of which tool was used (Playwright, REST Assured, Cypress, etc.).**
+
+Use the `--tms` value resolved in Pre-flight (**default: `xray`** — do NOT skip this phase just because `--tms` was not passed; use `xray` when omitted).
 
 Push pass/fail results back to TMS. The results file is always at `reports/results-<issueId>.json`:
 
