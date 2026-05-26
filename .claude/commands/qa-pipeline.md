@@ -21,14 +21,14 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 
 ### Flags
 
-| Flag | Required? | Default | When to omit |
-|---|---|---|---|
-| `--issue` | **Always** | — | Issue ID: JIRA → `TEST-22`, GitHub → `42`, ADO → `12345`, Linear → `ENG-456` |
-| `--source` | No | `github` | Omit if using GitHub Issues |
-| `--repo` | GitHub only | — | Only needed for `--source github`. Omit for JIRA / ADO / Linear |
-| `--tool` | No | `playwright` | Omit to default to Playwright UI tests |
-| `--tms` | No | `xray` | Omit to default to Xray. Use `--tms markdown` if you have no TMS |
-| `--no-pr` | No | _(PR is created)_ | Add to skip Draft PR. Useful for local runs or no git remote |
+| Flag | Required? | Supported values | Default | When to omit |
+|---|---|---|---|---|
+| `--issue` | **Always** | Any issue ID | — | Never. JIRA: `TEST-22`, GitHub: `42`, ADO: `12345`, Linear: `ENG-456` |
+| `--source` | No | `github`, `jira`, `ado`, `linear` | `github` | Omit if using GitHub Issues |
+| `--repo` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
+| `--tool` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `restassured`, `restassured:junit`, `appium`, `robot:ui`, `robot:api` | `playwright` | Omit to default to Playwright. Combine: `playwright,restassured` |
+| `--tms` | No | `xray`, `testrail`, `zephyr`, `markdown` | `xray` | Omit to default to Xray. Use `markdown` for no TMS |
+| `--no-pr` | No | _(flag, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add to skip for local runs or no git remote |
 
 ### Examples
 ```bash
