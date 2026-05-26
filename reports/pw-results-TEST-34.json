@@ -1,0 +1,2618 @@
+{
+  "config": {
+    "configFile": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/playwright.config.ts",
+    "rootDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "generated/progress-bar.spec.ts",
+      "file": "generated/progress-bar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Progress Bar — Start, Stop & Track Completion",
+          "file": "generated/progress-bar.spec.ts",
+          "line": 30,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Happy Path",
+              "file": "generated/progress-bar.spec.ts",
+              "line": 37,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-TEST34-01: page loads with 0% progress and Start button visible",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-01"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 5681,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66",
+                            "location": {
+                              "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                              "column": 66,
+                              "line": 41
+                            },
+                            "snippet": "  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 66,
+                                "line": 41
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:06:33.004Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-01"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-chromium/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                            "column": 66,
+                            "line": 41
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-6d7af565b4a848314302",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 38,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-02: clicking Start begins animation and reveals Stop button",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-02"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
+                          "status": "timedOut",
+                          "duration": 30140,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 51
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  49 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-02' });\n  50 |\n> 51 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  52 |\n  53 |       // Bar must start moving within 2 seconds\n  54 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:51:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:06:32.989Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-02"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-5c5a5aa2d32c1275db51",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 48,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-03: bar reaches 100% and shows completion state",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-03"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "timedOut",
+                          "duration": 30162,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 65
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  63 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-03' });\n  64 |\n> 65 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  66 |\n  67 |       // Wait up to 30 s for 100%\n  68 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:65:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:06:32.987Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-03"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-710e75e80bc469d775b3",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 62,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-04: Stop halts progress and Start resumes from same percentage",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-04"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "timedOut",
+                          "duration": 30152,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 93
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  91 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-04' });\n  92 |\n> 93 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  94 |\n  95 |       // Wait until bar is past 20%\n  96 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:93:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:06:32.975Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-04"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-b485b1fd1065fabdc27f",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 90,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-05: after completion, Start resets to 0% and restarts animation",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-05"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 4,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30096,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 118
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  116 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-05' });\n  117 |\n> 118 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  119 |\n  120 |       await expect(async () => {\n  121 |         expect(await readPercentage(page)).toBe(100);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:118:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:06:39.930Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-05"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-639818f2ac820742c0be",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 115,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-01: page loads with 0% progress and Start button visible",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-01"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 8,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 6393,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66",
+                            "location": {
+                              "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                              "column": 66,
+                              "line": 41
+                            },
+                            "snippet": "  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 66,
+                                "line": 41
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:10.450Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-01"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-firefox/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                            "column": 66,
+                            "line": 41
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-bd900a408f4b606b705b",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 38,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-02: clicking Start begins animation and reveals Stop button",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-02"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 9,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30149,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 51
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  49 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-02' });\n  50 |\n> 51 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  52 |\n  53 |       // Bar must start moving within 2 seconds\n  54 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:51:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:19.896Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-02"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-firefox/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-58b10476f31c44029025",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 48,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-03: bar reaches 100% and shows completion state",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-03"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 11,
+                          "parallelIndex": 3,
+                          "status": "timedOut",
+                          "duration": 30076,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 65
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  63 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-03' });\n  64 |\n> 65 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  66 |\n  67 |       // Wait up to 30 s for 100%\n  68 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:65:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:35.312Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-03"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-firefox/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-072a3d5cd49212bc413d",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 62,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-04: Stop halts progress and Start resumes from same percentage",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-04"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 10,
+                          "parallelIndex": 1,
+                          "status": "timedOut",
+                          "duration": 30087,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 93
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  91 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-04' });\n  92 |\n> 93 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  94 |\n  95 |       // Wait until bar is past 20%\n  96 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:93:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:35.312Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-04"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-firefox/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-66532e5c43cec9d2bb54",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 90,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-05: after completion, Start resets to 0% and restarts animation",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-05"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 12,
+                          "parallelIndex": 2,
+                          "status": "timedOut",
+                          "duration": 30064,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 118
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  116 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-05' });\n  117 |\n> 118 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  119 |\n  120 |       await expect(async () => {\n  121 |         expect(await readPercentage(page)).toBe(100);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:118:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:35.310Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-05"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-firefox/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-45ca3ca660f1ea723e69",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 115,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-01: page loads with 0% progress and Start button visible",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-01"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 16,
+                          "parallelIndex": 3,
+                          "status": "failed",
+                          "duration": 8361,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66",
+                            "location": {
+                              "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                              "column": 66,
+                              "line": 41
+                            },
+                            "snippet": "  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 66,
+                                "line": 41
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:07.947Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-01"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-webkit/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                            "column": 66,
+                            "line": 41
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-b0536e8a7724792a4c32",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 38,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-02: clicking Start begins animation and reveals Stop button",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-02"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 3,
+                          "status": "timedOut",
+                          "duration": 30122,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 51
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  49 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-02' });\n  50 |\n> 51 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  52 |\n  53 |       // Bar must start moving within 2 seconds\n  54 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:51:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:17.616Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-02"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-webkit/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-2698723ad5ddd6079066",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 48,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-03: bar reaches 100% and shows completion state",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-03"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 18,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30116,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 65
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  63 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-03' });\n  64 |\n> 65 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  66 |\n  67 |       // Wait up to 30 s for 100%\n  68 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:65:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:23.540Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-03"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-webkit/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-b7969ba270338936b73a",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 62,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-04: Stop halts progress and Start resumes from same percentage",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-04"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 19,
+                          "parallelIndex": 1,
+                          "status": "timedOut",
+                          "duration": 30156,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 93
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  91 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-04' });\n  92 |\n> 93 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  94 |\n  95 |       // Wait until bar is past 20%\n  96 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:93:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:38.631Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-04"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-webkit/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-15b64b6cdcaeab07e225",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 90,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-05: after completion, Start resets to 0% and restarts animation",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-05"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 20,
+                          "parallelIndex": 2,
+                          "status": "timedOut",
+                          "duration": 30158,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 118
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  116 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-05' });\n  117 |\n> 118 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  119 |\n  120 |       await expect(async () => {\n  121 |         expect(await readPercentage(page)).toBe(100);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:118:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:38.732Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-05"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-webkit/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-23fd7bd69d88779df73d",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 115,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-01: page loads with 0% progress and Start button visible",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-01"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 24,
+                          "parallelIndex": 1,
+                          "status": "failed",
+                          "duration": 5696,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66",
+                            "location": {
+                              "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                              "column": 66,
+                              "line": 41
+                            },
+                            "snippet": "  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 66,
+                                "line": 41
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /start/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  39 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-01' });\n  40 |\n> 41 |       await expect(page.getByRole('button', { name: /start/i })).toBeVisible();\n     |                                                                  ^\n  42 |       await expect(page.getByRole('button', { name: /stop/i })).not.toBeVisible();\n  43 |\n  44 |       const pct = await readPercentage(page);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:41:66"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:10.115Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-01"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-26ce0-ss-and-Start-button-visible-mobile-chrome/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                            "column": 66,
+                            "line": 41
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-a9de307b2cb8743ab029",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 38,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-02: clicking Start begins animation and reveals Stop button",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-02"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 25,
+                          "parallelIndex": 1,
+                          "status": "timedOut",
+                          "duration": 30110,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 51
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  49 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-02' });\n  50 |\n> 51 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  52 |\n  53 |       // Bar must start moving within 2 seconds\n  54 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:51:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:16.785Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-02"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-6cf43-ion-and-reveals-Stop-button-mobile-chrome/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-a50ae80487a289f6b3d7",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 48,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-03: bar reaches 100% and shows completion state",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-03"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 26,
+                          "parallelIndex": 3,
+                          "status": "timedOut",
+                          "duration": 30079,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 65
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  63 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-03' });\n  64 |\n> 65 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  66 |\n  67 |       // Wait up to 30 s for 100%\n  68 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:65:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:20.351Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-03"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-11045--and-shows-completion-state-mobile-chrome/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-c9d437441b7c694aacb1",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 62,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-04: Stop halts progress and Start resumes from same percentage",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-04"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 27,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30086,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 93
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  91 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-04' });\n  92 |\n> 93 |       await page.getByRole('button', { name: /start/i }).click();\n     |                                                          ^\n  94 |\n  95 |       // Wait until bar is past 20%\n  96 |       await expect(async () => {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:93:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:25.942Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-04"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-0a904-esumes-from-same-percentage-mobile-chrome/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-f9bf8c02531da373b872",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 90,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-05: after completion, Start resets to 0% and restarts animation",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-05"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 28,
+                          "parallelIndex": 2,
+                          "status": "timedOut",
+                          "duration": 30082,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 118
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  116 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-05' });\n  117 |\n> 118 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  119 |\n  120 |       await expect(async () => {\n  121 |         expect(await readPercentage(page)).toBe(100);\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:118:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:41.284Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-05"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-37506-to-0-and-restarts-animation-mobile-chrome/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-7142e69beab95b0f5b96",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 115,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "Negative Cases",
+              "file": "generated/progress-bar.spec.ts",
+              "line": 141,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-TEST34-06: percentage label stays in sync with bar fill width",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-06"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 5,
+                          "parallelIndex": 1,
+                          "status": "timedOut",
+                          "duration": 30279,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 145
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  143 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-06' });\n  144 |\n> 145 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  146 |\n  147 |       // Check sync at three sample points\n  148 |       for (const targetPct of [25, 50, 75]) {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:145:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:04.413Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-06"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-210a5059a0215b866eaf",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 142,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-07: Stop at 0–5% still halts correctly and Start resumes",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-07"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 6,
+                          "parallelIndex": 3,
+                          "status": "timedOut",
+                          "duration": 30256,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 169
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  167 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-07' });\n  168 |\n> 169 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  170 |\n  171 |       // Stop as quickly as possible (within ~200 ms)\n  172 |       const stopBtn = page.getByRole('button', { name: /stop/i });\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:169:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:04.416Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-07"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-8f6dea9478526b51c282",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 166,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-06: percentage label stays in sync with bar fill width",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-06"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 13,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30135,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 145
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  143 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-06' });\n  144 |\n> 145 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  146 |\n  147 |       // Check sync at three sample points\n  148 |       for (const targetPct of [25, 50, 75]) {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:145:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:51.932Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-06"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-firefox/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-a78ce4f522e946dd4325",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 142,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-07: Stop at 0–5% still halts correctly and Start resumes",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-07"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 14,
+                          "parallelIndex": 1,
+                          "status": "timedOut",
+                          "duration": 30157,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 169
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  167 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-07' });\n  168 |\n> 169 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  170 |\n  171 |       // Stop as quickly as possible (within ~200 ms)\n  172 |       const stopBtn = page.getByRole('button', { name: /stop/i });\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:169:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:06.964Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-07"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-firefox/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-78a453ad292e53b0abb8",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 166,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-06: percentage label stays in sync with bar fill width",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-06"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 21,
+                          "parallelIndex": 3,
+                          "status": "timedOut",
+                          "duration": 30176,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 145
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  143 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-06' });\n  144 |\n> 145 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  146 |\n  147 |       // Check sync at three sample points\n  148 |       for (const targetPct of [25, 50, 75]) {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:145:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:49.066Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-06"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-webkit/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-8fa1f4764a74867cfa71",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 142,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-07: Stop at 0–5% still halts correctly and Start resumes",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-07"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 22,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30123,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 169
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  167 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-07' });\n  168 |\n> 169 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  170 |\n  171 |       // Stop as quickly as possible (within ~200 ms)\n  172 |       const stopBtn = page.getByRole('button', { name: /stop/i });\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:169:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:54.815Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-07"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-webkit/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-b11377f7dfb70659341d",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 166,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-06: percentage label stays in sync with bar fill width",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-06"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 29,
+                          "parallelIndex": 1,
+                          "status": "timedOut",
+                          "duration": 30075,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 145
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  143 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-06' });\n  144 |\n> 145 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  146 |\n  147 |       // Check sync at three sample points\n  148 |       for (const targetPct of [25, 50, 75]) {\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:145:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:47.582Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-06"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-f0595-in-sync-with-bar-fill-width-mobile-chrome/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-ac6a98d61299c34be694",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 142,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-07: Stop at 0–5% still halts correctly and Start resumes",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-07"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 30,
+                          "parallelIndex": 3,
+                          "status": "timedOut",
+                          "duration": 30084,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 58,
+                                "line": 169
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  167 |       test.info().annotations.push({ type: 'tcId', description: 'TC-TEST34-07' });\n  168 |\n> 169 |       await page.getByRole('button', { name: /start/i }).click();\n      |                                                          ^\n  170 |\n  171 |       // Stop as quickly as possible (within ~200 ms)\n  172 |       const stopBtn = page.getByRole('button', { name: /stop/i });\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:169:58"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:50.849Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-07"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-e1731-correctly-and-Start-resumes-mobile-chrome/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-b25ae7670b834cd83cd4",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 166,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "Accessibility",
+              "file": "generated/progress-bar.spec.ts",
+              "line": 194,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "TC-TEST34-08: keyboard navigation — Tab to Start and Enter to activate",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-08"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 7,
+                          "parallelIndex": 2,
+                          "status": "timedOut",
+                          "duration": 30268,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 22,
+                                "line": 200
+                              },
+                              "message": "Error: locator.focus: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  198 |       // Tab until the Start button is focused\n  199 |       const startBtn = page.getByRole('button', { name: /start/i });\n> 200 |       await startBtn.focus();\n      |                      ^\n  201 |       await expect(startBtn).toBeFocused();\n  202 |\n  203 |       // Activate with Enter\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:200:22"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:07:04.415Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-08"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-91a5103b505316dd039f",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 195,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-08: keyboard navigation — Tab to Start and Enter to activate",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-08"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [
+                        {
+                          "workerIndex": 15,
+                          "parallelIndex": 2,
+                          "status": "timedOut",
+                          "duration": 30093,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 22,
+                                "line": 200
+                              },
+                              "message": "Error: locator.focus: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  198 |       // Tab until the Start button is focused\n  199 |       const startBtn = page.getByRole('button', { name: /start/i });\n> 200 |       await startBtn.focus();\n      |                      ^\n  201 |       await expect(startBtn).toBeFocused();\n  202 |\n  203 |       // Activate with Enter\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:200:22"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:08:07.181Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-08"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-firefox/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-firefox/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-firefox/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-eab0d3350d2ea0a6d41d",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 195,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-08: keyboard navigation — Tab to Start and Enter to activate",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-08"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [
+                        {
+                          "workerIndex": 23,
+                          "parallelIndex": 2,
+                          "status": "timedOut",
+                          "duration": 30121,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 22,
+                                "line": 200
+                              },
+                              "message": "Error: locator.focus: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  198 |       // Tab until the Start button is focused\n  199 |       const startBtn = page.getByRole('button', { name: /start/i });\n> 200 |       await startBtn.focus();\n      |                      ^\n  201 |       await expect(startBtn).toBeFocused();\n  202 |\n  203 |       // Activate with Enter\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:200:22"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:10.115Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-08"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-webkit/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-webkit/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-webkit/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-51b675e5692d2cc5134f",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 195,
+                  "column": 9
+                },
+                {
+                  "title": "TC-TEST34-08: keyboard navigation — Tab to Start and Enter to activate",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [
+                        {
+                          "type": "tcId",
+                          "description": "TC-TEST34-08"
+                        }
+                      ],
+                      "expectedStatus": "passed",
+                      "projectId": "mobile-chrome",
+                      "projectName": "mobile-chrome",
+                      "results": [
+                        {
+                          "workerIndex": 31,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30070,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts",
+                                "column": 22,
+                                "line": 200
+                              },
+                              "message": "Error: locator.focus: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /start/i })\u001b[22m\n\n\n  198 |       // Tab until the Start button is focused\n  199 |       const startBtn = page.getByRole('button', { name: /start/i });\n> 200 |       await startBtn.focus();\n      |                      ^\n  201 |       await expect(startBtn).toBeFocused();\n  202 |\n  203 |       // Activate with Enter\n    at /Users/yogitumkur/VisualStudio-workspace/AgenticAI/tests/generated/progress-bar.spec.ts:200:22"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-05-26T06:09:56.467Z",
+                          "annotations": [
+                            {
+                              "type": "tcId",
+                              "description": "TC-TEST34-08"
+                            }
+                          ],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-mobile-chrome/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-mobile-chrome/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/yogitumkur/VisualStudio-workspace/AgenticAI/reports/test-results/generated-progress-bar-Pro-d5a5f-Start-and-Enter-to-activate-mobile-chrome/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "ac1010222a27c9abb260-8e6849cda92371021a29",
+                  "file": "generated/progress-bar.spec.ts",
+                  "line": 195,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-26T06:06:32.625Z",
+    "duration": 234057.857,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 32,
+    "flaky": 0
+  }
+}
