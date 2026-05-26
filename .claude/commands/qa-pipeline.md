@@ -96,37 +96,66 @@ npx ts-node -e "
 
 ## Pre-flight: Argument & Env Check
 
-Parse from `$ARGUMENTS`:
-- `--issue`  — issue ID (e.g. `TEST-22`, `QA-42`, `42`, `ENG-456`)
-- `--source` — `github` | `jira` | `ado` | `linear`  (default: `github`)
-- `--tool`   — comma-separated (default: `playwright`)
-- `--repo`   — `owner/repo` (required only for GitHub source)
-- `--tms`    — `xray` | `testrail` | `zephyr` | `markdown`  (**default: `markdown`** — writes results locally; use `xray`/`testrail`/`zephyr` only if configured in `.env`)
-- `--no-pr`  — skip Draft PR creation
+### Step 1 — Parse & apply defaults
 
-If `--issue` is missing, stop and ask:
-> "Which issue should I run the pipeline for? Example: /qa-pipeline --issue TEST-22 --source jira --tool playwright"
+Parse from `$ARGUMENTS` and apply defaults for anything not provided:
 
-Verify required env vars before doing anything:
+| Argument | Provided? | Value to use |
+|---|---|---|
+| `--issue`  | Required — **stop if missing** | Issue ID: JIRA `TEST-22`, GitHub `42`, ADO `12345`, Linear `ENG-456` |
+| `--source` | Optional | Provided value, else **default: `github`** |
+| `--tool`   | Optional | Provided value (comma-separated), else **default: `playwright`** |
+| `--tms`    | Optional | Provided value, else **default: `markdown`** (writes locally, no external TMS needed) |
+| `--repo`   | Conditional | Required **only when `--source github`** — stop if missing |
+| `--no-pr`  | Optional flag | If present: skip PR. If absent: create Draft PR |
 
-| Source | Required vars |
-|---|---|
-| `jira`   | `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` |
-| `ado`    | `ADO_ORG`, `ADO_PROJECT`, `ADO_PAT` |
-| `linear` | `LINEAR_API_KEY` |
-| `github` | gh CLI auth (`gh auth status`) |
+If `--issue` is missing, stop immediately:
+> ❌ `--issue` is required. Example: `/qa-pipeline --issue TEST-22 --source jira --tool playwright`
 
-If any are missing, print which ones and stop.
+If `--source github` but `--repo` is missing, stop:
+> ❌ `--repo owner/repo` is required when using `--source github`. Example: `/qa-pipeline --issue 42 --source github --repo myorg/myrepo --tool playwright`
 
-Print the resolved plan before starting:
+### Step 2 — Validate env vars for the resolved source
+
+Check `.env` for the credentials required by the chosen `--source`:
+
+| Source | Required env vars | How to get them |
+|---|---|---|
+| `github` | gh CLI auth — run `gh auth status` to verify | `gh auth login` |
+| `jira`   | `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` | Atlassian → My Profile → API Tokens |
+| `ado`    | `ADO_ORG`, `ADO_PROJECT`, `ADO_PAT` | Azure DevOps → User Settings → Personal Access Tokens |
+| `linear` | `LINEAR_API_KEY` | Linear → Settings → API → Personal API Keys |
+
+If any are missing or empty, stop and list exactly which vars need to be added to `.env`:
+> ❌ Missing env vars for `--source jira`: `JIRA_API_TOKEN`. Add it to your `.env` file and re-run.
+
+### Step 3 — Validate env vars for the resolved TMS (skip if `--tms markdown`)
+
+| TMS | Required env vars | How to get them |
+|---|---|---|
+| `xray`     | `XRAY_CLIENT_ID`, `XRAY_CLIENT_SECRET`, `XRAY_PROJECT_KEY` | JIRA → Apps → Xray → API Keys |
+| `testrail` | `TESTRAIL_URL`, `TESTRAIL_USER`, `TESTRAIL_API_KEY`, `TESTRAIL_PROJECT_ID` | TestRail → My Settings → API Keys |
+| `zephyr`   | `ZEPHYR_BASE_URL`, `ZEPHYR_API_TOKEN`, `ZEPHYR_PROJECT_KEY` | JIRA → Zephyr Scale → API Tokens |
+| `markdown` | _(none — results written to `reports/` folder)_ | — |
+
+If TMS vars are missing, stop:
+> ❌ Missing env vars for `--tms xray`: `XRAY_CLIENT_SECRET`. Add it to `.env` or use `--tms markdown` to skip TMS sync.
+
+### Step 4 — Print the resolved plan and confirm
+
+Print everything that was resolved (including which values came from defaults) before running a single phase:
+
 ```
 🚀 swayambhu-qa Pipeline
-   Issue:    TEST-22  (jira)
-   UI tool:  Playwright (TypeScript)
-   API tool: REST Assured (TestNG)
-   Heal:     up to 2 rounds
-   PR:       yes
+   Issue:   TEST-22  (jira)
+   Tool:    playwright                     ← default
+   TMS:     markdown                       ← default (no external TMS)
+   PR:      yes
+   
+   ⚡ Starting in 3 seconds — Ctrl+C to abort
 ```
+
+If any value came from a default (not explicitly passed), mark it with `← default` so the user knows what was inferred.
 
 ---
 
