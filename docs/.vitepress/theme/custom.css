@@ -1,0 +1,24 @@
+/* Hero image — make the emblem fill the available space */
+.VPHero .image-container {
+  max-width: 340px !important;
+  width: 340px !important;
+}
+
+.VPHero .VPImage.image-src {
+  max-width: 340px !important;
+  width: 340px !important;
+  height: 340px !important;
+}
+
+/* Tighten hero on smaller screens */
+@media (max-width: 960px) {
+  .VPHero .image-container {
+    max-width: 220px !important;
+    width: 220px !important;
+  }
+  .VPHero .VPImage.image-src {
+    max-width: 220px !important;
+    width: 220px !important;
+    height: 220px !important;
+  }
+}

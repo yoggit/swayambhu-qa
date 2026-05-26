@@ -6,7 +6,7 @@ hero:
   text: "Agentic AI QA Pipeline"
   tagline: Give it a ticket. Get back a passing test suite. In under 30 minutes.
   image:
-    src: /logo.svg
+    src: /logo-icon.svg
     alt: swayambhu-qa
   actions:
     - theme: brand

@@ -1,0 +1,92 @@
+<svg viewBox="28 32 188 196" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>swayambhu-qa emblem</title>
+
+  <g transform="translate(120, 130)">
+
+    <!-- Outer rings -->
+    <circle cx="0" cy="0" r="95" fill="none" stroke="#1D9E75" stroke-width="1.2" opacity="0.3"/>
+    <circle cx="0" cy="0" r="82" fill="none" stroke="#1D9E75" stroke-width="0.6" opacity="0.2"/>
+
+    <!-- Mandala petals -->
+    <g opacity="0.15">
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75"/>
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(315)"/>
+    </g>
+
+    <!-- Tick marks -->
+    <g stroke="#1D9E75" stroke-width="1.5" opacity="0.55">
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(0)"/>
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(45)"/>
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(90)"/>
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(135)"/>
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(180)"/>
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(225)"/>
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(270)"/>
+      <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(315)"/>
+    </g>
+
+    <!-- Dots at 16 positions -->
+    <g fill="#1D9E75" opacity="0.4">
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(0)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(22.5)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(45)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(67.5)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(90)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(112.5)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(135)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(157.5)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(180)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(202.5)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(225)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(247.5)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(270)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(292.5)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(315)"/>
+      <circle cx="0" cy="-82" r="2.5" transform="rotate(337.5)"/>
+    </g>
+
+    <!-- Eye outline -->
+    <path d="M-58 0 Q0 -42 58 0 Q0 42 -58 0 Z" fill="none" stroke="#1D9E75" stroke-width="1.5" opacity="0.65"/>
+
+    <!-- Iris -->
+    <circle cx="0" cy="0" r="24" fill="none" stroke="#1D9E75" stroke-width="1.2" opacity="0.75"/>
+    <circle cx="0" cy="0" r="17" fill="#1D9E75" opacity="0.12"/>
+
+    <!-- Pupil -->
+    <circle cx="0" cy="0" r="15" fill="#1D9E75" opacity="0.9"/>
+
+    <!-- Checkmark -->
+    <polyline points="-6,1 -2,6 8,-6" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Circuit lines -->
+    <g stroke="#1D9E75" stroke-width="0.8" opacity="0.45" fill="none">
+      <polyline points="58,0 70,0 74,-8"/>
+      <polyline points="58,0 70,0 74,8"/>
+      <polyline points="-58,0 -70,0 -74,-8"/>
+      <polyline points="-58,0 -70,0 -74,8"/>
+      <polyline points="0,-42 0,-56 8,-60"/>
+      <polyline points="0,-42 0,-56 -8,-60"/>
+      <polyline points="0,42 0,56 8,60"/>
+      <polyline points="0,42 0,56 -8,60"/>
+    </g>
+
+    <!-- Circuit endpoint dots -->
+    <g fill="#1D9E75" opacity="0.55">
+      <circle cx="74" cy="-8" r="2.5"/>
+      <circle cx="74" cy="8" r="2.5"/>
+      <circle cx="-74" cy="-8" r="2.5"/>
+      <circle cx="-74" cy="8" r="2.5"/>
+      <circle cx="8" cy="-60" r="2.5"/>
+      <circle cx="-8" cy="-60" r="2.5"/>
+      <circle cx="8" cy="60" r="2.5"/>
+      <circle cx="-8" cy="60" r="2.5"/>
+    </g>
+
+  </g>
+</svg>
