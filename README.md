@@ -2,7 +2,7 @@
 
 > *Self-manifested QA. Give it a ticket. Get back a passing test suite.*
 
-An agentic AI QA pipeline built with Claude Code. One command takes any issue tracker ticket — JIRA, Azure DevOps, Linear, or GitHub Issues — all the way to a green test suite, logged bugs, and a Draft PR. In under 30 minutes.
+An agentic AI QA pipeline built with Claude Code. One command takes any issue tracker ticket — JIRA or GitHub Issues — all the way to a green test suite, logged bugs, and a Draft PR. In under 30 minutes.
 
 ## How It Works
 
@@ -69,8 +69,6 @@ Product Owner → Issue Tracker → /qa-pipeline QA-42 --source jira --tool play
 --tool selenium,restassured
 --tool appium,restassured
 --tool robot:ui,api
---tool robot:android,api
---tool robot:ios,api
 ```
 
 ## Example Commands
@@ -84,15 +82,6 @@ Product Owner → Issue Tracker → /qa-pipeline QA-42 --source jira --tool play
 
 # JIRA ticket → Playwright + REST Assured (UI + API together)
 /qa-pipeline --issue QA-42 --source jira --tool playwright,restassured
-
-# Azure DevOps → Selenium + TestNG
-/qa-pipeline --issue 12345 --source ado --tool selenium:testng
-
-# Linear → Cypress + REST Assured
-/qa-pipeline --issue ENG-456 --source linear --tool cypress,restassured
-
-# Linear → Robot Framework (UI + API)
-/qa-pipeline --issue ENG-456 --source linear --tool robot:ui,api
 
 # Skip PR creation (local dev / no git remote)
 /qa-pipeline --issue TEST-22 --source jira --tool playwright --no-pr
@@ -187,7 +176,10 @@ See the [Configuration](#configuration-env) section below for all available vari
 
 That's it. The pipeline reads your ticket, scrapes your app, writes tests in your existing framework, runs them, heals failures, and pushes results back to your TMS.
 
-## URL Resolution
+---
+
+<details>
+<summary><b>URL Resolution — how the pipeline finds your app URL</b></summary>
 
 Two URLs matter — one for UI tests, one for API tests. The agent resolves each independently using the same 3-tier lookup:
 
@@ -228,22 +220,44 @@ API URL:  https://api.myapp.com
 
 The parser accepts `Test URL`, `UI URL`, `Base URL` for the UI address and `API URL`, `API Base URL` for the API address — on the same line as the label or on the immediately following line.
 
-### CI / environment override with CLI flags
+</details>
 
-Use CLI flags to test the same ticket against different environments without editing the ticket:
+---
 
-```bash
-# Fetch issue
-npx ts-node scripts/fetch-issue.ts --issue QA-42 --source jira
+<details>
+<summary><b>Human review pause — how to approve or redirect after test cases are generated</b></summary>
 
-# Generate + run tests against staging
-npx ts-node scripts/generate-tests.ts --issue QA-42 \
-  --url https://staging.myapp.com \
-  --api-url https://api.staging.myapp.com
+After generating test cases and before writing any code, the pipeline pauses and shows you a table of all TCs with their Xray keys, types, and AC coverage. You can approve or redirect:
 
-# Push results back to Xray
-npx ts-node scripts/update-tms-status.ts --tms xray --issue QA-42 --results test-results.json
-```
+**Approve and proceed:**
+> yes
+
+**Remove a test case:**
+> Remove the accessibility test case, we don't need it for now
+
+**Add a test case:**
+> Add a test case for negative amount entry (e.g. entering -50)
+
+**Change a test type:**
+> TC-TEST22-03 should be an Edge case, not Happy Path
+
+**Change AC mapping:**
+> TC-TEST22-07 should cover AC-6 not AC-7
+
+**Change selectors:**
+> Use data-testid attributes instead of class-based selectors
+
+**Narrow scope:**
+> Focus only on Happy Path test cases, skip Negative and Edge for now
+
+Any plain-English instruction works — the pipeline rewrites the TC file and re-pushes to Xray before generating code.
+
+</details>
+
+---
+
+<details>
+<summary><b>Running in CI — GitHub Actions and headless execution</b></summary>
 
 ### CI Permissions — scope before you run
 
@@ -296,36 +310,12 @@ claude --dangerously-skip-permissions -p \
       "/qa-pipeline --issue ${{ inputs.issue }} --source jira --tool playwright --tms xray"
 ```
 
-### Human review pause
-
-After generating test cases and before writing any code, the pipeline pauses and shows you a table of all TCs with their Xray keys, types, and AC coverage. You can approve or redirect:
-
-**Approve and proceed:**
-> yes
-
-**Remove a test case:**
-> Remove the accessibility test case, we don't need it for now
-
-**Add a test case:**
-> Add a test case for negative amount entry (e.g. entering -50)
-
-**Change a test type:**
-> TC-TEST22-03 should be an Edge case, not Happy Path
-
-**Change AC mapping:**
-> TC-TEST22-07 should cover AC-6 not AC-7
-
-**Change selectors:**
-> Use data-testid attributes instead of class-based selectors
-
-**Narrow scope:**
-> Focus only on Happy Path test cases, skip Negative and Edge for now
-
-Any plain-English instruction works — the pipeline rewrites the TC file and re-pushes to Xray before generating code.
+</details>
 
 ---
 
-### How a user invokes the full pipeline
+<details>
+<summary><b>How the orchestrator works — script-by-script breakdown</b></summary>
 
 The user types one command in Claude Code:
 
@@ -354,7 +344,12 @@ node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js --issue T
 
 `--tool` tells the orchestrator *which* spec to generate and *which* test runner to invoke. Individual scripts are tool-agnostic — they never see the `--tool` flag.
 
-### All flags reference
+</details>
+
+---
+
+<details>
+<summary><b>All flags reference</b></summary>
 
 | Flag | Required? | Supported values | Default | When to omit |
 |---|---|---|---|---|
@@ -371,9 +366,12 @@ node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js --issue T
 | `--run-id <id>` | TestRail only | Integer run ID | — | Only for TestRail individual script calls |
 | `--feature <slug>` | markdown TMS only | Short slug string | — | Only for markdown TMS individual script calls |
 
+</details>
+
 ---
 
-## Output folders
+<details>
+<summary><b>Output folders — what the pipeline writes</b></summary>
 
 The pipeline writes into these folders inside your project (created automatically on first run):
 
@@ -398,9 +396,12 @@ tests/generated/
 
 Or commit them if you want a full audit trail of every pipeline run.
 
+</details>
+
 ---
 
-## Configuration (`.env`) {#configuration-env}
+<details>
+<summary id="configuration-env"><b>Configuration (.env) — all available variables</b></summary>
 
 Fill in only what your team uses — leave everything else blank:
 
@@ -444,7 +445,12 @@ ZEPHYR_API_TOKEN=your_token
 ZEPHYR_PROJECT_KEY=QA
 ```
 
-## Requirements
+</details>
+
+---
+
+<details>
+<summary><b>Requirements — what you need installed</b></summary>
 
 | Requirement | When needed |
 |---|---|
@@ -460,7 +466,14 @@ ZEPHYR_PROJECT_KEY=QA
 
 Everything else (Playwright, Cypress, your existing test framework) you already have in your project.
 
-### Draft PR prerequisites
+</details>
+
+---
+
+<details>
+<summary><b>Draft PR setup — prerequisites and repo setup</b></summary>
+
+### Prerequisites
 
 The Draft PR phase (Phase 9) requires:
 
@@ -476,9 +489,7 @@ Use `--no-pr` to skip Phase 9 entirely — everything else still runs:
 /qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray --no-pr
 ```
 
-### Repo setup for Draft PR
-
-If you want the pipeline to open a Draft PR automatically, set up your repo before running the pipeline:
+### Repo setup
 
 **GitHub:**
 ```bash
@@ -506,9 +517,12 @@ az login && az devops configure --defaults organization=https://dev.azure.com/or
 
 If none of these are set up, use `--no-pr` to skip Phase 9 — everything else still runs.
 
+</details>
+
 ---
 
-## Future Enhancements
+<details>
+<summary><b>Future Enhancements</b></summary>
 
 The following are planned or in progress. Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa](https://github.com/yoggit/swayambhu-qa).
 
@@ -545,6 +559,8 @@ The following are planned or in progress. Contributions welcome — open an issu
 | Multi-issue runs (`--issue TEST-22,TEST-62`) | 🔜 Planned |
 | CI/CD integration (GitHub Actions) | 🔜 Planned |
 | Documentation site | 🔜 Planned |
+
+</details>
 
 ---
 
