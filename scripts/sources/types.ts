@@ -57,11 +57,34 @@ export function parseAcceptanceCriteria(text: string): string[] {
 
 export function parseTestUrls(text: string): TestUrls {
   const section = extractSection(text, 'URL') || text;
-  const uiMatch = section.match(/UI[^:]*:\s*(https?:\/\/[^\s\n`]+)/i);
-  const apiMatch = section.match(/API[^:]*:\s*(https?:\/\/[^\s\n`]+)/i);
+  const clean = (s: string) => s.replace(/[`*]/g, '').trim();
+
+  // Match explicit API label first (before generic URL scan)
+  const apiMatch = section.match(/API[^:]*URL[^:]*:\s*(https?:\/\/[^\s\n`*]+)/i)
+    || text.match(/API[^:]*URL[^:]*:\s*(https?:\/\/[^\s\n`*]+)/i);
+
+  // Match UI / Test URL / Base URL on same line OR URL on the very next non-empty line
+  const uiSameLine = section.match(/(?:UI|Test|Base)[^:]*URL[^:]*:\s*(https?:\/\/[^\s\n`*]+)/i)
+    || text.match(/(?:UI|Test|Base)[^:]*URL[^:]*:\s*(https?:\/\/[^\s\n`*]+)/i);
+
+  // Fallback: label on one line, URL on the next
+  const uiNextLine = (() => {
+    const lines = text.split('\n');
+    for (let i = 0; i < lines.length - 1; i++) {
+      if (lines[i].match(/(?:UI|Test|Base)[^:]*URL/i)) {
+        const next = lines.slice(i + 1).find((l) => l.trim().match(/^https?:\/\//));
+        if (next) return next.trim();
+      }
+    }
+    return undefined;
+  })();
+
+  // Last resort: first https URL anywhere in the text (for Background sections)
+  const anyUrl = text.match(/https?:\/\/[^\s\n`*]+/)?.[0];
+
   return {
-    ui: uiMatch?.[1]?.replace(/[`*]/g, ''),
-    api: apiMatch?.[1]?.replace(/[`*]/g, ''),
+    ui: clean(uiSameLine?.[1] || uiNextLine || anyUrl || ''),
+    api: apiMatch ? clean(apiMatch[1]) : undefined,
   };
 }
 
@@ -153,8 +176,24 @@ export function stripHtml(html: string): string {
 // Convert Atlassian Document Format (ADF) JSON to plain text (used by JIRA)
 export function adfToText(adf: unknown): string {
   if (!adf || typeof adf !== 'object') return '';
-  const node = adf as { type?: string; text?: string; content?: unknown[] };
-  if (node.type === 'text') return node.text || '';
+  const node = adf as { type?: string; text?: string; content?: unknown[]; attrs?: Record<string, string>; marks?: { type: string; attrs?: Record<string, string> }[] };
+
+  // Inline text node — preserve href from link marks
+  if (node.type === 'text') {
+    const text = node.text || '';
+    const linkMark = node.marks?.find((m) => m.type === 'link');
+    const href = linkMark?.attrs?.href;
+    // If the text itself is not a URL but there's an href, append it
+    if (href && !text.startsWith('http')) return `${text} ${href}`;
+    return href && text.startsWith('http') ? href : text;
+  }
+
+  // Smart link / inlineCard — emit the raw URL
+  if (node.type === 'inlineCard') return node.attrs?.url || '';
+
+  // Hard break
+  if (node.type === 'hardBreak') return '\n';
+
   if (!node.content) return '';
   return node.content
     .map((child) => {
@@ -162,7 +201,11 @@ export function adfToText(adf: unknown): string {
       const text = adfToText(child);
       if (c.type === 'paragraph') return text + '\n';
       if (c.type === 'listItem') return '- ' + text;
-      if (c.type === 'heading') return '## ' + text + '\n';
+      if (c.type === 'heading') return text + '\n';
+      if (c.type === 'bulletList' || c.type === 'orderedList') return text + '\n';
+      if (c.type === 'table') return text + '\n';
+      if (c.type === 'tableRow') return '| ' + text + '\n';
+      if (c.type === 'tableCell' || c.type === 'tableHeader') return text + ' | ';
       return text;
     })
     .join('')
