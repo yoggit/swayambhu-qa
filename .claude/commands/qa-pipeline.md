@@ -96,66 +96,142 @@ npx ts-node -e "
 
 ## Pre-flight: Argument & Env Check
 
-### Step 1 — Parse & apply defaults
+### Step 1 — Validate required arguments
 
-Parse from `$ARGUMENTS` and apply defaults for anything not provided:
+**`--issue`** — required. Stop if missing:
+> ❌ `--issue` is required. Which ticket should I test?
+> Example: `/qa-pipeline --issue TEST-22 --source jira --tool playwright`
 
-| Argument | Provided? | Value to use |
-|---|---|---|
-| `--issue`  | Required — **stop if missing** | Issue ID: JIRA `TEST-22`, GitHub `42`, ADO `12345`, Linear `ENG-456` |
-| `--source` | Optional | Provided value, else **default: `github`** |
-| `--tool`   | Optional | Provided value (comma-separated), else **default: `playwright`** |
-| `--tms`    | Optional | Provided value, else **default: `markdown`** (writes locally, no external TMS needed) |
-| `--repo`   | Conditional | Required **only when `--source github`** — stop if missing |
-| `--no-pr`  | Optional flag | If present: skip PR. If absent: create Draft PR |
+**`--source`** — required. Stop if missing or invalid:
 
-If `--issue` is missing, stop immediately:
-> ❌ `--issue` is required. Example: `/qa-pipeline --issue TEST-22 --source jira --tool playwright`
+_Missing:_
+> ❌ `--source` is required. Which issue tracker holds this ticket?
+> - JIRA → `--source jira`
+> - GitHub Issues → `--source github --repo owner/repo`
+> - Azure DevOps → `--source ado`
+> - Linear → `--source linear`
 
-If `--source github` but `--repo` is missing, stop:
-> ❌ `--repo owner/repo` is required when using `--source github`. Example: `/qa-pipeline --issue 42 --source github --repo myorg/myrepo --tool playwright`
+_Invalid value (e.g. `--source bitbucket`):_
+> ❌ `--source bitbucket` is not supported. Supported values: `jira`, `github`, `ado`, `linear`.
 
-### Step 2 — Validate env vars for the resolved source
+**`--tool`** — required. Stop if missing or invalid:
 
-Check `.env` for the credentials required by the chosen `--source`:
+_Missing:_
+> ❌ `--tool` is required. Which test runner should I use?
+> - UI only → `--tool playwright` / `cypress` / `selenium` / `selenium:testng` / `selenium:junit`
+> - API only → `--tool restassured` / `restassured:junit`
+> - UI + API → `--tool playwright,restassured`
+> - Mobile → `--tool appium`
+> - Robot Framework → `--tool robot:ui` / `robot:api` / `robot:android` / `robot:ios`
+
+_Invalid value (e.g. `--tool mocha`):_
+> ❌ `--tool mocha` is not supported. Supported: `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `selenium:cucumber`, `restassured`, `restassured:junit`, `restassured:cucumber`, `appium`, `robot:ui`, `robot:api`, `robot:android`, `robot:ios`. Combine multiple with commas.
+
+_Tool variant fallbacks (do not stop — apply silently and note in plan):_
+- `--tool robot` with no variant → treat as `robot:ui`
+- `--tool selenium` with no variant → treat as `selenium:testng`
+
+**`--tms`** — optional. If invalid value, stop:
+> ❌ `--tms jenkins` is not supported. Supported: `xray`, `testrail`, `zephyr`. Omit `--tms` entirely to use markdown mode (no external TMS needed).
+
+### Step 2 — Determine TMS mode
+
+`--tms` controls Phase 3 (test case storage) and Phase 8 (results reporting):
+
+| Mode | When | Phase 3 behaviour | Phase 8 behaviour |
+|---|---|---|---|
+| **TMS mode** | `--tms xray/testrail/zephyr` provided | Push test cases to TMS, get TC IDs back | Push results to TMS + create Test Execution ticket |
+| **Markdown mode** | `--tms` not provided | Write test cases as local markdown in `test-cases/` | Write results summary to `reports/` — no external system needed |
+
+### Step 3 — Check `.env` file exists
+
+If `.env` does not exist in the project root, stop:
+> ❌ No `.env` file found. `npx @swayambhu-qa/core init` creates `.env.example` in your project — copy it to `.env` and fill in your credentials:
+> `cp .env.example .env`
+
+### Step 4 — Validate env vars for `--source`
 
 | Source | Required env vars | How to get them |
 |---|---|---|
-| `github` | gh CLI auth — run `gh auth status` to verify | `gh auth login` |
+| `github` | gh CLI auth — verify with `gh auth status` | `gh auth login` |
 | `jira`   | `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` | Atlassian → My Profile → API Tokens |
 | `ado`    | `ADO_ORG`, `ADO_PROJECT`, `ADO_PAT` | Azure DevOps → User Settings → Personal Access Tokens |
 | `linear` | `LINEAR_API_KEY` | Linear → Settings → API → Personal API Keys |
 
-If any are missing or empty, stop and list exactly which vars need to be added to `.env`:
-> ❌ Missing env vars for `--source jira`: `JIRA_API_TOKEN`. Add it to your `.env` file and re-run.
+Stop and list every missing var:
+> ❌ Missing env vars for `--source jira`: `JIRA_API_TOKEN`. Add it to `.env` and re-run.
 
-### Step 3 — Validate env vars for the resolved TMS (skip if `--tms markdown`)
+### Step 5 — Validate env vars for `--tms` (skip entirely if not provided)
 
 | TMS | Required env vars | How to get them |
 |---|---|---|
 | `xray`     | `XRAY_CLIENT_ID`, `XRAY_CLIENT_SECRET`, `XRAY_PROJECT_KEY` | JIRA → Apps → Xray → API Keys |
 | `testrail` | `TESTRAIL_URL`, `TESTRAIL_USER`, `TESTRAIL_API_KEY`, `TESTRAIL_PROJECT_ID` | TestRail → My Settings → API Keys |
 | `zephyr`   | `ZEPHYR_BASE_URL`, `ZEPHYR_API_TOKEN`, `ZEPHYR_PROJECT_KEY` | JIRA → Zephyr Scale → API Tokens |
-| `markdown` | _(none — results written to `reports/` folder)_ | — |
 
-If TMS vars are missing, stop:
-> ❌ Missing env vars for `--tms xray`: `XRAY_CLIENT_SECRET`. Add it to `.env` or use `--tms markdown` to skip TMS sync.
+Stop and list every missing var:
+> ❌ Missing env vars for `--tms xray`: `XRAY_CLIENT_SECRET`. Add it to `.env` and re-run, or omit `--tms` to use markdown mode instead.
 
-### Step 4 — Print the resolved plan and confirm
+### Step 6 — Resolve `--repo` and PR target
 
-Print everything that was resolved (including which values came from defaults) before running a single phase:
+`--repo` serves two purposes depending on `--source`:
+- `--source github` + `--repo` → used to **fetch the GitHub issue** (required for GitHub source)
+- Any source + no git remote → `--repo` used as **PR target** in Phase 9
+
+Resolution logic:
+
+1. If `--source github` and `--repo` not provided → stop:
+   > ❌ `--repo owner/repo` is required when using `--source github` (needed to fetch the issue).
+   > Example: `/qa-pipeline --issue 42 --source github --repo myorg/myrepo --tool playwright`
+
+2. If `--no-pr` provided → skip PR, no further repo checks needed.
+
+3. If `--no-pr` not provided → detect git remote:
+   ```bash
+   git remote get-url origin 2>/dev/null
+   ```
+   - Remote found → use it for Draft PR in Phase 9.
+   - No remote but `--repo` provided → use `--repo` as PR target.
+   - No remote and no `--repo` → **warn and continue without PR** (do not stop):
+     > ⚠️ No git remote found and `--repo` not provided — Draft PR will be skipped. To enable PR, run `git remote add origin <url>` or add `--repo owner/repo`.
+
+### Step 7 — Check for existing artifacts (re-run detection)
+
+Check whether this issue has been run before:
+```bash
+ls test-cases/TC-<issueId>-*.md 2>/dev/null
+ls tests/generated/<slug>.spec.ts 2>/dev/null
+```
+
+If existing files found, **⏸ PAUSE and ask**:
+> ⚠️ Found existing artifacts from a previous run for `<issueId>`:
+> - `test-cases/TC-<issueId>-<slug>.md`
+> - `tests/generated/<slug>.spec.ts`
+>
+> What should I do?
+> - **Regenerate** — rewrite test cases and specs from scratch
+> - **Reuse** — skip Phase 3 & 4, go straight to running tests
+
+Wait for user response before continuing.
+
+### Step 8 — Print resolved plan and wait 5 seconds
+
+Print the full resolved plan before starting Phase 1. Mark anything applied as a fallback with `← fallback`:
 
 ```
 🚀 swayambhu-qa Pipeline
    Issue:   TEST-22  (jira)
-   Tool:    playwright                     ← default
-   TMS:     markdown                       ← default (no external TMS)
-   PR:      yes
-   
+   Tool:    selenium:testng          ← fallback (selenium variant defaulted to testng)
+   TMS:     xray  →  push test cases + create Test Execution ticket
+   PR:      yes  →  github.com/myorg/myrepo
+
    ⚡ Starting in 5 seconds — Ctrl+C to abort
 ```
 
-If any value came from a default (not explicitly passed), mark it with `← default` so the user knows what was inferred.
+If `--tms` was not provided:
+```
+   TMS:     none  →  test cases saved to test-cases/, results written to reports/
+```
 
 ---
 
@@ -227,16 +303,20 @@ Write test cases covering:
 
 Each TC must have: ID, priority, type, steps table (# | Action | Test Data | Expected Result), Preconditions.
 
-Then push to TMS if configured:
-```bash
-npx ts-node scripts/push-to-tms.ts --tms <tms> --issue <id> --file test-cases/TC-<issueId>-*.md
-```
-
 **⏸ PAUSE — Show test cases and ask:**
 > "Here are the N test cases I'll automate. Review them — any changes before I write the code?
 > Reply **yes** to proceed or tell me what to change."
 
-Wait for human confirmation before Phase 4.
+Wait for human confirmation, then branch on TMS mode:
+
+**TMS mode** (`--tms` provided) — push test cases to TMS and get back native TC IDs:
+```bash
+node node_modules/@swayambhu-qa/core/dist/scripts/push-to-tms.js \
+  --tms <tms> --issue <issueId> --file test-cases/TC-<issueId>-*.md
+```
+Use the returned TC IDs to annotate automation specs in Phase 4 (e.g. `tcId: "TEST-23"`).
+
+**Markdown mode** (`--tms` not provided) — test cases stay as local files only. Phase 4 will generate specs referencing the local TC IDs (e.g. `TC-TEST22-01`).
 
 ---
 
@@ -413,18 +493,28 @@ If zero confirmed failures: print "✅ No bugs to log — all tests green."
 
 ## PHASE 8 — Update TMS & Comment on Issue
 
-**Always run this phase regardless of which tool was used (Playwright, REST Assured, Cypress, etc.).**
+**Always run this phase regardless of which tool was used.**
 
-Use the `--tms` value resolved in Pre-flight (**default: `markdown`** — do NOT skip this phase; if `--tms` was not passed, use `markdown` which writes results locally without needing any external TMS credentials).
+Branch on TMS mode resolved in Pre-flight:
 
-Push pass/fail results back to TMS. The results file is always at `reports/results-<issueId>.json`:
-
+**TMS mode** (`--tms` provided) — push results and create a Test Execution ticket:
 ```bash
 node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js \
   --tms <tms> --issue <issueId> --results reports/results-<issueId>.json
 ```
-
 Log the Test Execution ticket ID from the output (e.g. `TEST-69`) and include it in the Phase 10 final summary.
+
+**Markdown mode** (`--tms` not provided) — write a results summary locally:
+- Results are already in `reports/results-<issueId>.json` from Phase 5
+- Write a human-readable summary to `reports/summary-<issueId>.md`:
+  ```
+  # Test Results — <issueId>
+  Date: <date> | Tool: <tool> | Passed: N | Failed: N | Healed: N
+  | TC ID | Description | Status |
+  |-------|-------------|--------|
+  | TC-TEST22-01 | ... | ✅ Passed |
+  ```
+- No external system needed — do NOT try to call update-tms-status without `--tms`
 
 Post a structured comment on the original issue:
 ```bash
@@ -537,3 +627,24 @@ Always end with this block:
 ║  Draft PR    #<number> (or skipped)                      ║
 ╚══════════════════════════════════════════════════════════╝
 ```
+
+---
+
+## Fallback Mechanisms Reference
+
+All automatic fallbacks applied during this pipeline — documented so users know what happened and why.
+
+| Situation | Fallback applied | Where handled |
+|---|---|---|
+| `--tool robot` with no variant | Treated as `robot:ui` | Pre-flight Step 1 |
+| `--tool selenium` with no variant | Treated as `selenium:testng` | Pre-flight Step 1 |
+| `--tms` not provided | Markdown mode: test cases → `test-cases/`, results → `reports/summary-<id>.md` | Pre-flight Step 2, Phase 3, Phase 8 |
+| `--source github` + no `--repo` | Stop — `--repo` is required to fetch the GitHub issue | Pre-flight Step 6 |
+| `--repo` with non-GitHub source | `--repo` used as PR target if no git remote found | Pre-flight Step 6 |
+| `--no-pr` absent + no git remote + no `--repo` | PR skipped with warning — pipeline continues | Pre-flight Step 6 |
+| `.env` file missing | Stop — user directed to run `npx @swayambhu-qa/core init` | Pre-flight Step 3 |
+| Existing `test-cases/` or `tests/generated/` from prior run | Pause and ask: regenerate or reuse | Pre-flight Step 7 |
+| UI URL missing from ticket + UI tool selected | Phase 1 pauses and asks for the URL | Phase 1 |
+| API URL missing from ticket + API tool selected | Phase 1 pauses and asks for the URL | Phase 1 |
+| All tests fail heal round 2 with remaining failures | Pipeline continues to Phase 7 (bug creation) — does not abort | Phase 6 |
+| TMS push fails (network/auth error) | Results kept in `reports/results-<id>.json` — Phase 10 notes "TMS sync failed" | Phase 8 |
