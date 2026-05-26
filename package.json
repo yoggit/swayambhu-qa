@@ -1,24 +1,52 @@
 {
-  "name": "qa-agents",
-  "version": "1.0.0",
-  "description": "Agentic AI toolkit for QA automation — powered by Claude Code",
-  "main": "index.js",
+  "name": "@swayambhu-qa/core",
+  "version": "0.1.8",
+  "description": "Self-manifested QA. Give it a ticket. Get back a passing test suite.",
+  "homepage": "https://github.com/yoggit/swayambhu-qa",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yoggit/swayambhu-qa.git"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/mcp.js",
+  "bin": {
+    "swayambhu-qa": "dist/cli.js"
+  },
+  "files": [
+    "dist/",
+    "commands/",
+    ".env.example"
+  ],
+  "keywords": [
+    "qa",
+    "playwright",
+    "rest-assured",
+    "ai-agents",
+    "test-automation",
+    "claude",
+    "mcp",
+    "jira",
+    "xray"
+  ],
   "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report reports/html",
-    "scrape": "ts-node scripts/scrape-page.ts",
     "lint:tests": "playwright test --list"
   },
-  "keywords": ["qa", "playwright", "ai-agents", "test-automation", "claude"],
-  "author": "",
-  "license": "MIT",
-  "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.19.19",
     "ts-node": "^10.9.2",
+    "tsup": "^8.5.1",
     "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "dotenv": "^17.4.2"
   }
 }

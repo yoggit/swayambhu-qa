@@ -135,16 +135,11 @@ Print:
 📋 TEST-22: "Budget Tracker" | Priority: P2 | UI: qaplayground.dev/apps/budget-tracker/
 ```
 
-If `apiEndpoints` is empty and an API tool is selected, ask:
-> "No API endpoints found in the ticket. Should I skip API tests or would you like to add endpoints?"
-
 ---
 
 ## PHASE 2 — Scrape the App
 
 **Skip if API-only tools selected** (e.g. `--tool restassured`, `--tool robot:api`).
-
-**Skip this phase if selected tools are API-only** (e.g. `--tool restassured`, `--tool robot:api`).
 
 ```bash
 npx ts-node scripts/scrape-app.ts --url <testUrls.ui>
@@ -184,7 +179,7 @@ npx ts-node scripts/push-to-tms.ts --tms <tms> --issue <id> --file test-cases/TC
 > "Here are the N test cases I'll automate. Review them — any changes before I write the code?
 > Reply **yes** to proceed or tell me what to change."
 
-Wait for human confirmation before Phase 4.
+Wait for confirmation before Phase 4.
 
 ---
 

@@ -17,6 +17,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import { logger } from './logger';
 import { fetchGitHubIssue } from './sources/github';
 import { fetchJiraIssue } from './sources/jira';
 import { fetchAdoWorkItem } from './sources/ado';
@@ -36,24 +37,27 @@ function hasFlag(flag: string): boolean {
   return args.includes(flag);
 }
 
-const issueId = args.find((a) => !a.startsWith('--')) as string;
+const issueId = getArg('--issue') as string;
 const source = (getArg('--source') || 'github') as Source;
 const repo = getArg('--repo') || '';
 
 if (!issueId) {
-  console.error('Usage: npx ts-node scripts/fetch-issue.ts <issue-id> [--source github|jira|ado|linear] [--repo owner/repo]');
+  console.error('Usage: npx ts-node scripts/fetch-issue.ts --issue <id> --source github|jira|ado|linear [--repo owner/repo]');
   console.error('');
   console.error('Examples:');
-  console.error('  npx ts-node scripts/fetch-issue.ts 42     --source github --repo myorg/myrepo');
-  console.error('  npx ts-node scripts/fetch-issue.ts QA-42  --source jira');
-  console.error('  npx ts-node scripts/fetch-issue.ts 12345  --source ado');
-  console.error('  npx ts-node scripts/fetch-issue.ts ENG-42 --source linear');
+  console.error('  npx ts-node scripts/fetch-issue.ts --issue 42     --source github --repo myorg/myrepo');
+  console.error('  npx ts-node scripts/fetch-issue.ts --issue QA-42  --source jira');
+  console.error('  npx ts-node scripts/fetch-issue.ts --issue 12345  --source ado');
+  console.error('  npx ts-node scripts/fetch-issue.ts --issue ENG-42 --source linear');
   process.exit(1);
 }
 
 // ─── Dispatch ─────────────────────────────────────────────────────────────────
 
 async function main() {
+  const log = logger(issueId);
+  log.phase(1, 'RUN', `Fetching ${issueId} from ${source}`);
+
   try {
     let requirement;
 
@@ -83,8 +87,16 @@ async function main() {
         process.exit(1);
     }
 
+    log.phase(1, 'OK', `Fetched: "${(requirement as any).title}"`, {
+      priority: (requirement as any).priority,
+      ui: (requirement as any).testUrls?.ui,
+      api: (requirement as any).testUrls?.api,
+      acs: (requirement as any).acceptanceCriteria?.length,
+    });
+
     console.log(JSON.stringify(requirement, null, 2));
   } catch (err) {
+    log.phase(1, 'FAIL', `Failed to fetch ${issueId}`, { error: err instanceof Error ? err.message : String(err) });
     console.error('Failed to fetch issue:', err instanceof Error ? err.message : err);
     process.exit(1);
   }
