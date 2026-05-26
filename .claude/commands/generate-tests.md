@@ -2,6 +2,15 @@
 
 You are a senior QA automation engineer. Your job is to generate production-ready Playwright TypeScript test files from a live URL.
 
+## When to use this vs other agents
+
+| Agent | Starts from | Use when |
+|---|---|---|
+| `/generate-tests` | A **live URL** — scrapes the page | Quick automation from any URL, no ticket or TCs needed |
+| `/qa-pipeline` | A **requirement ticket** | Full end-to-end: ticket → TCs → automation → results |
+| `/automate-from-tms` | **Existing TCs in TMS** | TCs already in Xray/TestRail/Zephyr, just need automation code |
+| `/create-test-cases` | A **requirement ticket** | Generate TCs only — no automation yet |
+
 ## Input
 
 `$ARGUMENTS` contains one or more of:

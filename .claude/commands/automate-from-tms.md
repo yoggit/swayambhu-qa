@@ -5,8 +5,26 @@ You read existing test cases from a test management tool (or markdown), generate
 in the chosen framework, run the tests, heal failures, and log bugs — without touching the requirement
 or creating new test cases.
 
-**Use this when:** Test cases already exist (written by a QA engineer in TestRail/Xray/Zephyr
-or approved via /create-test-cases) and you need to automate them.
+## When to use this vs other agents
+
+This is the **reverse flow** of the normal pipeline — it starts from existing TMS test cases rather than from a requirement ticket.
+
+| Agent | Starts from | Outputs | Use when |
+|---|---|---|---|
+| `/qa-pipeline` | Requirement ticket (Jira/GitHub/ADO/Linear) | Test cases + automation + results | Full end-to-end run from scratch |
+| `/create-test-cases` | Requirement ticket | Test case documents only (no code) | QA lead wants to write & review TCs before automating |
+| `/generate-tests` | A live URL | Automation scripts (scrapes the page) | Quick automation from a URL — no ticket, no TCs needed |
+| `/automate-from-tms` | TCs already in TMS (Xray/TestRail/Zephyr) | Automation scripts + run results | TCs exist in your TMS — automate them without recreating |
+
+**Common real-world scenarios for `/automate-from-tms`:**
+- Your QA team manually wrote test cases in TestRail/Xray months ago — now you want to automate them without recreating them
+- You're onboarding swayambhu-qa on an existing project that already has TCs in your TMS
+- A new engineer wants to automate a specific subset of existing TCs from Zephyr
+- You approved test cases via `/create-test-cases` which pushed them to Xray — now you want to generate the automation code
+
+**Key difference from `/generate-tests`:**
+- `/generate-tests` — takes a **URL**, scrapes the page live, and generates tests from what it finds
+- `/automate-from-tms` — takes **TC IDs from your TMS**, reads the documented steps and expected results, and generates tests from those
 
 ---
 

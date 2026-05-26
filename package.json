@@ -1,6 +1,6 @@
 {
   "name": "@swayambhu-qa/core",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Self-manifested QA. Give it a ticket. Get back a passing test suite.",
   "homepage": "https://github.com/yoggit/swayambhu-qa",
   "repository": {
