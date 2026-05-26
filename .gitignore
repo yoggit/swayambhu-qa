@@ -19,6 +19,10 @@ tests/generated/
 # npm pack artifacts
 *.tgz
 
+# VitePress build output
+docs/.vitepress/dist
+docs/.vitepress/cache
+
 # Misc
 *.webm
 *.zip

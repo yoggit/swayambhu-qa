@@ -1,4 +1,6 @@
-# swayambhu-qa
+<p align="center">
+  <img src="assets/logo.svg" alt="swayambhu-qa" width="520">
+</p>
 
 > *Self-manifested QA. Give it a ticket. Get back a passing test suite.*
 
@@ -566,9 +568,9 @@ The following are planned or in progress. Contributions welcome — open an issu
 
 ## Documentation
 
-Full documentation site coming soon at **https://yoggit.github.io/swayambhu-qa/**
+Full docs at **[yoggit.github.io/swayambhu-qa/](https://yoggit.github.io/swayambhu-qa/)**
 
-In the meantime, everything you need is in this README and the `.claude/commands/` files installed by `init`.
+Covers all agents, flags, configuration, URL resolution, CI setup, and future enhancements.
 
 ---
 

@@ -36,14 +36,18 @@
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report reports/html",
-    "lint:tests": "playwright test --list"
+    "lint:tests": "playwright test --list",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^22.19.19",
     "ts-node": "^10.9.2",
     "tsup": "^8.5.1",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "vitepress": "^1.6.4"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
