@@ -89,4 +89,10 @@ If `--output` was given: write to that file and confirm.
 Otherwise: print directly to the terminal.
 
 If the report was written to a file, offer:
-> "Report saved. Want me to post this as a JIRA comment or GitHub PR comment? (I'll need the ticket/PR number)"
+> "Report saved. Want me to post this as a comment on the issue?"
+
+If yes, post using:
+```bash
+node node_modules/@swayambhu-qa/core/dist/scripts/comment-issue.js \
+  --source <source> --issue <issueId> --body "<report text>"
+```

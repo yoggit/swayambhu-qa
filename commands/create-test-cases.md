@@ -184,7 +184,14 @@ Prints each Zephyr test ID.
 
 ## STEP 6 — Comment Summary on Original Ticket
 
-Post a comment on the source issue summarizing what was created:
+Post a comment on the source issue using:
+
+```bash
+node node_modules/@swayambhu-qa/core/dist/scripts/comment-issue.js \
+  --source <source> --issue <issueId> --body "<comment text>"
+```
+
+Comment format:
 
 ```
 ## 📋 Test Cases Created — swayambhu-qa
