@@ -1,0 +1,24 @@
+{
+  "name": "qa-agents",
+  "version": "1.0.0",
+  "description": "Agentic AI toolkit for QA automation — powered by Claude Code",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report reports/html",
+    "scrape": "ts-node scripts/scrape-page.ts",
+    "lint:tests": "playwright test --list"
+  },
+  "keywords": ["qa", "playwright", "ai-agents", "test-automation", "claude"],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+reports/test-results/
+reports/html/
+reports/screenshots/
+*.webm
+*.zip
+target/
+allure-results/
+allure-report/
+.env
+.DS_Store

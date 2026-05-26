@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="API Test Suite" verbose="1" parallel="methods" thread-count="4">
+
+  <listeners>
+    <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+  </listeners>
+
+  <test name="Generated API Tests">
+    <packages>
+      <package name="com.qaagents.tests.generated"/>
+    </packages>
+  </test>
+
+  <test name="Regression API Tests">
+    <packages>
+      <package name="com.qaagents.tests.regression"/>
+    </packages>
+  </test>
+
+</suite>
