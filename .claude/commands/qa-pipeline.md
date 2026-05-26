@@ -216,11 +216,11 @@ Apply this decision logic:
 | Any | Any | Any | User explicitly requested regenerate (from prior answer) — see below |
 
 **For the common Re-run case** (`tc-mapping` + local files + specs all exist), **⏸ PAUSE and ask**:
-> ⚠️ This issue was run before. Existing test cases are already in your TMS (pushing again would create duplicates).
+> ⚠️ This issue was run before. Test cases already exist in your TMS.
 >
 > What should I do?
-> - **Re-run tests** — keep existing test cases and specs, just run Phase 5 → 8 again (creates a new Test Execution ticket)
-> - **Regenerate everything** — rewrite test cases and specs from scratch and push new ones to TMS (old TMS entries will NOT be deleted — do this only if requirements changed significantly)
+> - **Re-run tests** — skip test case generation, run the existing specs → heal if needed → create a new Test Execution ticket with this run's results
+> - **Regenerate everything** — rewrite test cases and specs from scratch, push new ones to TMS (old TMS entries will NOT be deleted — only choose this if requirements changed significantly)
 
 Wait for user response before continuing.
 
