@@ -45,22 +45,22 @@ Product Owner → Issue Tracker → /qa-pipeline QA-42 --source jira --tool play
 ## Supported Tools
 
 ### Issue Management (`--source`)
-| Tool | Flag |
-|---|---|
-| GitHub Issues | `--source github` (default) |
-| JIRA / Atlassian | `--source jira` |
-| Azure DevOps | `--source ado` |
-| Linear | `--source linear` |
+| Tool | Flag | Status |
+|---|---|---|
+| GitHub Issues | `--source github` (default) | ✅ |
+| JIRA / Atlassian | `--source jira` | ✅ |
+| Azure DevOps | `--source ado` | 🔜 Planned |
+| Linear | `--source linear` | 🔜 Planned |
 
 ### Test Automation (`--tool`)
-| Tool | Flag |
-|---|---|
-| Playwright + TypeScript | `--tool playwright` |
-| Cypress + TypeScript | `--tool cypress` |
-| Selenium + Java | `--tool selenium` / `selenium:testng` / `selenium:junit` / `selenium:cucumber` |
-| REST Assured + Java | `--tool restassured` / `restassured:junit` / `restassured:cucumber` |
-| Appium (Mobile) | `--tool appium` |
-| Robot Framework | `--tool robot:ui` / `robot:api` / `robot:android` / `robot:ios` |
+| Tool | Flag | Status |
+|---|---|---|
+| Playwright + TypeScript | `--tool playwright` | ✅ |
+| REST Assured + Java | `--tool restassured` / `restassured:junit` / `restassured:cucumber` | ✅ |
+| Cypress + TypeScript | `--tool cypress` | 🔜 Planned |
+| Selenium + Java | `--tool selenium` / `selenium:testng` / `selenium:junit` / `selenium:cucumber` | 🔜 Planned |
+| Appium (Mobile) | `--tool appium` | 🔜 Planned |
+| Robot Framework | `--tool robot:ui` / `robot:api` / `robot:android` / `robot:ios` | 🔜 Planned |
 
 ### Valid Combos (UI + API)
 ```bash
@@ -359,9 +359,9 @@ node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js --issue T
 | Flag | Required? | Supported values | Default | When to omit |
 |---|---|---|---|---|
 | `--issue <id>` | **Always** | Any issue ID | — | Never. JIRA: `TEST-22`, GitHub: `42`, ADO: `12345`, Linear: `ENG-456` |
-| `--source <src>` | No | `github`, `jira`, `ado`, `linear` | `github` | Omit if using GitHub Issues |
+| `--source <src>` | No | `github` ✅, `jira` ✅, `ado` 🔜, `linear` 🔜 | `github` | Omit if using GitHub Issues |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
-| `--tool <tool>` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `selenium:cucumber`, `restassured`, `restassured:junit`, `restassured:cucumber`, `appium`, `robot:ui`, `robot:api`, `robot:android`, `robot:ios` | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
+| `--tool <tool>` | No | `playwright` ✅, `restassured` ✅, `cypress` 🔜, `selenium` 🔜, `appium` 🔜, `robot:ui` 🔜 | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
 | `--tms <tms>` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally with no external TMS needed. Add `--tms xray` (or `testrail`/`zephyr`) only if you have credentials configured in `.env` |
 | `--no-pr` | No | _(flag only, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add `--no-pr` to skip PR for local runs or when no git remote is configured |
 | `--url <url>` | No | Any URL | From issue / `.env` | Omit if the issue has a `Test URL:` line or `BASE_URL` is set in `.env` |
@@ -505,6 +505,46 @@ az login && az devops configure --defaults organization=https://dev.azure.com/or
 ```
 
 If none of these are set up, use `--no-pr` to skip Phase 9 — everything else still runs.
+
+---
+
+## Future Enhancements
+
+The following are planned or in progress. Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa](https://github.com/yoggit/swayambhu-qa).
+
+### Test Runner Support
+| Tool | Status |
+|---|---|
+| Playwright + TypeScript | ✅ Supported |
+| REST Assured + Java | ✅ Supported |
+| Cypress + TypeScript | 🔜 Planned |
+| Selenium (TestNG / JUnit / Cucumber) | 🔜 Planned |
+| Robot Framework (UI / API / Mobile) | 🔜 Planned |
+| Appium (Android / iOS) | 🔜 Planned |
+
+### Issue Source Support
+| Source | Status |
+|---|---|
+| JIRA | ✅ Supported |
+| GitHub Issues | ✅ Supported |
+| Azure DevOps | 🔜 Planned |
+| Linear | 🔜 Planned |
+
+### Test Management System Support
+| TMS | Status |
+|---|---|
+| Xray (JIRA plugin) | ✅ Supported |
+| Markdown (local files) | ✅ Supported |
+| TestRail | 🔜 Planned |
+| Zephyr Scale | 🔜 Planned |
+
+### Pipeline Features
+| Feature | Status |
+|---|---|
+| Multi-tool combined runs (`playwright,restassured`) | ✅ Supported |
+| Multi-issue runs (`--issue TEST-22,TEST-62`) | 🔜 Planned |
+| CI/CD integration (GitHub Actions) | 🔜 Planned |
+| Documentation site | 🔜 Planned |
 
 ---
 

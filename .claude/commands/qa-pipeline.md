@@ -511,6 +511,9 @@ If zero confirmed failures: print "✅ No bugs to log — all tests green."
 Branch on TMS mode resolved in Pre-flight:
 
 **TMS mode** (`--tms` provided) — push results and create a Test Execution ticket:
+
+> ⚠️ `reports/results-<issueId>.json` is written automatically by Phase 5's run-tests script. **Do NOT use the Write tool to create or overwrite it** — just pass the existing file path to update-tms-status.
+
 ```bash
 node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js \
   --tms <tms> --issue <issueId> --results reports/results-<issueId>.json
@@ -518,7 +521,7 @@ node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js \
 Log the Test Execution ticket ID from the output (e.g. `TEST-69`) and include it in the Phase 10 final summary.
 
 **Markdown mode** (`--tms` not provided) — write a results summary locally:
-- Results are already in `reports/results-<issueId>.json` from Phase 5
+- Results are already in `reports/results-<issueId>.json` from Phase 5 — do not rewrite it
 - Write a human-readable summary to `reports/summary-<issueId>.md`:
   ```
   # Test Results — <issueId>

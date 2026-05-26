@@ -1,12 +1,26 @@
 node_modules/
 dist/
+target/
+.env
+.DS_Store
+
+# Generated pipeline artifacts
+logs/
+test-results/
+reports/results*.json
+reports/pw-results*.json
+reports/tc-mapping*.json
 reports/test-results/
 reports/html/
 reports/screenshots/
+test-cases/TC-*.md
+tests/generated/
+
+# npm pack artifacts
+*.tgz
+
+# Misc
 *.webm
 *.zip
-target/
 allure-results/
 allure-report/
-.env
-.DS_Store
