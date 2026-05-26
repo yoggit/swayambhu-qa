@@ -27,7 +27,7 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 | `--source` | No | `github`, `jira`, `ado`, `linear` | `github` | Omit if using GitHub Issues |
 | `--repo` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
 | `--tool` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `restassured`, `restassured:junit`, `appium`, `robot:ui`, `robot:api` | `playwright` | Omit to default to Playwright. Combine: `playwright,restassured` |
-| `--tms` | No | `xray`, `testrail`, `zephyr`, `markdown` | `xray` | Omit to default to Xray. Use `markdown` for no TMS |
+| `--tms` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally. Add `--tms xray` (or `testrail`/`zephyr`) only if you have credentials configured in `.env` |
 | `--no-pr` | No | _(flag, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add to skip for local runs or no git remote |
 
 ### Examples
@@ -101,7 +101,7 @@ Parse from `$ARGUMENTS`:
 - `--source` — `github` | `jira` | `ado` | `linear`  (default: `github`)
 - `--tool`   — comma-separated (default: `playwright`)
 - `--repo`   — `owner/repo` (required only for GitHub source)
-- `--tms`    — `xray` | `testrail` | `zephyr` | `markdown`  (**default: `xray`** — always run Phase 8 with `xray` unless overridden)
+- `--tms`    — `xray` | `testrail` | `zephyr` | `markdown`  (**default: `markdown`** — writes results locally; use `xray`/`testrail`/`zephyr` only if configured in `.env`)
 - `--no-pr`  — skip Draft PR creation
 
 If `--issue` is missing, stop and ask:
@@ -386,7 +386,7 @@ If zero confirmed failures: print "✅ No bugs to log — all tests green."
 
 **Always run this phase regardless of which tool was used (Playwright, REST Assured, Cypress, etc.).**
 
-Use the `--tms` value resolved in Pre-flight (**default: `xray`** — do NOT skip this phase just because `--tms` was not passed; use `xray` when omitted).
+Use the `--tms` value resolved in Pre-flight (**default: `markdown`** — do NOT skip this phase; if `--tms` was not passed, use `markdown` which writes results locally without needing any external TMS credentials).
 
 Push pass/fail results back to TMS. The results file is always at `reports/results-<issueId>.json`:
 

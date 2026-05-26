@@ -362,7 +362,7 @@ node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js --issue T
 | `--source <src>` | No | `github`, `jira`, `ado`, `linear` | `github` | Omit if using GitHub Issues |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
 | `--tool <tool>` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `selenium:cucumber`, `restassured`, `restassured:junit`, `restassured:cucumber`, `appium`, `robot:ui`, `robot:api`, `robot:android`, `robot:ios` | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
-| `--tms <tms>` | No | `xray`, `testrail`, `zephyr`, `markdown` | `xray` | Omit to default to Xray. Use `markdown` to write test cases locally with no TMS |
+| `--tms <tms>` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally with no external TMS needed. Add `--tms xray` (or `testrail`/`zephyr`) only if you have credentials configured in `.env` |
 | `--no-pr` | No | _(flag only, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add `--no-pr` to skip PR for local runs or when no git remote is configured |
 | `--url <url>` | No | Any URL | From issue / `.env` | Omit if the issue has a `Test URL:` line or `BASE_URL` is set in `.env` |
 | `--api-url <url>` | No | Any URL | From issue / `.env` | Omit if the issue has an `API URL:` line or `API_BASE_URL` is set in `.env` |
