@@ -24,6 +24,7 @@ export default defineConfig([
       'scripts/update-tms-status':'scripts/update-tms-status.ts',
       'scripts/create-bug':       'scripts/create-bug.ts',
       'scripts/comment-issue':    'scripts/comment-issue.ts',
+      'scripts/read-from-tms':    'scripts/read-from-tms.ts',
     },
     format: ['cjs'],
     target: 'node18',

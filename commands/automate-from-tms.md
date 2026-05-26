@@ -100,23 +100,15 @@ Print resolved plan:
 Read the file `test-cases/TC-<issueId>-*.md` or match `--suite` / `--case` pattern.
 Parse each `## TC-*` section into a structured list.
 
-### If --test-mgmt is testRail
+### If --test-mgmt is testRail / xray / zephyr
 ```bash
-npx ts-node scripts/read-from-tms.ts \
-  --tms testRail \
-  --issue <issueId>     # or --suite <name> or --case <ids>
+node node_modules/@swayambhu-qa/core/dist/scripts/read-from-tms.js \
+  --tms <testRail|xray|zephyr> \
+  --issue <issueId>
 ```
+Optional: `--suite <name>` to filter by suite name, or `--case <TC-1-01,TC-1-02>` for specific IDs.
+
 Returns structured TC list: ID, title, steps, test data, expected results.
-
-### If --test-mgmt is xray
-```bash
-npx ts-node scripts/read-from-tms.ts --tms xray --issue <issueId>
-```
-
-### If --test-mgmt is zephyr
-```bash
-npx ts-node scripts/read-from-tms.ts --tms zephyr --issue <issueId>
-```
 
 Print what was loaded:
 ```
