@@ -197,22 +197,35 @@ Resolution logic:
 
 ### Step 7 — Check for existing artifacts (re-run detection)
 
-Check whether this issue has been run before:
+The `tc-mapping-<issueId>.json` file is the single source of truth for whether test cases have already been pushed to TMS. Check it first:
+
 ```bash
+ls reports/tc-mapping-<issueId>.json 2>/dev/null
 ls test-cases/TC-<issueId>-*.md 2>/dev/null
 ls tests/generated/<slug>.spec.ts 2>/dev/null
 ```
 
-If existing files found, **⏸ PAUSE and ask**:
-> ⚠️ Found existing artifacts from a previous run for `<issueId>`:
-> - `test-cases/TC-<issueId>-<slug>.md`
-> - `tests/generated/<slug>.spec.ts`
+Apply this decision logic:
+
+| tc-mapping exists? | Local TC files exist? | Spec files exist? | Action |
+|---|---|---|---|
+| No | No | No | **First run** — generate everything normally |
+| Yes | Yes | Yes | **Re-run** — reuse all artifacts, skip Phase 3 & 4, jump to Phase 5 |
+| Yes | Yes | No | TC mapping + test cases exist but specs missing — skip Phase 3 TMS push, regenerate specs only in Phase 4 |
+| No | Yes | Yes | Local files exist but were never pushed to TMS — offer to push or skip |
+| Any | Any | Any | User explicitly requested regenerate (from prior answer) — see below |
+
+**For the common Re-run case** (`tc-mapping` + local files + specs all exist), **⏸ PAUSE and ask**:
+> ⚠️ This issue was run before. Existing test cases are already in your TMS (pushing again would create duplicates).
 >
 > What should I do?
-> - **Regenerate** — rewrite test cases and specs from scratch
-> - **Reuse** — skip Phase 3 & 4, go straight to running tests
+> - **Re-run tests** — keep existing test cases and specs, just run Phase 5 → 8 again (creates a new Test Execution ticket)
+> - **Regenerate everything** — rewrite test cases and specs from scratch and push new ones to TMS (old TMS entries will NOT be deleted — do this only if requirements changed significantly)
 
 Wait for user response before continuing.
+
+If user chooses **Regenerate**: proceed through all phases normally, but warn before Phase 3 TMS push:
+> ⚠️ About to create NEW test cases in TMS. The previous ones will remain — archive or delete them manually in your TMS if no longer needed.
 
 ### Step 8 — Print resolved plan and wait 5 seconds
 
@@ -643,7 +656,8 @@ All automatic fallbacks applied during this pipeline — documented so users kno
 | `--repo` with non-GitHub source | `--repo` used as PR target if no git remote found | Pre-flight Step 6 |
 | `--no-pr` absent + no git remote + no `--repo` | PR skipped with warning — pipeline continues | Pre-flight Step 6 |
 | `.env` file missing | Stop — user directed to run `npx @swayambhu-qa/core init` | Pre-flight Step 3 |
-| Existing `test-cases/` or `tests/generated/` from prior run | Pause and ask: regenerate or reuse | Pre-flight Step 7 |
+| `tc-mapping-<issueId>.json` exists (TCs already in TMS) | Pause and ask: re-run tests only, or regenerate (warns that old TMS entries won't be deleted) | Pre-flight Step 7 |
+| Existing local TC files + specs but no `tc-mapping` | Offer to push existing TCs to TMS or skip | Pre-flight Step 7 |
 | UI URL missing from ticket + UI tool selected | Phase 1 pauses and asks for the URL | Phase 1 |
 | API URL missing from ticket + API tool selected | Phase 1 pauses and asks for the URL | Phase 1 |
 | All tests fail heal round 2 with remaining failures | Pipeline continues to Phase 7 (bug creation) — does not abort | Phase 6 |
