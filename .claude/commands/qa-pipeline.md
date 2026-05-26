@@ -16,17 +16,39 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 ## Input
 
 ```
-/qa-pipeline --issue <id> --source <source> --tool <tools> [--repo <owner/repo>] [--no-pr]
+/qa-pipeline --issue <id> [--source <source>] [--tool <tools>] [--repo <owner/repo>] [--tms <tms>] [--no-pr]
 ```
+
+### Flags
+
+| Flag | Required? | Default | When to omit |
+|---|---|---|---|
+| `--issue` | **Always** | — | Issue ID: JIRA → `TEST-22`, GitHub → `42`, ADO → `12345`, Linear → `ENG-456` |
+| `--source` | No | `github` | Omit if using GitHub Issues |
+| `--repo` | GitHub only | — | Only needed for `--source github`. Omit for JIRA / ADO / Linear |
+| `--tool` | No | `playwright` | Omit to default to Playwright UI tests |
+| `--tms` | No | `xray` | Omit to default to Xray. Use `--tms markdown` if you have no TMS |
+| `--no-pr` | No | _(PR is created)_ | Add to skip Draft PR. Useful for local runs or no git remote |
 
 ### Examples
 ```bash
-/qa-pipeline --issue TEST-22  --source jira   --tool playwright
-/qa-pipeline --issue TEST-22  --source jira   --tool playwright,restassured
-/qa-pipeline --issue 12345    --source ado    --tool selenium:testng
-/qa-pipeline --issue ENG-456  --source linear --tool cypress,restassured
-/qa-pipeline --issue ENG-456  --source linear --tool robot:ui,api
-/qa-pipeline --issue 42       --source github --tool playwright --repo myorg/myrepo --no-pr
+# JIRA → Playwright only
+/qa-pipeline --issue TEST-22 --source jira --tool playwright
+
+# JIRA → Playwright + REST Assured (UI + API)
+/qa-pipeline --issue TEST-22 --source jira --tool playwright,restassured
+
+# ADO → Selenium + TestNG
+/qa-pipeline --issue 12345 --source ado --tool selenium:testng
+
+# Linear → Cypress + REST Assured
+/qa-pipeline --issue ENG-456 --source linear --tool cypress,restassured
+
+# GitHub → Playwright, skip PR
+/qa-pipeline --issue 42 --source github --repo myorg/myrepo --tool playwright --no-pr
+
+# No TMS (write test cases as local markdown files)
+/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms markdown
 ```
 
 ---

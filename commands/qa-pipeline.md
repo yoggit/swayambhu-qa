@@ -16,17 +16,39 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 ## Input
 
 ```
-/qa-pipeline --issue <id> --source <source> --tool <tools> [--repo <owner/repo>] [--no-pr]
+/qa-pipeline --issue <id> [--source <source>] [--tool <tools>] [--repo <owner/repo>] [--tms <tms>] [--no-pr]
 ```
+
+### Flags
+
+| Flag | Required? | Default | When to omit |
+|---|---|---|---|
+| `--issue` | **Always** | — | Issue ID: JIRA → `TEST-22`, GitHub → `42`, ADO → `12345`, Linear → `ENG-456` |
+| `--source` | No | `github` | Omit if using GitHub Issues |
+| `--repo` | GitHub only | — | Only needed for `--source github`. Omit for JIRA / ADO / Linear |
+| `--tool` | No | `playwright` | Omit to default to Playwright UI tests |
+| `--tms` | No | `xray` | Omit to default to Xray. Use `--tms markdown` if you have no TMS |
+| `--no-pr` | No | _(PR is created)_ | Add to skip Draft PR. Useful for local runs or no git remote |
 
 ### Examples
 ```bash
-/qa-pipeline --issue TEST-22  --source jira   --tool playwright
-/qa-pipeline --issue TEST-22  --source jira   --tool playwright,restassured
-/qa-pipeline --issue 12345    --source ado    --tool selenium:testng
-/qa-pipeline --issue ENG-456  --source linear --tool cypress,restassured
-/qa-pipeline --issue ENG-456  --source linear --tool robot:ui,api
-/qa-pipeline --issue 42       --source github --tool playwright --repo myorg/myrepo --no-pr
+# JIRA → Playwright only
+/qa-pipeline --issue TEST-22 --source jira --tool playwright
+
+# JIRA → Playwright + REST Assured (UI + API)
+/qa-pipeline --issue TEST-22 --source jira --tool playwright,restassured
+
+# ADO → Selenium + TestNG
+/qa-pipeline --issue 12345 --source ado --tool selenium:testng
+
+# Linear → Cypress + REST Assured
+/qa-pipeline --issue ENG-456 --source linear --tool cypress,restassured
+
+# GitHub → Playwright, skip PR
+/qa-pipeline --issue 42 --source github --repo myorg/myrepo --tool playwright --no-pr
+
+# No TMS (write test cases as local markdown files)
+/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms markdown
 ```
 
 ---
@@ -135,11 +157,16 @@ Print:
 📋 TEST-22: "Budget Tracker" | Priority: P2 | UI: qaplayground.dev/apps/budget-tracker/
 ```
 
+If `apiEndpoints` is empty and an API tool is selected, ask:
+> "No API endpoints found in the ticket. Should I skip API tests or would you like to add endpoints?"
+
 ---
 
 ## PHASE 2 — Scrape the App
 
 **Skip if API-only tools selected** (e.g. `--tool restassured`, `--tool robot:api`).
+
+**Skip this phase if selected tools are API-only** (e.g. `--tool restassured`, `--tool robot:api`).
 
 ```bash
 npx ts-node scripts/scrape-app.ts --url <testUrls.ui>
@@ -179,7 +206,7 @@ npx ts-node scripts/push-to-tms.ts --tms <tms> --issue <id> --file test-cases/TC
 > "Here are the N test cases I'll automate. Review them — any changes before I write the code?
 > Reply **yes** to proceed or tell me what to change."
 
-Wait for confirmation before Phase 4.
+Wait for human confirmation before Phase 4.
 
 ---
 

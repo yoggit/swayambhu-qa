@@ -76,23 +76,32 @@ Product Owner → Issue Tracker → /qa-pipeline QA-42 --source jira --tool play
 ## Example Commands
 
 ```bash
-# GitHub Issue → Playwright tests
-/qa-pipeline 42 --source github --repo myorg/myrepo --tool playwright
+# Simplest: GitHub Issue + Playwright (--source github and --tool playwright are defaults)
+/qa-pipeline --issue 42 --repo myorg/myrepo
 
-# JIRA ticket → Playwright + REST Assured
-/qa-pipeline QA-42 --source jira --tool playwright,restassured
+# JIRA ticket → Playwright only (no --repo needed for JIRA)
+/qa-pipeline --issue TEST-22 --source jira --tool playwright
+
+# JIRA ticket → Playwright + REST Assured (UI + API together)
+/qa-pipeline --issue QA-42 --source jira --tool playwright,restassured
 
 # Azure DevOps → Selenium + TestNG
-/qa-pipeline 12345 --source ado --tool selenium:testng
+/qa-pipeline --issue 12345 --source ado --tool selenium:testng
 
 # Linear → Cypress + REST Assured
-/qa-pipeline ENG-456 --source linear --tool cypress,restassured
+/qa-pipeline --issue ENG-456 --source linear --tool cypress,restassured
 
 # Linear → Robot Framework (UI + API)
-/qa-pipeline ENG-456 --source linear --tool robot:ui,api
+/qa-pipeline --issue ENG-456 --source linear --tool robot:ui,api
+
+# Skip PR creation (local dev / no git remote)
+/qa-pipeline --issue TEST-22 --source jira --tool playwright --no-pr
+
+# Skip TMS push (use markdown as a local record instead of Xray/TestRail)
+/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms markdown
 
 # Just create test cases, no automation
-/create-test-cases QA-42 --source jira
+/create-test-cases --issue QA-42 --source jira
 
 # Automate existing test cases from TestRail
 /automate-from-tms --issue QA-42 --source jira --test-mgmt testRail --tool playwright
@@ -347,20 +356,20 @@ node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js --issue T
 
 ### All flags reference
 
-| Flag | Accepted by | Purpose |
-|---|---|---|
-| `--issue <id>` | all scripts | Issue ID — JIRA: `TEST-22`, GitHub: `42`, ADO: `12345`, Linear: `ENG-456` |
-| `--source <src>` | `fetch-issue` | `jira` \| `ado` \| `linear` \| `github` |
-| `--repo <owner/repo>` | `fetch-issue` | Required for GitHub source only |
-| `--tool <tool>` | `/qa-pipeline` orchestrator | `playwright` \| `cypress` \| `selenium` \| `restassured` \| `appium` \| `robot` |
-| `--tms <tms>` | `push-to-tms`, `update-tms-status` | `xray` \| `testrail` \| `zephyr` \| `markdown` |
-| `--url <url>` | `scrape-app` | UI app URL — overrides issue description and `BASE_URL` in `.env` |
-| `--api-url <url>` | orchestrator | API base URL — overrides issue description and `API_BASE_URL` in `.env` |
-| `--file <path>` | `push-to-tms` | Path to generated TC markdown file |
-| `--results <path>` | `update-tms-status` | Path to JSON test results file |
-| `--run-id <id>` | `update-tms-status` | TestRail Test Run ID (TestRail only) |
-| `--feature <slug>` | `update-tms-status` | Feature slug (markdown TMS only) |
-| `--no-pr` | `/qa-pipeline` orchestrator | Skip Draft PR creation |
+| Flag | Required? | Default | Purpose & when to omit |
+|---|---|---|---|
+| `--issue <id>` | **Always** | — | Issue ID. Format by tracker: JIRA → `TEST-22`, GitHub → `42`, ADO → `12345`, Linear → `ENG-456` |
+| `--source <src>` | No | `github` | Where to fetch the issue: `jira` \| `ado` \| `linear` \| `github`. Omit if you use GitHub Issues. |
+| `--repo <owner/repo>` | GitHub only | — | Your GitHub repo (e.g. `myorg/myrepo`). **Only needed when `--source github`**. Omit for JIRA/ADO/Linear. |
+| `--tool <tool>` | No | `playwright` | Test runner(s) to generate and execute. Omit to default to Playwright. See tool combos below. |
+| `--tms <tms>` | No | `xray` | Test Management System: `xray` \| `testrail` \| `zephyr` \| `markdown`. Omit to default to Xray. Use `markdown` for no TMS. |
+| `--no-pr` | No | _(PR is created)_ | Add this flag to skip the Draft PR step entirely. Useful for local runs or when no git remote is set up. |
+| `--url <url>` | No | From issue / `.env` | Override the UI app URL. Omit if the issue description contains a `Test URL:` line or `BASE_URL` is set in `.env`. |
+| `--api-url <url>` | No | From issue / `.env` | Override the API base URL. Omit if the issue has an `API URL:` line or `API_BASE_URL` is set in `.env`. |
+| `--file <path>` | `push-to-tms` only | — | Path to a TC markdown file (individual script use only — orchestrator sets this automatically). |
+| `--results <path>` | `update-tms-status` only | — | Path to the results JSON (individual script use only — orchestrator sets this automatically). |
+| `--run-id <id>` | TestRail only | — | TestRail Test Run ID (individual script use only). |
+| `--feature <slug>` | markdown TMS only | — | Feature slug for markdown TMS (individual script use only). |
 
 ---
 
