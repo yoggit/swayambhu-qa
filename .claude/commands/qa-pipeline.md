@@ -152,7 +152,7 @@ Print everything that was resolved (including which values came from defaults) b
    TMS:     markdown                       ← default (no external TMS)
    PR:      yes
    
-   ⚡ Starting in 3 seconds — Ctrl+C to abort
+   ⚡ Starting in 5 seconds — Ctrl+C to abort
 ```
 
 If any value came from a default (not explicitly passed), mark it with `← default` so the user knows what was inferred.
