@@ -95,8 +95,8 @@ Ticket / File → /qa-pipeline --id QA-42 --source jira --tool playwright,restas
 
 ```bash
 # Local file — no IMS, no credentials needed
-/qa-pipeline --id ./story.md --tool playwright
-/qa-pipeline --id requirements/login.docx --tool playwright,restassured
+/qa-pipeline --id "./story.md" --tool playwright
+/qa-pipeline --id "requirements/login.docx" --tool playwright,restassured
 
 # GitHub Issue + Playwright
 /qa-pipeline --id 42 --source github --repo myorg/myrepo

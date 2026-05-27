@@ -14,8 +14,8 @@ The full QA pipeline — from a single ticket to a passing test suite, logged bu
 
 ```bash
 # From a local file — no IMS or credentials needed
-/qa-pipeline --id ./story.md --tool playwright
-/qa-pipeline --id requirements/login-feature.docx --tool playwright,restassured
+/qa-pipeline --id "./story.md" --tool playwright
+/qa-pipeline --id "requirements/login-feature.docx" --tool playwright,restassured
 
 # JIRA + Playwright only
 /qa-pipeline --id TEST-22 --source jira --tool playwright

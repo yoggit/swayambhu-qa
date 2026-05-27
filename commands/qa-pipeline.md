@@ -33,10 +33,10 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 ### Examples
 ```bash
 # From a local file (no --source needed) → Playwright
-/qa-pipeline --id ./story.md --tool playwright
+/qa-pipeline --id "./story.md" --tool playwright
 
 # From a local file → Playwright + REST Assured
-/qa-pipeline --id requirements/login-feature.txt --tool playwright,restassured
+/qa-pipeline --id "requirements/login-feature.txt" --tool playwright,restassured
 
 # JIRA → Playwright only
 /qa-pipeline --id TEST-22 --source jira --tool playwright
