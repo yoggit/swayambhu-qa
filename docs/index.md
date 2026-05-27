@@ -32,6 +32,9 @@ features:
   - icon: 📋
     title: TMS integration
     details: Push test cases to Xray and pull back results automatically. Or use markdown mode — no TMS credentials needed to get started.
+  - icon: 📄
+    title: No IMS? No problem.
+    details: No JIRA, no GitHub, no credentials. Pass a local .md, .txt, .docx, .doc, or .pdf file as input and the pipeline reads your requirements directly from it.
   - icon: 🔁
     title: Re-run aware
     details: Already pushed test cases to your TMS? The pipeline detects that and skips re-creating duplicates — just runs the existing tests and updates execution results.
@@ -71,7 +74,11 @@ npx @swayambhu-qa/core init
 Then open Claude Code and run:
 
 ```bash
+# From a JIRA ticket
 /qa-pipeline --id TEST-22 --source jira --tool playwright
+
+# Or from a local file — no credentials needed
+/qa-pipeline --id "./my-feature.txt" --tool playwright
 ```
 
 → [Full setup guide](/guide/getting-started)
