@@ -87,7 +87,7 @@ Then open Claude Code and run:
 
 | Category | What works |
 |---|---|
-| Issue sources | JIRA ✅, GitHub Issues ✅ |
+| Issue sources | JIRA ✅, GitHub Issues ✅, Local file (`.md` `.txt` `.docx` `.doc` `.pdf`) ✅ |
 | Test tools | Playwright ✅, REST Assured ✅ |
 | TMS | Xray ✅, Markdown (local) ✅ |
 | Combined runs | `--tool playwright,restassured` ✅ |
