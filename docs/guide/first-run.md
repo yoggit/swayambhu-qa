@@ -5,7 +5,7 @@ This page walks through a complete pipeline run — what each phase does and wha
 ## Example command
 
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
 ```
 
 ## Phase 1 — Fetch the ticket
@@ -92,7 +92,7 @@ If you omit `--tms` (or use `--tms markdown`), no Xray credentials are needed:
 
 ## Re-runs
 
-If you run the same `--issue` again, the pipeline detects that TCs already exist in Xray (`tc-mapping-<issueId>.json` is present) and asks:
+If you run the same `--id` again, the pipeline detects that TCs already exist in Xray (`tc-mapping-<issueId>.json` is present) and asks:
 
 > TCs for TEST-22 already exist in Xray. Re-run tests or regenerate everything?
 

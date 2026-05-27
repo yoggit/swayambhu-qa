@@ -45,7 +45,7 @@ If neither `--case` nor `--url` is provided, ask:
 ## STEP 1 — Scrape the App (if --url provided)
 
 ```bash
-npx ts-node scripts/scrape-page.ts <url> --screenshot
+npx swayambhu-scrape <url> --screenshot
 ```
 
 Extract: selectors, `data-testid` attributes, form fields, button labels, ARIA roles.

@@ -5,20 +5,20 @@ Reads a ticket and generates test case documents only — no automation code wri
 ## Usage
 
 ```bash
-/create-test-cases --issue <id> --source <src> [--tms <tms>]
+/create-test-cases --id <id> --source <src> [--tms <tms>]
 ```
 
 ## Examples
 
 ```bash
 # JIRA → push TCs to Xray
-/create-test-cases --issue TEST-22 --source jira --tms xray
+/create-test-cases --id TEST-22 --source jira --tms xray
 
 # JIRA → write locally as markdown (no Xray needed)
-/create-test-cases --issue TEST-22 --source jira
+/create-test-cases --id TEST-22 --source jira
 
 # GitHub → push TCs to Xray
-/create-test-cases --issue 42 --repo myorg/myrepo --tms xray
+/create-test-cases --id 42 --repo myorg/myrepo --tms xray
 ```
 
 ## What it does
@@ -33,7 +33,7 @@ Reads a ticket and generates test case documents only — no automation code wri
 Once TCs are approved in Xray, use `/automate-from-tms` to generate the automation code:
 
 ```bash
-/automate-from-tms --issue TEST-22 --source jira --test-mgmt xray --tool playwright
+/automate-from-tms --id TEST-22 --source jira --test-mgmt xray --tool playwright
 ```
 
 ## vs `/qa-pipeline`

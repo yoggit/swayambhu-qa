@@ -66,7 +66,7 @@ pom.xml
 ## STEP 1 — Scrape the App (if --url provided)
 
 ```bash
-npx ts-node scripts/scrape-page.ts <url> --screenshot
+npx swayambhu-scrape <url> --screenshot
 ```
 
 Extract: element IDs, `data-testid`, name attributes, ARIA labels, button text.

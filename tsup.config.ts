@@ -31,6 +31,7 @@ export default defineConfig([
     clean: false,
     sourcemap: false,
     dts: false,
+    banner: { js: '#!/usr/bin/env node' },
     // @playwright/test is already installed in user's project — don't bundle it
     external: ['@playwright/test'],
   },

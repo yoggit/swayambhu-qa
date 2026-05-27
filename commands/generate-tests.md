@@ -26,7 +26,7 @@ If no URL is found in `$ARGUMENTS`, ask the user: "What URL should I generate te
 Run the scraper and capture its JSON output:
 
 ```bash
-npx ts-node scripts/scrape-page.ts <URL> [--screenshot]
+npx swayambhu-scrape <URL> [--screenshot]
 ```
 
 If the command fails (network error, timeout), tell the user and stop.

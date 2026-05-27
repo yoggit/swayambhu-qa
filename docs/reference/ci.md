@@ -6,7 +6,7 @@ Run the pipeline headlessly in CI using `--dangerously-skip-permissions`.
 
 ```bash
 claude --dangerously-skip-permissions -p \
-  "/qa-pipeline --issue QA-42 --source jira --tool playwright --tms xray"
+  "/qa-pipeline --id QA-42 --source jira --tool playwright --tms xray"
 ```
 
 - `--dangerously-skip-permissions` — skips all tool-use approval prompts (required for non-interactive CI)
@@ -81,7 +81,7 @@ jobs:
           BASE_URL: ${{ vars.STAGING_URL }}
         run: |
           claude --dangerously-skip-permissions -p \
-            "/qa-pipeline --issue ${{ inputs.issue || 'TEST-22' }} \
+            "/qa-pipeline --id ${{ inputs.issue || 'TEST-22' }} \
              --source jira --tool playwright --tms xray --no-pr"
 ```
 

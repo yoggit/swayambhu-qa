@@ -40,15 +40,22 @@ features:
 ## How It Works
 
 ```
-/qa-pipeline --issue TEST-22 --source jira --tool playwright,restassured
+/qa-pipeline --id TEST-22 --source jira --tool playwright,restassured
         │
-        ├── Phase 1: Fetch ticket from JIRA
-        ├── Phase 2: Scrape app URL for selectors
+        ├── Phase 1: Fetch ticket (requirement, ACs, URLs)
+        │
+        ├── Phase 2: ┌─ UI tools  → Scrape live app for DOM selectors & form fields
+        │            └─ API tools → Read API URL / Swagger / OpenAPI docs from ticket
+        │
         ├── Phase 3: Generate test cases → push to Xray
         │           ↳ Human review pause (approve or redirect)
-        ├── Phase 4: Generate Playwright + REST Assured specs
-        ├── Phase 5: Run tests
-        ├── Phase 6: Heal failures (selectors, timing)
+        │
+        ├── Phase 4: ┌─ UI tools  → Write Playwright / Cypress / Selenium specs
+        │            └─ API tools → Write REST Assured / Robot API specs
+        │
+        ├── Phase 5: Run all specs
+        ├── Phase 6: ┌─ UI  → Heal broken selectors, timing issues
+        │            └─ API → Heal auth errors, wrong base URL, schema mismatches
         ├── Phase 7: Log confirmed bugs back to JIRA
         ├── Phase 8: Push results to Xray → create Test Execution
         └── Phase 9: Open Draft PR with test files
@@ -64,7 +71,7 @@ npx @swayambhu-qa/core init
 Then open Claude Code and run:
 
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright
+/qa-pipeline --id TEST-22 --source jira --tool playwright
 ```
 
 → [Full setup guide](/guide/getting-started)

@@ -48,6 +48,7 @@ export default defineConfig({
         items: [
           { text: 'Environment Variables', link: '/guide/configuration' },
           { text: 'URL Resolution', link: '/guide/url-resolution' },
+          { text: 'File Source', link: '/guide/file-source' },
         ],
       },
       {

@@ -8,8 +8,8 @@ import { logger } from './logger';
 
 const args = process.argv.slice(2);
 const url = args[args.indexOf('--url') + 1];
-const issueId = args[args.indexOf('--issue') + 1] || 'unknown';
-if (!url) { console.error('Usage: npx ts-node scripts/scrape-app.ts --url <url> [--issue <id>]'); process.exit(1); }
+const issueId = args[args.indexOf('--id') + 1] || 'unknown';
+if (!url) { console.error('Usage: npx ts-node scripts/scrape-app.ts --url <url> [--id <id>]'); process.exit(1); }
 
 (async () => {
   const log = logger(issueId);
@@ -18,8 +18,10 @@ if (!url) { console.error('Usage: npx ts-node scripts/scrape-app.ts --url <url> 
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
 
-  await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-  await page.waitForTimeout(2000);
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  // Give JS-heavy apps (Swagger UI, React, etc.) time to render without waiting for networkidle,
+  // which never settles on apps with continuous background polling.
+  await page.waitForTimeout(3000);
 
   async function collectElements() {
     return page.evaluate(() => {

@@ -5,50 +5,52 @@ The full QA pipeline — from a single ticket to a passing test suite, logged bu
 ## Usage
 
 ```bash
-/qa-pipeline --issue <id> --source <src> --tool <tool> [options]
+/qa-pipeline --id <id|path> [--source <src>] --tool <tool> [options]
 ```
 
-## Required flags
-
-| Flag | Description |
-|---|---|
-| `--issue <id>` | Issue ID — e.g. `TEST-22`, `42`, `ENG-456` |
+`--id` accepts either an **IMS issue ID** (with `--source`) or a **local file path** (without `--source`). See [File Source](/guide/file-source) for supported formats.
 
 ## Common examples
 
 ```bash
+# From a local file — no IMS or credentials needed
+/qa-pipeline --id ./story.md --tool playwright
+/qa-pipeline --id requirements/login-feature.docx --tool playwright,restassured
+
 # JIRA + Playwright only
-/qa-pipeline --issue TEST-22 --source jira --tool playwright
+/qa-pipeline --id TEST-22 --source jira --tool playwright
 
 # JIRA + Playwright + REST Assured (UI + API together)
-/qa-pipeline --issue QA-42 --source jira --tool playwright,restassured
+/qa-pipeline --id QA-42 --source jira --tool playwright,restassured
 
-# GitHub Issue + Playwright (no --source needed)
-/qa-pipeline --issue 42 --repo myorg/myrepo
+# GitHub Issue + Playwright
+/qa-pipeline --id 42 --source github --repo myorg/myrepo
 
 # Skip PR creation
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --no-pr
+/qa-pipeline --id TEST-22 --source jira --tool playwright --no-pr
 
 # Use local markdown instead of Xray (no TMS credentials needed)
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms markdown
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms markdown
 
 # Push results to Xray
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
 ```
 
 ## Phases
 
-| Phase | What happens |
-|---|---|
-| 1 | Fetch ticket from issue tracker |
-| 2 | Scrape app URL for selectors and structure |
-| 3 | Generate test cases → push to TMS (or write locally) → **human review pause** |
-| 4 | Generate automation code (Playwright / REST Assured) |
-| 5 | Run tests |
-| 6 | Heal failures (selector drift, timing) |
-| 7 | Log confirmed bugs to issue tracker |
-| 8 | Push results to TMS → create Test Execution ticket |
-| 9 | Open Draft PR |
+| Phase | UI tools (Playwright, Cypress, Selenium…) | API tools (REST Assured, Robot API…) |
+|---|---|---|
+| **1** | Fetch ticket — requirement, ACs, test URLs | ← same |
+| **2** | Scrape live app for DOM selectors & form fields | Read API URL, Swagger / OpenAPI docs from ticket |
+| **3** | Generate test cases → push to TMS → **human review pause** | ← same |
+| **4** | Write UI specs using scraped selectors | Write API specs using endpoint definitions |
+| **5** | Run specs | ← same |
+| **6** | Heal broken selectors and timing issues | Heal auth errors, base URL drift, schema mismatches |
+| **7** | Log confirmed bugs to issue tracker | ← same |
+| **8** | Push results to TMS → create Test Execution | ← same |
+| **9** | Open Draft PR with generated test files | ← same |
+
+When both UI + API tools are selected (`--tool playwright,restassured`), Phases 2, 4, and 6 run in both tracks simultaneously.
 
 ## Human review pause (Phase 3)
 

@@ -5,7 +5,7 @@ Reads existing test cases from your TMS and generates automation code for them â
 ## Usage
 
 ```bash
-/automate-from-tms [--issue <id>] [--suite <name>] [--case <ids>] \
+/automate-from-tms [--id <id>] [--suite <name>] [--case <ids>] \
                    [--source <src>] [--test-mgmt <tms>] [--tool <tool>]
 ```
 
@@ -13,7 +13,7 @@ Reads existing test cases from your TMS and generates automation code for them â
 
 ```bash
 # All TCs linked to a JIRA issue â†’ automate with Playwright
-/automate-from-tms --issue QA-42 --source jira --test-mgmt xray --tool playwright
+/automate-from-tms --id QA-42 --source jira --test-mgmt xray --tool playwright
 
 # Specific TestRail suite â†’ Playwright
 /automate-from-tms --suite "Login Tests" --test-mgmt testRail --tool playwright
@@ -22,12 +22,12 @@ Reads existing test cases from your TMS and generates automation code for them â
 /automate-from-tms --case TC-1-01,TC-1-03,TC-1-05 --test-mgmt markdown --tool playwright
 
 # TCs from Xray â†’ Playwright + REST Assured
-/automate-from-tms --issue QA-42 --source jira --test-mgmt xray --tool playwright,restassured
+/automate-from-tms --id QA-42 --source jira --test-mgmt xray --tool playwright,restassured
 ```
 
 ## TC selection priority
 
-`--case` > `--suite` > `--issue`
+`--case` > `--suite` > `--id`
 
 Most granular wins. If you provide `--case`, the suite and issue flags are ignored.
 

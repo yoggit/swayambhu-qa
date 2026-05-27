@@ -54,7 +54,7 @@ If TMS vars are missing, fall back to markdown and inform the user:
 ## STEP 1 — Read the Requirement
 
 ```bash
-npx ts-node scripts/fetch-issue.ts <issue-id> --source <source> [--repo owner/repo]
+npx swayambhu-fetch --id <id> --source <source> [--repo owner/repo]
 ```
 
 Extract: `title`, `acceptanceCriteria`, `testUrls`, `credentials`, `apiEndpoints`, `priority`.
@@ -149,9 +149,9 @@ Save to `test-cases/TC-<issueId>-<feature-slug>.md`.
 
 ### testRail
 ```bash
-npx ts-node scripts/push-to-tms.ts \
+npx swayambhu-push-tms \
   --tms testRail \
-  --issue <issueId> \
+  --id <issueId> \
   --file test-cases/TC-<issueId>-<feature-slug>.md
 ```
 
@@ -160,9 +160,9 @@ Prints each created TC's TestRail ID (e.g. `C1001`, `C1002`...).
 
 ### xray
 ```bash
-npx ts-node scripts/push-to-tms.ts \
+npx swayambhu-push-tms \
   --tms xray \
-  --issue <issueId> \
+  --id <issueId> \
   --file test-cases/TC-<issueId>-<feature-slug>.md
 ```
 
@@ -171,9 +171,9 @@ Prints each Xray test ID.
 
 ### zephyr
 ```bash
-npx ts-node scripts/push-to-tms.ts \
+npx swayambhu-push-tms \
   --tms zephyr \
-  --issue <issueId> \
+  --id <issueId> \
   --file test-cases/TC-<issueId>-<feature-slug>.md
 ```
 
@@ -187,8 +187,8 @@ Prints each Zephyr test ID.
 Post a comment on the source issue using:
 
 ```bash
-node node_modules/@swayambhu-qa/core/dist/scripts/comment-issue.js \
-  --source <source> --issue <issueId> --body "<comment text>"
+npx swayambhu-comment \
+  --source <source> --id <issueId> --body "<comment text>"
 ```
 
 Comment format:
@@ -212,7 +212,7 @@ Comment format:
 | Accessibility | <n> |
 
 ### Next Step
-Run `/automate-from-tms --issue <issueId> --source <source> --test-mgmt <tms> --tool <tool>`
+Run `/automate-from-tms --id <issueId> --source <source> --test-mgmt <tms> --tool <tool>`
 to generate automation from these test cases.
 ```
 
@@ -235,5 +235,5 @@ to generate automation from these test cases.
 ║  Saved to    <file or TMS IDs>                           ║
 ╚══════════════════════════════════════════════════════════╝
 
-Next: /automate-from-tms --issue <issueId> --source <source> --tool <tool>
+Next: /automate-from-tms --id <issueId> --source <source> --tool <tool>
 ```

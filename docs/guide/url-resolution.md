@@ -19,7 +19,7 @@ Test URL: https://myapp.com
 
 **Via CLI flag:**
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --url https://staging.myapp.com
+/qa-pipeline --id TEST-22 --source jira --tool playwright --url https://staging.myapp.com
 ```
 
 **In `.env`:**
@@ -40,7 +40,7 @@ API URL: https://api.myapp.com
 
 **Via CLI flag:**
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool restassured --api-url https://api.staging.myapp.com
+/qa-pipeline --id TEST-22 --source jira --tool restassured --api-url https://api.staging.myapp.com
 ```
 
 **In `.env`:**
@@ -65,12 +65,12 @@ Use CLI flags to override without editing the ticket — useful for running agai
 
 ```bash
 # Staging
-/qa-pipeline --issue TEST-22 --source jira --tool playwright \
+/qa-pipeline --id TEST-22 --source jira --tool playwright \
   --url https://staging.myapp.com \
   --api-url https://api.staging.myapp.com
 
 # Production smoke test
-/qa-pipeline --issue TEST-22 --source jira --tool playwright \
+/qa-pipeline --id TEST-22 --source jira --tool playwright \
   --url https://myapp.com \
   --api-url https://api.myapp.com
 ```

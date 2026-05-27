@@ -4,8 +4,8 @@
 
 | Flag | Required? | Supported values | Default | Notes |
 |---|---|---|---|---|
-| `--issue <id>` | **Always** | Any issue ID | — | `TEST-22`, `42`, `ENG-456` |
-| `--source <src>` | No | `github` ✅, `jira` ✅, `ado` 🔜, `linear` 🔜 | `github` | Omit if using GitHub Issues |
+| `--id <id>` | **Always** | Issue ID **or** local file path | — | IMS: `TEST-22`, `42`, `ENG-456` · File: `./story.md`, `req.docx`, `brief.pdf` |
+| `--source <src>` | No | `github` ✅, `jira` ✅, `ado` 🔜, `linear` 🔜 | _(none — reads from file)_ | Omit to read from a local file; provide to pull from an IMS |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Only needed with `--source github` |
 | `--tool <tool>` | No | `playwright` ✅, `restassured` ✅, `cypress` 🔜, `selenium` 🔜 | `playwright` | Combine with commas: `playwright,restassured` |
 | `--tms <tms>` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit for local-only run. Add `--tms xray` to push to Xray |
@@ -17,7 +17,7 @@
 
 | Flag | Required? | Notes |
 |---|---|---|
-| `--issue <id>` | One of these three is required | Automate all TCs linked to this issue |
+| `--id <id>` | One of these three is required | Automate all TCs linked to this issue |
 | `--suite <name>` | One of these three is required | Automate a full suite by name |
 | `--case <ids>` | One of these three is required | Comma-separated TC IDs — most granular |
 | `--source <src>` | No | Issue tracker (for bug logging) — default `github` |
@@ -38,6 +38,6 @@ These flags are only needed when calling individual scripts directly. The orches
 
 ## TC selection priority (automate-from-tms)
 
-`--case` > `--suite` > `--issue`
+`--case` > `--suite` > `--id`
 
 Most granular wins.

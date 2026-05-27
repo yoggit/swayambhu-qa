@@ -96,7 +96,8 @@ function init(autoApprove = false) {
   console.log('Setup complete. Next steps:');
   console.log('  1. Copy .env.example to .env and fill in your credentials');
   console.log('  2. Open this project in Claude Code');
-  console.log('  3. Run: /qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray');
+  console.log('  3. Run: /qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray');
+  console.log('     Or from a file: /qa-pipeline --id ./story.md --tool playwright');
   if (!autoApprove) {
     console.log('');
     console.log('Tip: To skip per-step approval prompts, re-run with:');

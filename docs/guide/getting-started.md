@@ -72,7 +72,7 @@ Fill in only what your team uses — leave everything else blank. See [Environme
 ## Step 4 — Run
 
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
 ```
 
 That's it. The pipeline reads your ticket, scrapes your app, writes tests, runs them, heals failures, and pushes results back to your TMS.

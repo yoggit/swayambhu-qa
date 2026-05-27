@@ -7,12 +7,12 @@
  * Usage:
  *   npx ts-node scripts/push-to-tms.ts \
  *     --tms testRail \
- *     --issue QA-42 \
+ *     --id QA-42 \
  *     --file test-cases/TC-QA42-user-login.md
  *
- *   npx ts-node scripts/push-to-tms.ts --tms markdown --issue 42 --file test-cases/TC-42-login.md
- *   npx ts-node scripts/push-to-tms.ts --tms xray     --issue QA-42 --file test-cases/TC-QA42-login.md
- *   npx ts-node scripts/push-to-tms.ts --tms zephyr   --issue QA-42 --file test-cases/TC-QA42-login.md
+ *   npx ts-node scripts/push-to-tms.ts --tms markdown --id 42 --file test-cases/TC-42-login.md
+ *   npx ts-node scripts/push-to-tms.ts --tms xray     --id QA-42 --file test-cases/TC-QA42-login.md
+ *   npx ts-node scripts/push-to-tms.ts --tms zephyr   --id QA-42 --file test-cases/TC-QA42-login.md
  *
  * Outputs: JSON with pushed TMS IDs to stdout
  */
@@ -41,12 +41,12 @@ function getArg(flag: string): string | undefined {
 }
 
 const tms = (getArg('--tms') || 'markdown') as TMSType;
-const issueId = getArg('--issue') || '';
+const issueId = getArg('--id') || '';
 const file = getArg('--file') || '';
 
 if (!issueId || !file) {
-  console.error('Error: --issue <id> and --file <path> are required');
-  console.error('Usage: npx ts-node scripts/push-to-tms.ts --tms <tms> --issue <id> --file <path>');
+  console.error('Error: --id <id> and --file <path> are required');
+  console.error('Usage: npx ts-node scripts/push-to-tms.ts --tms <tms> --id <id> --file <path>');
   process.exit(1);
 }
 

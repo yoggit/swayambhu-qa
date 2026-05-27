@@ -83,7 +83,7 @@ tests/robot/
 ## STEP 1 — Scrape the App (if --url provided, UI mode)
 
 ```bash
-npx ts-node scripts/scrape-page.ts <url> --screenshot
+npx swayambhu-scrape <url> --screenshot
 ```
 
 Extract: element locators, form fields, button labels, ARIA roles.

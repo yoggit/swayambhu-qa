@@ -8,11 +8,11 @@
  *   npx ts-node scripts/comment-issue.ts \
  *     --source github \
  *     --repo owner/repo \
- *     --issue 42 \
+ *     --id 42 \
  *     --body "## Test Cases Created ..."
  *
  *   # Pass body from a file (useful for long summaries):
- *   npx ts-node scripts/comment-issue.ts --source jira --issue QA-42 --body-file reports/summary.md
+ *   npx ts-node scripts/comment-issue.ts --source jira --id QA-42 --body-file reports/summary.md
  *
  * Required env vars per source — see .env.example
  */
@@ -37,14 +37,14 @@ function getArg(flag: string): string | undefined {
 }
 
 const source = (getArg('--source') || 'github') as CommentSource;
-const issueId = getArg('--issue') || '';
+const issueId = getArg('--id') || '';
 const repo = getArg('--repo');
 const bodyArg = getArg('--body');
 const bodyFile = getArg('--body-file');
 
 if (!issueId) {
-  console.error('Error: --issue <id> is required');
-  console.error('Usage: npx ts-node scripts/comment-issue.ts --source <source> --issue <id> --body "..."');
+  console.error('Error: --id <id> is required');
+  console.error('Usage: npx ts-node scripts/comment-issue.ts --source <source> --id <id> --body "..."');
   process.exit(1);
 }
 

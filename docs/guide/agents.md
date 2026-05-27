@@ -22,9 +22,9 @@ swayambhu-qa ships 8 agents. Each handles a specific job in the QA lifecycle. Us
 The full orchestrator. Runs all phases from ticket fetch to Draft PR.
 
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray
-/qa-pipeline --issue QA-42 --source jira --tool playwright,restassured
-/qa-pipeline --issue 42 --repo myorg/myrepo --no-pr
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
+/qa-pipeline --id QA-42 --source jira --tool playwright,restassured
+/qa-pipeline --id 42 --repo myorg/myrepo --no-pr
 ```
 
 → [Full reference](/guide/qa-pipeline)
@@ -36,7 +36,7 @@ The full orchestrator. Runs all phases from ticket fetch to Draft PR.
 Reads a ticket and generates test case documents only — no automation code written. Good for teams that review TCs in Xray before writing any automation.
 
 ```bash
-/create-test-cases --issue TEST-22 --source jira --tms xray
+/create-test-cases --id TEST-22 --source jira --tms xray
 ```
 
 After TCs are approved in Xray, run `/automate-from-tms` to generate the code.
@@ -63,7 +63,7 @@ Takes a live URL, scrapes the page, and writes a Playwright spec file directly �
 Reads existing test cases from your TMS (Xray, TestRail, Zephyr, or local markdown files) and generates automation code, runs it, heals failures, and logs bugs.
 
 ```bash
-/automate-from-tms --issue QA-42 --source jira --test-mgmt xray --tool playwright
+/automate-from-tms --id QA-42 --source jira --test-mgmt xray --tool playwright
 /automate-from-tms --suite "Login Tests" --test-mgmt testRail --tool playwright,restassured
 /automate-from-tms --case TC-1-01,TC-1-03 --test-mgmt markdown --tool playwright
 ```
@@ -89,7 +89,7 @@ Auto-fixes broken selectors and timing issues in a failing spec file. Skips fail
 Takes a bug report (issue ID or description) and writes a regression test that fails on the bug and passes after it's fixed.
 
 ```bash
-/bug-to-test --issue BUG-123 --source jira
+/bug-to-test --id BUG-123 --source jira
 ```
 
 → [Full reference](/guide/bug-to-test)
@@ -113,7 +113,7 @@ Reads test results across multiple runs and identifies flaky tests, their failur
 Generates a structured QA report from test results — suitable for posting to JIRA, Slack, or a PR comment.
 
 ```bash
-/qa-report --issue TEST-22 --source jira
+/qa-report --id TEST-22 --source jira
 ```
 
 → [Full reference](/guide/qa-report)

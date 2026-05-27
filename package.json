@@ -1,6 +1,6 @@
 {
   "name": "@swayambhu-qa/core",
-  "version": "0.1.22",
+  "version": "0.1.36",
   "description": "Self-manifested QA. Give it a ticket. Get back a passing test suite.",
   "homepage": "https://github.com/yoggit/swayambhu-qa",
   "repository": {
@@ -11,7 +11,15 @@
   "type": "commonjs",
   "main": "dist/mcp.js",
   "bin": {
-    "swayambhu-qa": "dist/cli.js"
+    "swayambhu-qa": "dist/cli.js",
+    "swayambhu-fetch": "dist/scripts/fetch-issue.js",
+    "swayambhu-scrape": "dist/scripts/scrape-app.js",
+    "swayambhu-push-tms": "dist/scripts/push-to-tms.js",
+    "swayambhu-run-tests": "dist/scripts/run-tests.js",
+    "swayambhu-update-tms": "dist/scripts/update-tms-status.js",
+    "swayambhu-create-bug": "dist/scripts/create-bug.js",
+    "swayambhu-comment": "dist/scripts/comment-issue.js",
+    "swayambhu-read-tms": "dist/scripts/read-from-tms.js"
   },
   "files": [
     "dist/",
@@ -42,6 +50,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
+    "@marp-team/marp-cli": "^4.4.0",
     "@playwright/test": "^1.60.0",
     "@types/node": "^22.19.19",
     "ts-node": "^10.9.2",

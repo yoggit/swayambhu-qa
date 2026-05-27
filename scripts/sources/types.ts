@@ -5,7 +5,7 @@
  */
 
 export type Priority = 'P0' | 'P1' | 'P2' | 'P3' | 'unknown';
-export type Source = 'github' | 'jira' | 'ado' | 'linear';
+export type Source = 'github' | 'jira' | 'ado' | 'linear' | 'file';
 
 export interface Credential {
   role: string;
@@ -50,8 +50,8 @@ export function parseAcceptanceCriteria(text: string): string[] {
   const source = section || text;
   return source
     .split('\n')
-    .filter((l) => l.trim().match(/^[-*]\s*(\[.?\])?\s*.+/))
-    .map((l) => l.replace(/^[-*]\s*(\[.?\])?\s*/, '').trim())
+    .filter((l) => l.trim().match(/^(?:[-*•]|\d+[.)]) *(\[.?\])?\s*.+/))
+    .map((l) => l.replace(/^(?:[-*•]|\d+[.)]) *(\[.?\])?\s*/, '').trim())
     .filter(Boolean);
 }
 

@@ -8,7 +8,7 @@
  *
  * Usage:
  *   npx ts-node scripts/run-tests.ts \
- *     --issue TEST-22 \
+ *     --id TEST-22 \
  *     --spec tests/generated/budget-tracker.spec.ts \
  *     [--tool playwright]       # default: playwright
  *     [--project chromium]      # Playwright project filter (optional)
@@ -29,14 +29,14 @@ function getArg(flag: string): string | undefined {
   return i !== -1 ? args[i + 1] : undefined;
 }
 
-const issueId = getArg('--issue') || '';
+const issueId = getArg('--id') || '';
 const specFile = getArg('--spec') || '';
 const tool = getArg('--tool') || 'playwright';
 const project = getArg('--project');
 
 if (!issueId || !specFile) {
-  console.error('Error: --issue <id> and --spec <path> are required');
-  console.error('Usage: npx ts-node scripts/run-tests.ts --issue TEST-22 --spec tests/generated/budget-tracker.spec.ts');
+  console.error('Error: --id <id> and --spec <path> are required');
+  console.error('Usage: npx ts-node scripts/run-tests.ts --id TEST-22 --spec tests/generated/budget-tracker.spec.ts');
   process.exit(1);
 }
 

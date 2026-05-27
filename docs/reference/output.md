@@ -32,6 +32,6 @@ To commit generated artifacts for an audit trail, remove the relevant lines from
 
 ## Re-run detection
 
-`reports/tc-mapping-<issueId>.json` is the key file for re-run detection. If it exists when you run `/qa-pipeline` again with the same `--issue`, the pipeline knows TCs were already pushed to the TMS and will ask whether to re-run or regenerate.
+`reports/tc-mapping-<issueId>.json` is the key file for re-run detection. If it exists when you run `/qa-pipeline` again with the same `--id`, the pipeline knows TCs were already pushed to the TMS and will ask whether to re-run or regenerate.
 
 Delete this file to force a full regeneration from scratch.

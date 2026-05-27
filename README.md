@@ -4,26 +4,43 @@
 
 > *Self-manifested QA. Give it a ticket. Get back a passing test suite.*
 
-An agentic AI QA pipeline built with Claude Code. One command takes any issue tracker ticket — JIRA or GitHub Issues — all the way to a green test suite, logged bugs, and a Draft PR. In under 30 minutes.
+An agentic AI QA pipeline built with Claude Code. Give it a ticket, a Word doc, a PDF, or a plain text file — it comes back with a passing test suite, logged bugs, and a Draft PR. In under 30 minutes.
 
 ## How It Works
 
 ```
-Product Owner → Issue Tracker → /qa-pipeline QA-42 --source jira --tool playwright,restassured
+Ticket / File → /qa-pipeline --id QA-42 --source jira --tool playwright,restassured
                                         │
-                           ┌────────────┴────────────┐
-                           ▼                         ▼
-                 Playwright Tests          REST Assured API Tests
-                 (TypeScript)              (Java + Maven)
-                           │                         │
-                           └────────────┬────────────┘
-                                        ▼
-                             Flaky Detection & Healing
-                                        ▼
-                                Bug Reports logged
-                                        ▼
-                              Comment on original ticket
-                                        ▼
+                    ┌───────────────────┴───────────────────┐
+                 UI track                               API track
+           (Playwright, Cypress…)              (REST Assured, Robot…)
+                    │                                        │
+          Scrape live app for                  Read API URL / Swagger /
+          DOM selectors & forms                 OpenAPI docs from ticket
+                    │                                        │
+                    └───────────────────┬───────────────────┘
+                                        │
+                         Generate & review test cases
+                          ↳ Human review pause here
+                                        │
+                    ┌───────────────────┴───────────────────┐
+          Write Playwright specs                Write REST Assured specs
+          (selectors from scrape)               (endpoints from ticket)
+                    │                                        │
+                    └───────────────────┬───────────────────┘
+                                        │
+                                   Run all tests
+                                        │
+                    ┌───────────────────┴───────────────────┐
+          Heal broken selectors              Heal auth / base URL /
+          and timing issues                  schema mismatches
+                    │                                        │
+                    └───────────────────┬───────────────────┘
+                                        │
+                              Log confirmed bugs
+                                        │
+                          Push results to TMS / comment
+                                        │
                                  Draft PR created
                                         ▓
                               Human reviews & approves
@@ -46,13 +63,14 @@ Product Owner → Issue Tracker → /qa-pipeline QA-42 --source jira --tool play
 
 ## Supported Tools
 
-### Issue Management (`--source`)
-| Tool | Flag | Status |
+### Requirement Input (`--id` + optional `--source`)
+| Source | How to use | Status |
 |---|---|---|
-| GitHub Issues | `--source github` (default) | ✅ |
-| JIRA / Atlassian | `--source jira` | ✅ |
-| Azure DevOps | `--source ado` | 🔜 Planned |
-| Linear | `--source linear` | 🔜 Planned |
+| Local file (`.md`, `.txt`, `.docx`, `.doc`, `.pdf`) | `--id ./story.md` _(no `--source` needed)_ | ✅ |
+| GitHub Issues | `--id 42 --source github` | ✅ |
+| JIRA / Atlassian | `--id TEST-22 --source jira` | ✅ |
+| Azure DevOps | `--id 12345 --source ado` | 🔜 Planned |
+| Linear | `--id ENG-456 --source linear` | 🔜 Planned |
 
 ### Test Automation (`--tool`)
 | Tool | Flag | Status |
@@ -76,26 +94,30 @@ Product Owner → Issue Tracker → /qa-pipeline QA-42 --source jira --tool play
 ## Example Commands
 
 ```bash
-# Simplest: GitHub Issue + Playwright (--source github and --tool playwright are defaults)
-/qa-pipeline --issue 42 --repo myorg/myrepo
+# Local file — no IMS, no credentials needed
+/qa-pipeline --id ./story.md --tool playwright
+/qa-pipeline --id requirements/login.docx --tool playwright,restassured
 
-# JIRA ticket → Playwright only (no --repo needed for JIRA)
-/qa-pipeline --issue TEST-22 --source jira --tool playwright
+# GitHub Issue + Playwright
+/qa-pipeline --id 42 --source github --repo myorg/myrepo
+
+# JIRA ticket → Playwright only
+/qa-pipeline --id TEST-22 --source jira --tool playwright
 
 # JIRA ticket → Playwright + REST Assured (UI + API together)
-/qa-pipeline --issue QA-42 --source jira --tool playwright,restassured
+/qa-pipeline --id QA-42 --source jira --tool playwright,restassured
 
 # Skip PR creation (local dev / no git remote)
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --no-pr
+/qa-pipeline --id TEST-22 --source jira --tool playwright --no-pr
 
 # Skip TMS push (use markdown as a local record instead of Xray/TestRail)
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms markdown
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms markdown
 
 # Just create test cases, no automation
-/create-test-cases --issue QA-42 --source jira
+/create-test-cases --id QA-42 --source jira
 
 # Automate existing test cases from TestRail
-/automate-from-tms --issue QA-42 --source jira --test-mgmt testRail --tool playwright
+/automate-from-tms --id QA-42 --source jira --test-mgmt testRail --tool playwright
 ```
 
 ## Setup
@@ -173,10 +195,10 @@ See the [Configuration](#configuration-env) section below for all available vari
 ### 4. Open in Claude Code and run
 
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
 ```
 
-That's it. The pipeline reads your ticket, scrapes your app, writes tests in your existing framework, runs them, heals failures, and pushes results back to your TMS.
+That's it. The pipeline reads your ticket, scrapes your app (UI) or reads API docs (API), writes tests in your existing framework, runs them, heals failures, and pushes results back to your TMS.
 
 ---
 
@@ -284,7 +306,7 @@ Full syntax to run the pipeline headlessly in CI:
 
 ```bash
 claude --dangerously-skip-permissions -p \
-  "/qa-pipeline --issue QA-42 --source jira --tool playwright --tms xray"
+  "/qa-pipeline --id QA-42 --source jira --tool playwright --tms xray"
 ```
 
 - `--dangerously-skip-permissions` — skips all tool-use approval prompts (required for non-interactive CI)
@@ -309,7 +331,7 @@ claude --dangerously-skip-permissions -p \
     BASE_URL: ${{ vars.STAGING_URL }}
   run: |
     claude --dangerously-skip-permissions -p \
-      "/qa-pipeline --issue ${{ inputs.issue }} --source jira --tool playwright --tms xray"
+      "/qa-pipeline --id ${{ inputs.issue }} --source jira --tool playwright --tms xray"
 ```
 
 </details>
@@ -322,26 +344,26 @@ claude --dangerously-skip-permissions -p \
 The user types one command in Claude Code:
 
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
 ```
 
 The orchestrator (`/qa-pipeline`) reads those flags and internally calls each script with only the subset that script needs:
 
 ```bash
 # Phase 1 — fetch ticket:
-node node_modules/@swayambhu-qa/core/dist/scripts/fetch-issue.js --issue TEST-22 --source jira
+npx swayambhu-fetch --id TEST-22 --source jira
 
 # Phase 2 — scrape app UI:
-node node_modules/@swayambhu-qa/core/dist/scripts/scrape-app.js --url <url-from-issue>
+npx swayambhu-scrape --url <url-from-issue>
 
 # Phase 3 — push test cases to TMS:
-node node_modules/@swayambhu-qa/core/dist/scripts/push-to-tms.js --issue TEST-22 --tms xray --file test-cases/TC-TEST22-*.md
+npx swayambhu-push-tms --id TEST-22 --tms xray --file test-cases/TC-TEST22-*.md
 
 # Phase 5 — run tests (Playwright example):
-npx playwright test tests/generated/<slug>.spec.ts --reporter=json
+npx swayambhu-run-tests --id TEST-22 --spec tests/generated/<slug>.spec.ts --tool playwright
 
 # Phase 8 — update TMS with results:
-node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js --issue TEST-22 --tms xray --results reports/results-TEST22.json
+npx swayambhu-update-tms --id TEST-22 --tms xray --results reports/results-TEST22.json
 ```
 
 `--tool` tells the orchestrator *which* spec to generate and *which* test runner to invoke. Individual scripts are tool-agnostic — they never see the `--tool` flag.
@@ -355,7 +377,7 @@ node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js --issue T
 
 | Flag | Required? | Supported values | Default | When to omit |
 |---|---|---|---|---|
-| `--issue <id>` | **Always** | Any issue ID | — | Never. JIRA: `TEST-22`, GitHub: `42`, ADO: `12345`, Linear: `ENG-456` |
+| `--id <id>` | **Always** | Any issue ID | — | Never. JIRA: `TEST-22`, GitHub: `42`, ADO: `12345`, Linear: `ENG-456` |
 | `--source <src>` | No | `github` ✅, `jira` ✅, `ado` 🔜, `linear` 🔜 | `github` | Omit if using GitHub Issues |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
 | `--tool <tool>` | No | `playwright` ✅, `restassured` ✅, `cypress` 🔜, `selenium` 🔜, `appium` 🔜, `robot:ui` 🔜 | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
@@ -488,7 +510,7 @@ The pipeline detects your remote URL automatically and uses the right CLI — Gi
 Use `--no-pr` to skip Phase 9 entirely — everything else still runs:
 
 ```bash
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms xray --no-pr
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray --no-pr
 ```
 
 ### Repo setup
@@ -558,7 +580,7 @@ The following are planned or in progress. Contributions welcome — open an issu
 | Feature | Status |
 |---|---|
 | Multi-tool combined runs (`playwright,restassured`) | ✅ Supported |
-| Multi-issue runs (`--issue TEST-22,TEST-62`) | 🔜 Planned |
+| Multi-issue runs (`--id TEST-22,TEST-62`) | 🔜 Planned |
 | CI/CD integration (GitHub Actions) | 🔜 Planned |
 | Documentation site | 🔜 Planned |
 

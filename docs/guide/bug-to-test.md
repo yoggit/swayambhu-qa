@@ -5,17 +5,17 @@ Takes a bug report and writes a regression test that fails on the bug and passes
 ## Usage
 
 ```bash
-/bug-to-test --issue <id> --source <src>
+/bug-to-test --id <id> --source <src>
 ```
 
 ## Examples
 
 ```bash
 # GitHub bug report → regression test
-/bug-to-test --issue 123 --repo myorg/myrepo
+/bug-to-test --id 123 --repo myorg/myrepo
 
 # JIRA bug → regression test
-/bug-to-test --issue BUG-456 --source jira
+/bug-to-test --id BUG-456 --source jira
 ```
 
 ## What it does

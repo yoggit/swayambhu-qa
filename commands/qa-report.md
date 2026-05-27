@@ -93,6 +93,6 @@ If the report was written to a file, offer:
 
 If yes, post using:
 ```bash
-node node_modules/@swayambhu-qa/core/dist/scripts/comment-issue.js \
-  --source <source> --issue <issueId> --body "<report text>"
+npx swayambhu-comment \
+  --source <source> --id <issueId> --body "<report text>"
 ```

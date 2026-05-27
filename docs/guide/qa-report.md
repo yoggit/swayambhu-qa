@@ -5,14 +5,14 @@ Generates a structured QA report from test results — suitable for posting to J
 ## Usage
 
 ```bash
-/qa-report [--issue <id>] [--source <src>]
+/qa-report [--id <id>] [--source <src>]
 ```
 
 ## Examples
 
 ```bash
 # Generate report and post to JIRA issue
-/qa-report --issue TEST-22 --source jira
+/qa-report --id TEST-22 --source jira
 
 # Generate report only (no post)
 /qa-report

@@ -26,7 +26,7 @@ Extract from the description:
 
 If the URL is available, scrape it:
 ```bash
-npx ts-node scripts/scrape-page.ts <url>
+npx swayambhu-scrape <url>
 ```
 
 If any information is missing or ambiguous, ask one focused question before continuing.

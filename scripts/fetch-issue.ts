@@ -15,6 +15,7 @@
  */
 
 import * as dotenv from 'dotenv';
+import * as path from 'path';
 dotenv.config();
 
 import { logger } from './logger';
@@ -22,7 +23,16 @@ import { fetchGitHubIssue } from './sources/github';
 import { fetchJiraIssue } from './sources/jira';
 import { fetchAdoWorkItem } from './sources/ado';
 import { fetchLinearIssue } from './sources/linear';
+import { fetchFromFile } from './sources/file';
 import { Source } from './sources/types';
+
+function fileLogId(filePath: string): string {
+  const ext = path.extname(filePath).toLowerCase();
+  return path.basename(filePath, ext)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
 // ─── Argument parsing ─────────────────────────────────────────────────────────
 
@@ -33,57 +43,63 @@ function getArg(flag: string): string | undefined {
   return i !== -1 ? args[i + 1] : undefined;
 }
 
-function hasFlag(flag: string): boolean {
-  return args.includes(flag);
-}
-
-const issueId = getArg('--issue') as string;
-const source = (getArg('--source') || 'github') as Source;
+const id = getArg('--id') as string;
+const sourceArg = getArg('--source');
+const source: Source = (sourceArg as Source) || 'file';  // no --source → local file
 const repo = getArg('--repo') || '';
 
-if (!issueId) {
-  console.error('Usage: npx ts-node scripts/fetch-issue.ts --issue <id> --source github|jira|ado|linear [--repo owner/repo]');
+if (!id) {
+  console.error('Usage: npx ts-node scripts/fetch-issue.ts --id <id|path> [--source github|jira|ado|linear] [--repo owner/repo]');
   console.error('');
-  console.error('Examples:');
-  console.error('  npx ts-node scripts/fetch-issue.ts --issue 42     --source github --repo myorg/myrepo');
-  console.error('  npx ts-node scripts/fetch-issue.ts --issue QA-42  --source jira');
-  console.error('  npx ts-node scripts/fetch-issue.ts --issue 12345  --source ado');
-  console.error('  npx ts-node scripts/fetch-issue.ts --issue ENG-42 --source linear');
+  console.error('IMS examples (--source required):');
+  console.error('  npx ts-node scripts/fetch-issue.ts --id 42       --source github --repo myorg/myrepo');
+  console.error('  npx ts-node scripts/fetch-issue.ts --id QA-42    --source jira');
+  console.error('  npx ts-node scripts/fetch-issue.ts --id 12345    --source ado');
+  console.error('  npx ts-node scripts/fetch-issue.ts --id ENG-42   --source linear');
+  console.error('');
+  console.error('File examples (omit --source):');
+  console.error('  npx ts-node scripts/fetch-issue.ts --id ./story.md');
+  console.error('  npx ts-node scripts/fetch-issue.ts --id requirements/login-feature.txt');
   process.exit(1);
 }
 
 // ─── Dispatch ─────────────────────────────────────────────────────────────────
 
 async function main() {
-  const log = logger(issueId);
-  log.phase(1, 'RUN', `Fetching ${issueId} from ${source}`);
+  const logId = source === 'file' ? fileLogId(id) : id;
+  const log = logger(logId);
+  log.phase(1, 'RUN', sourceArg ? `Fetching ${id} from ${source}` : `Reading file: ${id}`);
 
   try {
     let requirement;
 
     switch (source) {
+      case 'file':
+        requirement = await fetchFromFile(id);
+        break;
+
       case 'github':
         if (!repo) {
           console.error('Error: --repo owner/repo is required for GitHub source');
           process.exit(1);
         }
-        requirement = fetchGitHubIssue(issueId, repo as string);
+        requirement = fetchGitHubIssue(id, repo as string);
         break;
 
       case 'jira':
-        requirement = await fetchJiraIssue(issueId as string);
+        requirement = await fetchJiraIssue(id);
         break;
 
       case 'ado':
-        requirement = await fetchAdoWorkItem(issueId as string);
+        requirement = await fetchAdoWorkItem(id);
         break;
 
       case 'linear':
-        requirement = await fetchLinearIssue(issueId as string);
+        requirement = await fetchLinearIssue(id);
         break;
 
       default:
-        console.error(`Unknown source: "${source}". Valid options: github, jira, ado, linear`);
+        console.error(`Unknown source: "${source}". Valid options: file, github, jira, ado, linear`);
         process.exit(1);
     }
 
@@ -96,7 +112,7 @@ async function main() {
 
     console.log(JSON.stringify(requirement, null, 2));
   } catch (err) {
-    log.phase(1, 'FAIL', `Failed to fetch ${issueId}`, { error: err instanceof Error ? err.message : String(err) });
+    log.phase(1, 'FAIL', `Failed to fetch ${logId}`, { error: err instanceof Error ? err.message : String(err) });
     console.error('Failed to fetch issue:', err instanceof Error ? err.message : err);
     process.exit(1);
   }

@@ -31,7 +31,7 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 ## Input
 
 ```
-/automate-from-tms [--issue <id>] [--suite <name>] [--case <ids>] \
+/automate-from-tms [--id <id>] [--suite <name>] [--case <ids>] \
                    [--source <source>] [--test-mgmt <tms>] \
                    [--tool <tools>] [--bug-tracker <tracker>]
 ```
@@ -39,7 +39,7 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 ### Examples
 ```bash
 # All TCs linked to a JIRA issue → automate with Playwright
-/automate-from-tms --issue QA-42 --source jira --test-mgmt testRail --tool playwright
+/automate-from-tms --id QA-42 --source jira --test-mgmt testRail --tool playwright
 
 # Specific TestRail suite → Cypress + REST Assured
 /automate-from-tms --suite "Login Tests" --test-mgmt testRail --tool cypress,restassured
@@ -48,14 +48,14 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 /automate-from-tms --case TC-1-01,TC-1-03,TC-1-05 --test-mgmt markdown --tool selenium:testng
 
 # Linear issue → Robot Framework (UI + API)
-/automate-from-tms --issue ENG-456 --source linear --test-mgmt xray --tool robot:ui,api
+/automate-from-tms --id ENG-456 --source linear --test-mgmt xray --tool robot:ui,api
 
 # ADO work item → Playwright, log bugs back to ADO
-/automate-from-tms --issue 12345 --source ado --test-mgmt zephyr --tool playwright --bug-tracker ado
+/automate-from-tms --id 12345 --source ado --test-mgmt zephyr --tool playwright --bug-tracker ado
 ```
 
 ### Arguments
-- `--issue` — ticket ID to find linked test cases (e.g. `QA-42`, `ENG-456`, `42`)
+- `--id` — ticket ID to find linked test cases (e.g. `QA-42`, `ENG-456`, `42`)
 - `--suite` — test suite/folder name in TMS (e.g. `"Login Tests"`)
 - `--case` — comma-separated TC IDs (e.g. `TC-1-01,TC-1-03`) — most granular
 - `--source` — issue tracker for bug logging (default: `github`)
@@ -63,15 +63,15 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 - `--tool` — automation framework(s) to use (default: `playwright`)
 - `--bug-tracker` — where to log bugs (default: same as `--source`)
 
-**Priority of TC selection:** `--case` > `--suite` > `--issue`
+**Priority of TC selection:** `--case` > `--suite` > `--id`
 
 ---
 
 ## Argument Resolution
 
-If neither `--issue`, `--suite`, nor `--case` is provided, ask:
+If neither `--id`, `--suite`, nor `--case` is provided, ask:
 > "Which test cases should I automate? Provide one of:
-> - `--issue <id>` to automate all TCs linked to a ticket
+> - `--id <id>` to automate all TCs linked to a ticket
 > - `--suite <name>` to automate a full suite
 > - `--case TC-1-01,TC-1-02` for specific test cases"
 
@@ -102,9 +102,9 @@ Parse each `## TC-*` section into a structured list.
 
 ### If --test-mgmt is testRail / xray / zephyr
 ```bash
-node node_modules/@swayambhu-qa/core/dist/scripts/read-from-tms.js \
+npx swayambhu-read-tms \
   --tms <testRail|xray|zephyr> \
-  --issue <issueId>
+  --id <issueId>
 ```
 Optional: `--suite <name>` to filter by suite name, or `--case <TC-1-01,TC-1-02>` for specific IDs.
 
@@ -122,7 +122,7 @@ Print what was loaded:
 
 If any UI tool is in `--tool` (playwright, cypress, selenium, robot:ui, appium):
 ```bash
-npx ts-node scripts/scrape-page.ts <ui-url> --screenshot
+npx swayambhu-scrape <ui-url> --screenshot
 ```
 
 Extract selectors, test IDs, form fields to inform the automation code.
@@ -238,7 +238,7 @@ For each failing test:
 For each confirmed bug, log to `--bug-tracker` (defaults to `--source`):
 
 **GitHub:** `gh issue create --label "bug" ...`
-**JIRA/ADO/Linear:** `npx ts-node scripts/create-bug.ts --source <tracker> ...`
+**JIRA/ADO/Linear:** `npx swayambhu-create-bug --source <tracker> ...`
 
 Include in each bug:
 - Which TC failed
@@ -253,7 +253,7 @@ Include in each bug:
 Mark each TC with its execution result back in the TMS:
 
 ```bash
-npx ts-node scripts/update-tms-status.ts \
+npx swayambhu-update-tms \
   --tms <testRail|xray|zephyr|markdown> \
   --results reports/results.json
 ```

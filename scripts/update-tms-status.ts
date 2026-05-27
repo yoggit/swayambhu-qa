@@ -9,7 +9,7 @@
  *     --tms testRail \
  *     --results reports/results.json \
  *     [--run-id 12345]        # TestRail: required Test Run ID
- *     [--issue QA-42]         # Zephyr/Xray: for naming the test cycle
+ *     [--id QA-42]         # Zephyr/Xray: for naming the test cycle
  *
  * Results JSON format:
  * [
@@ -51,7 +51,7 @@ function getArg(flag: string): string | undefined {
 const tms = (getArg('--tms') || 'markdown') as TMSType;
 const resultsFile = getArg('--results') || '';
 const runId = getArg('--run-id') || '';           // TestRail: Test Run ID
-const issueId = getArg('--issue') || '';          // Xray/Zephyr: requirement issue
+const issueId = getArg('--id') || '';          // Xray/Zephyr: requirement issue
 const featureSlug = getArg('--feature') || '';    // Markdown: feature slug for filename
 
 if (!resultsFile) {
@@ -109,7 +109,7 @@ async function main() {
 
       case 'markdown':
         if (!issueId || !featureSlug) {
-          console.error('Error: --issue and --feature are required for markdown TMS updates');
+          console.error('Error: --id and --feature are required for markdown TMS updates');
           process.exit(1);
         }
         result = updateMarkdownResults({ issueId, featureSlug, results });

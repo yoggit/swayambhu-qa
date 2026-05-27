@@ -48,7 +48,7 @@ Read the failing test file. For each failure, determine:
 ## Step 3 — Re-scrape for new selectors (if --url provided)
 
 ```bash
-npx ts-node scripts/scrape-page.ts <url>
+npx swayambhu-scrape <url>
 ```
 
 Use the fresh snapshot to find:
