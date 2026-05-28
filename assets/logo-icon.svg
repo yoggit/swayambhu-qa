@@ -1,15 +1,8 @@
-<svg width="100%" viewBox="0 0 680 260" role="img" xmlns="http://www.w3.org/2000/svg">
-  <title>swayambhu-qa logo</title>
-  <desc>Logo for swayambhu-qa: an agentic AI QA pipeline.</desc>
-
-  <!-- Emblem centered at x=120, y=130 -->
+<svg viewBox="28 32 188 196" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>swayambhu-qa emblem</title>
   <g transform="translate(120, 130)">
-
-    <!-- Outer rings -->
     <circle cx="0" cy="0" r="95" fill="none" stroke="#1D9E75" stroke-width="1.2" opacity="0.5"/>
     <circle cx="0" cy="0" r="82" fill="none" stroke="#1D9E75" stroke-width="0.7" opacity="0.35"/>
-
-    <!-- Mandala petals -->
     <g opacity="0.28">
       <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75"/>
       <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(45)"/>
@@ -20,8 +13,6 @@
       <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(270)"/>
       <ellipse cx="0" cy="-64" rx="13" ry="28" fill="#1D9E75" transform="rotate(315)"/>
     </g>
-
-    <!-- Tick marks -->
     <g stroke="#1D9E75" stroke-width="1.5" opacity="0.75">
       <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(0)"/>
       <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(45)"/>
@@ -32,8 +23,6 @@
       <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(270)"/>
       <line x1="0" y1="-95" x2="0" y2="-85" transform="rotate(315)"/>
     </g>
-
-    <!-- Dots at 16 positions -->
     <g fill="#1D9E75" opacity="0.6">
       <circle cx="0" cy="-82" r="2.5" transform="rotate(0)"/>
       <circle cx="0" cy="-82" r="2.5" transform="rotate(22.5)"/>
@@ -52,21 +41,11 @@
       <circle cx="0" cy="-82" r="2.5" transform="rotate(315)"/>
       <circle cx="0" cy="-82" r="2.5" transform="rotate(337.5)"/>
     </g>
-
-    <!-- Eye outline -->
     <path d="M-58 0 Q0 -42 58 0 Q0 42 -58 0 Z" fill="none" stroke="#1D9E75" stroke-width="1.8" opacity="0.85"/>
-
-    <!-- Iris -->
     <circle cx="0" cy="0" r="24" fill="none" stroke="#1D9E75" stroke-width="1.4" opacity="1"/>
     <circle cx="0" cy="0" r="17" fill="#1D9E75" opacity="0.18"/>
-
-    <!-- Pupil -->
     <circle cx="0" cy="0" r="15" fill="#1D9E75" opacity="1"/>
-
-    <!-- Checkmark -->
     <polyline points="-6,1 -2,6 8,-6" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-
-    <!-- Circuit lines -->
     <g stroke="#1D9E75" stroke-width="0.9" opacity="0.65" fill="none">
       <polyline points="58,0 70,0 74,-8"/>
       <polyline points="58,0 70,0 74,8"/>
@@ -77,8 +56,6 @@
       <polyline points="0,42 0,56 8,60"/>
       <polyline points="0,42 0,56 -8,60"/>
     </g>
-
-    <!-- Circuit endpoint dots -->
     <g fill="#1D9E75" opacity="0.75">
       <circle cx="74" cy="-8" r="2.5"/>
       <circle cx="74" cy="8" r="2.5"/>
@@ -89,12 +66,5 @@
       <circle cx="8" cy="60" r="2.5"/>
       <circle cx="-8" cy="60" r="2.5"/>
     </g>
-
   </g>
-
-  <!-- Name: "swayambhu" dark, "-qa" teal -->
-  <text x="238" y="142" font-family="ui-monospace, monospace" font-size="34" font-weight="500" fill="#1a1a1a">swayambhu<tspan fill="#1D9E75">-qa</tspan></text>
-  <!-- Tagline -->
-  <text x="240" y="170" font-family="ui-monospace, monospace" font-size="12" font-weight="400" fill="#555555">GIVE IT A TICKET. GET BACK TESTS.</text>
-
 </svg>
