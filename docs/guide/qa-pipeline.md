@@ -36,6 +36,23 @@ The full QA pipeline — from a single ticket to a passing test suite, logged bu
 /qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
 ```
 
+## Multi-run — multiple tickets or files in one command
+
+`--id` accepts a comma-separated list of issue IDs and/or file paths. Each item runs the full pipeline (Phases 1–9) sequentially, with a 5-second cooldown between items. A combined summary is printed at the end.
+
+```bash
+# Two JIRA tickets, back-to-back
+/qa-pipeline --id "TEST-22,TEST-62" --source jira --tool playwright
+
+# Mixed: two tickets + one local file (no credentials needed for the file)
+/qa-pipeline --id "TEST-22,TEST-62,./docs/extra-feature.md" --source jira --tool playwright
+
+# Three local files — no IMS at all
+/qa-pipeline --id "./feature-a.md,./feature-b.md,./feature-c.txt" --tool playwright
+```
+
+If one item fails (ticket not found, file missing), it is marked ❌ and the next item starts automatically.
+
 ## Phases
 
 | Phase | UI tools (Playwright, Cypress, Selenium…) | API tools (REST Assured, Robot API…) |

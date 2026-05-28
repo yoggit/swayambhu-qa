@@ -16,16 +16,19 @@ This is the first human checkpoint in the QA lifecycle.
 
 ### Examples
 ```bash
-/create-test-cases 42                                          # GitHub, markdown output
-/create-test-cases QA-42 --source jira                        # JIRA, markdown output
-/create-test-cases QA-42 --source jira --test-mgmt testRail   # JIRA → push to TestRail
-/create-test-cases ENG-456 --source linear --test-mgmt xray   # Linear → push to Xray
-/create-test-cases 12345 --source ado --test-mgmt zephyr      # ADO → push to Zephyr
+/create-test-cases 42                                                  # GitHub, markdown output
+/create-test-cases QA-42 --source jira                                 # JIRA, markdown output
+/create-test-cases QA-42,QA-43 --source jira                          # Multiple tickets — sequential
+/create-test-cases "./story.md"                                        # Local file — no credentials needed
+/create-test-cases "QA-42,QA-43,./local-spec.txt" --source jira       # Mixed — tickets + file
+/create-test-cases QA-42 --source jira --test-mgmt testRail           # JIRA → push to TestRail
+/create-test-cases ENG-456 --source linear --test-mgmt xray           # Linear → push to Xray
+/create-test-cases 12345 --source ado --test-mgmt zephyr              # ADO → push to Zephyr
 /create-test-cases QA-42 --source jira --tool playwright,restassured  # tag TCs with tools
 ```
 
 ### Arguments
-- `issue-id` — ticket ID in the issue tracker (e.g. `42`, `QA-42`, `ENG-456`)
+- `issue-id` — one or more ticket IDs or local file paths, comma-separated (e.g. `QA-42`, `QA-42,QA-43`, `"QA-42,./spec.txt"`)
 - `--source` — where to read the requirement from (default: `github`)
 - `--test-mgmt` — where to push test cases: `testRail` | `xray` | `zephyr` | `markdown` (default: `markdown`)
 - `--tool` — optional: tag each TC with which automation tool will cover it
@@ -33,6 +36,43 @@ This is the first human checkpoint in the QA lifecycle.
 ---
 
 ## Argument Resolution
+
+### Step 0 — Parse and expand issue-id
+
+Split the `issue-id` value by comma. Trim whitespace from each entry. For each entry, detect its type:
+
+- **File path** — starts with `./`, `/`, or ends with `.md`/`.txt`/`.docx`/`.doc`/`.pdf` → read requirements from local file, no `--source` needed for this entry
+- **Ticket ID** — everything else → fetch from IMS using `--source`
+
+If a ticket ID entry is found but `--source` is not provided, stop and ask:
+> ❌ `--source` is required for ticket IDs. Which tracker? `--source jira|github|ado|linear`
+
+**Single entry** → single-run mode. Proceed to env check normally.
+
+**Multiple entries** → multi-run mode. Print:
+```
+🗂️  Multi-run — N items queued: ID1, ID2, ./file.txt, ...
+    Test cases will be created for each sequentially (5s cooldown between items).
+    A combined summary will follow.
+```
+
+Run Steps 1–4 for each entry. After each completes, wait 5 seconds before the next:
+```
+✅ <id> complete. Starting next in 5 seconds...
+```
+If one entry fails unrecoverably, mark it ❌ and continue.
+
+After all entries are done, print a combined summary:
+```
+╔═══════════════════════════════════════════════════╗
+║     create-test-cases — Multi-Run Complete        ║
+╠═══════════════════════════════════════════════════╣
+║  QA-42       ✅  8 TCs pushed to xray            ║
+║  QA-43       ✅  5 TCs saved to test-cases/      ║
+║  ./spec.txt  ✅  6 TCs saved to test-cases/      ║
+║  QA-99       ❌  ERROR: ticket not found         ║
+╚═══════════════════════════════════════════════════╝
+```
 
 Parse `$ARGUMENTS`. If no `issue-id` found, ask:
 > "Which issue should I create test cases for? Provide the issue ID and --source (github/jira/ado/linear)."

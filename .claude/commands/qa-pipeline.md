@@ -16,39 +16,54 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 ## Input
 
 ```
-/qa-pipeline --issue <id> [--source <source>] [--tool <tools>] [--repo <owner/repo>] [--tms <tms>] [--no-pr]
+/qa-pipeline --id <id|path> [--source <source>] [--tool <tools>] [--repo <owner/repo>] [--tms <tms>] [--no-pr]
 ```
 
 ### Flags
 
-| Flag | Required? | Supported values | Default | When to omit |
+| Flag | Required? | Supported values | Default | Notes |
 |---|---|---|---|---|
-| `--issue` | **Always** | Any issue ID | — | Never. JIRA: `TEST-22`, GitHub: `42`, ADO: `12345`, Linear: `ENG-456` |
-| `--source` | No | `github`, `jira`, `ado`, `linear` | `github` | Omit if using GitHub Issues |
-| `--repo` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
+| `--id` | **Always** | One or more issue IDs or file paths, comma-separated | — | Single: `TEST-22` · Multi: `TEST-22,TEST-62` · File: `"./story.md"` · Multi-file: `"./f1.txt,./f2.txt"` |
+| `--source` | No | `github`, `jira`, `ado`, `linear` | _(none — reads from file)_ | Omit to read requirements from a local file; provide to pull from an IMS |
+| `--repo` | GitHub only | e.g. `myorg/myrepo` | — | Required when `--source github`; omit for all other sources |
 | `--tool` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `restassured`, `restassured:junit`, `appium`, `robot:ui`, `robot:api` | `playwright` | Omit to default to Playwright. Combine: `playwright,restassured` |
-| `--tms` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally. Add `--tms xray` (or `testrail`/`zephyr`) only if you have credentials configured in `.env` |
+| `--tms` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally. Add `--tms xray` (or `testrail`/`zephyr`) only if credentials are in `.env` |
 | `--no-pr` | No | _(flag, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add to skip for local runs or no git remote |
 
 ### Examples
 ```bash
+# From a local file (no --source needed) → Playwright
+/qa-pipeline --id "./story.md" --tool playwright
+
+# From a local file → Playwright + REST Assured
+/qa-pipeline --id "requirements/login-feature.txt" --tool playwright,restassured
+
+# Multiple local files — runs sequentially, combined summary at end
+/qa-pipeline --id "./feature1.txt,./feature2.txt" --tool playwright
+
 # JIRA → Playwright only
-/qa-pipeline --issue TEST-22 --source jira --tool playwright
+/qa-pipeline --id TEST-22 --source jira --tool playwright
 
 # JIRA → Playwright + REST Assured (UI + API)
-/qa-pipeline --issue TEST-22 --source jira --tool playwright,restassured
+/qa-pipeline --id TEST-22 --source jira --tool playwright,restassured
 
 # ADO → Selenium + TestNG
-/qa-pipeline --issue 12345 --source ado --tool selenium:testng
+/qa-pipeline --id 12345 --source ado --tool selenium:testng
 
 # Linear → Cypress + REST Assured
-/qa-pipeline --issue ENG-456 --source linear --tool cypress,restassured
+/qa-pipeline --id ENG-456 --source linear --tool cypress,restassured
 
 # GitHub → Playwright, skip PR
-/qa-pipeline --issue 42 --source github --repo myorg/myrepo --tool playwright --no-pr
+/qa-pipeline --id 42 --source github --repo myorg/myrepo --tool playwright --no-pr
 
 # No TMS (write test cases as local markdown files)
-/qa-pipeline --issue TEST-22 --source jira --tool playwright --tms markdown
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms markdown
+
+# Multiple JIRA tickets — sequential, 5s cooldown between each
+/qa-pipeline --id TEST-22,TEST-62 --source jira --tool playwright
+
+# Mixed — ticket + local file
+/qa-pipeline --id "TEST-22,./local-spec.txt" --source jira --tool playwright
 ```
 
 ---
@@ -72,12 +87,12 @@ Log line format:
 2026-05-26T10:34:00Z [PIPELINE] [DONE ] 72/72 passed | bugs=0 | rounds=2 | duration=220s
 ```
 
-The `fetch-issue.ts`, `scrape-app.ts`, `push-to-tms.ts`, and `update-tms-status.ts` scripts log automatically.
+The `swayambhu-fetch`, `swayambhu-scrape`, `swayambhu-push-tms`, and `swayambhu-update-tms` scripts log automatically.
 
 For phases the agent handles directly (Phase 4 spec generation, Phase 6 heal decisions, Phase 7 bugs), emit log entries using:
 ```bash
-npx ts-node -e "
-  const { logger } = require('./scripts/logger');
+node -e "
+  const { logger } = require('@swayambhu-qa/core/dist/scripts/logger');
   const log = logger('<issueId>');
   log.phase(<n>, '<STATUS>', '<message>', { key: 'value' });
 "
@@ -85,8 +100,8 @@ npx ts-node -e "
 
 Or for the heal loop specifically:
 ```bash
-npx ts-node -e "
-  const { logger } = require('./scripts/logger');
+node -e "
+  const { logger } = require('@swayambhu-qa/core/dist/scripts/logger');
   const log = logger('<issueId>');
   log.heal(<round>, '<cause>', '<fix>', { fixed: <n>, remaining: <n> });
 "
@@ -96,23 +111,45 @@ npx ts-node -e "
 
 ## Pre-flight: Argument & Env Check
 
+### Step 0 — Parse and expand --id
+
+Split the `--id` value by comma to produce an ordered list of IDs/paths. Trim whitespace from each entry.
+
+**Single entry** → single-run mode. Proceed to Step 1 as normal.
+
+**Multiple entries** → multi-run mode. Print immediately:
+```
+🗂️  Multi-run — N issues queued: ID1, ID2, ...
+    Each will complete all phases before the next begins (5s cooldown between issues).
+    A combined summary will follow at the end.
+```
+
+Store the full list. All flags (`--source`, `--tool`, `--tms`, `--repo`, `--no-pr`) apply uniformly to every entry in the list.
+
+**File path entries** (start with `./`, `/`, or end with a known extension) — each is treated as an independent file source, same as single file mode. `--source` is not required for those entries.
+
+If an entry looks like a ticket ID (e.g. `TEST-22`) but `--source` is not provided, stop and ask which source to use — do not guess.
+
 ### Step 1 — Validate required arguments
 
-**`--issue`** — required. Stop if missing:
-> ❌ `--issue` is required. Which ticket should I test?
-> Example: `/qa-pipeline --issue TEST-22 --source jira --tool playwright`
+**`--id`** — required. Stop if missing:
+> ❌ `--id` is required. Provide an issue ID (e.g. `TEST-22`) with `--source`, or a file path (e.g. `./story.md`) without `--source`.
 
-**`--source`** — required. Stop if missing or invalid:
+**`--source`** — optional. Determines where requirements are read from:
 
-_Missing:_
-> ❌ `--source` is required. Which issue tracker holds this ticket?
-> - JIRA → `--source jira`
-> - GitHub Issues → `--source github --repo owner/repo`
-> - Azure DevOps → `--source ado`
-> - Linear → `--source linear`
+| Value | What happens |
+|---|---|
+| _(omitted)_ | `--id` is treated as a local file path (`.md`, `.txt`, `.docx`, `.doc`, `.pdf`) |
+| `jira` | Fetch ticket from JIRA |
+| `github` | Fetch issue from GitHub Issues (also needs `--repo`) |
+| `ado` | Fetch work item from Azure DevOps |
+| `linear` | Fetch issue from Linear |
+
+_If `--source` is omitted and `--id` is not a readable file, stop:_
+> ❌ File not found: `<path>`. Check the path or add `--source jira|github|ado|linear` to pull from an IMS.
 
 _Invalid value (e.g. `--source bitbucket`):_
-> ❌ `--source bitbucket` is not supported. Supported values: `jira`, `github`, `ado`, `linear`.
+> ❌ `--source bitbucket` is not supported. Supported values: `jira`, `github`, `ado`, `linear`. Omit `--source` to read from a local file.
 
 **`--tool`** — required. Stop if missing or invalid:
 
@@ -151,6 +188,8 @@ If `.env` does not exist in the project root, stop:
 
 ### Step 4 — Validate env vars for `--source`
 
+**Skip this step if `--source` was not provided** (file mode requires no credentials). If `--source` was provided, validate its required env vars:
+
 | Source | Required env vars | How to get them |
 |---|---|---|
 | `github` | gh CLI auth — verify with `gh auth status` | `gh auth login` |
@@ -182,7 +221,7 @@ Resolution logic:
 
 1. If `--source github` and `--repo` not provided → stop:
    > ❌ `--repo owner/repo` is required when using `--source github` (needed to fetch the issue).
-   > Example: `/qa-pipeline --issue 42 --source github --repo myorg/myrepo --tool playwright`
+   > Example: `/qa-pipeline --id 42 --source github --repo myorg/myrepo --tool playwright`
 
 2. If `--no-pr` provided → skip PR, no further repo checks needed.
 
@@ -231,12 +270,37 @@ If user chooses **Regenerate**: proceed through all phases normally, but warn be
 
 Print the full resolved plan before starting Phase 1. Mark anything applied as a fallback with `← fallback`:
 
+Single-run example:
 ```
 🚀 swayambhu-qa Pipeline
-   Issue:   TEST-22  (jira)
+   Input:   TEST-22  (jira)          ← from IMS
    Tool:    selenium:testng          ← fallback (selenium variant defaulted to testng)
    TMS:     xray  →  push test cases + create Test Execution ticket
    PR:      yes  →  github.com/myorg/myrepo
+
+   ⚡ Starting in 5 seconds — Ctrl+C to abort
+```
+
+File mode example:
+```
+🚀 swayambhu-qa Pipeline
+   Input:   ./story.md  (file)       ← local file
+   Tool:    playwright
+   TMS:     none  →  test cases saved to test-cases/, results written to reports/
+   PR:      none  →  no git remote detected
+   Comment: skipped  →  no IMS to post back to
+
+   ⚡ Starting in 5 seconds — Ctrl+C to abort
+```
+
+Multi-run example:
+```
+🚀 swayambhu-qa Pipeline — Multi-Run (3 issues)
+   IDs:     TEST-22, TEST-62, TEST-99
+   Source:  jira
+   Tool:    playwright
+   TMS:     none  →  test cases saved to test-cases/, results written to reports/
+   PR:      yes  →  one branch + Draft PR per issue
 
    ⚡ Starting in 5 seconds — Ctrl+C to abort
 ```
@@ -248,10 +312,34 @@ If `--tms` was not provided:
 
 ---
 
+## Run Loop — Phases 1–9
+
+**Repeat Phases 1–9 for each issueId in the expanded list.**
+
+Before starting each issue, print a separator:
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Issue N of M: <issueId>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+After Phase 9 completes for an issue:
+1. Record results for Phase 10: `issueId`, `title`, `passed`, `failed`, `healed`, `bugs`, `prNumber`, `status` (✅ green / ❌ failed / ⚠️ partial)
+2. If there are more issues remaining, wait 5 seconds before starting the next one:
+   ```
+   ✅ <issueId> complete. Starting next issue in 5 seconds...
+   ```
+   ```bash
+   sleep 5
+   ```
+3. If a phase fails unrecoverably for one issue (e.g. invalid credentials, file not found), mark that issue as ❌ ERROR, print the reason, and continue with the next issue — do not abort the entire run.
+
+---
+
 ## PHASE 1 — Read the Requirement
 
 ```bash
-npx ts-node scripts/fetch-issue.ts --issue <id> --source <source> [--repo owner/repo]
+npx swayambhu-fetch --id <id|path> [--source <source>] [--repo owner/repo]
 ```
 
 Extract from the JSON output:
@@ -267,6 +355,11 @@ Extract from the JSON output:
 1. `--url` CLI flag
 2. `testUrls.ui` / `testUrls.api` from the issue description (`Test URL:` / `API URL:` labels)
 3. `BASE_URL` / `API_BASE_URL` from `.env`
+
+If `acceptanceCriteria` is empty (no structured ACs found — common with plain-text files):
+- Do **not** stop
+- Fall back to `rawBody` — read the full text and infer test scenarios from it
+- Note in the plan: `ACs: none structured — using full text as context`
 
 If `testUrls.ui` is missing and a UI tool is selected, ask:
 > "No UI URL found in the ticket. What page should I test?"
@@ -288,7 +381,7 @@ If `apiEndpoints` is empty and an API tool is selected, ask:
 **Skip this phase if selected tools are API-only** (e.g. `--tool restassured`, `--tool robot:api`).
 
 ```bash
-npx ts-node scripts/scrape-app.ts --url <testUrls.ui>
+npx swayambhu-scrape --url <testUrls.ui>
 ```
 
 This runs a real Playwright browser (headless Chromium) against the live app.
@@ -324,8 +417,8 @@ Wait for human confirmation, then branch on TMS mode:
 
 **TMS mode** (`--tms` provided) — push test cases to TMS and get back native TC IDs:
 ```bash
-node node_modules/@swayambhu-qa/core/dist/scripts/push-to-tms.js \
-  --tms <tms> --issue <issueId> --file test-cases/TC-<issueId>-*.md
+npx swayambhu-push-tms \
+  --tms <tms> --id <issueId> --file test-cases/TC-<issueId>-*.md
 ```
 Use the returned TC IDs to annotate automation specs in Phase 4 (e.g. `tcId: "TEST-23"`).
 
@@ -418,7 +511,7 @@ back to TC IDs (using `test.info().annotations`) and writes `reports/results-<is
 
 **Playwright:**
 ```bash
-npx ts-node scripts/run-tests.ts --issue <issueId> --spec tests/generated/<feature-slug>.spec.ts
+npx swayambhu-run-tests --id <issueId> --spec tests/generated/<feature-slug>.spec.ts --tool playwright
 ```
 
 This reads `reports/tc-mapping-<issueId>.json` (written by Phase 3's push-to-tms) to resolve
@@ -486,12 +579,14 @@ ROUND 2
 
 ## PHASE 7 — Log Bugs
 
+**Skip this phase if `--source` was not provided (file mode has no remote tracker to log bugs against).** Instead, print a local summary of confirmed failures.
+
 For every test that failed after 2 heal rounds:
 
 ```bash
-npx ts-node scripts/create-bug.ts \
+npx swayambhu-create-bug \
   --source <source> \
-  --issue <issueId> \
+  --issue-id <issueId> \
   --title "[BUG] <one-line description from error>" \
   --tc-id <TC-id> \
   --tool <tool> \
@@ -506,7 +601,7 @@ If zero confirmed failures: print "✅ No bugs to log — all tests green."
 
 ## PHASE 8 — Update TMS & Comment on Issue
 
-**Always run this phase regardless of which tool was used.**
+**Skip the TMS update and comment steps if `--source` was not provided (file mode has no remote ticket and no TMS context). In file mode, only write the local results summary.**
 
 Branch on TMS mode resolved in Pre-flight:
 
@@ -515,8 +610,8 @@ Branch on TMS mode resolved in Pre-flight:
 > ⚠️ `reports/results-<issueId>.json` is written automatically by Phase 5's run-tests script. **Do NOT use the Write tool to create or overwrite it** — just pass the existing file path to update-tms-status.
 
 ```bash
-node node_modules/@swayambhu-qa/core/dist/scripts/update-tms-status.js \
-  --tms <tms> --issue <issueId> --results reports/results-<issueId>.json
+npx swayambhu-update-tms \
+  --tms <tms> --id <issueId> --results reports/results-<issueId>.json
 ```
 Log the Test Execution ticket ID from the output (e.g. `TEST-69`) and include it in the Phase 10 final summary.
 
@@ -532,9 +627,9 @@ Log the Test Execution ticket ID from the output (e.g. `TEST-69`) and include it
   ```
 - No external system needed — do NOT try to call update-tms-status without `--tms`
 
-Post a structured comment on the original issue:
+Post a structured comment on the original issue (skip if `--source` was not provided — file mode has no remote ticket to comment on):
 ```bash
-npx ts-node scripts/comment-issue.ts --source <source> --issue <issueId> --body "..."
+npx swayambhu-comment --source <source> --id <issueId> --body "..."
 ```
 
 Comment format:
@@ -624,7 +719,7 @@ az repos pr create --draft \
 
 ## PHASE 10 — Final Summary
 
-Always end with this block:
+**Single-run** — print this block:
 
 ```
 ╔══════════════════════════════════════════════════════════╗
@@ -643,6 +738,25 @@ Always end with this block:
 ║  Draft PR    #<number> (or skipped)                      ║
 ╚══════════════════════════════════════════════════════════╝
 ```
+
+**Multi-run** — print the single-run block for each issue (in order), then a combined summary:
+
+```
+╔══════════════════════════════════════════════════════════╗
+║           swayambhu-qa Multi-Run Complete                ║
+╠══════════════════════════════════════════════════════════╣
+║  Issues run    N                                         ║
+║  Total tests   <sum passed> passed / <sum total> total   ║
+║  Total bugs    <sum bugs>                                 ║
+╠══════════════════════════════════════════════════════════╣
+║  ID          Status    Tests       Bugs   PR             ║
+║  TEST-22     ✅        12/12       0      #45            ║
+║  TEST-62     ✅        8/9         1      #46            ║
+║  TEST-99     ❌ ERROR  —           —      skipped        ║
+╚══════════════════════════════════════════════════════════╝
+```
+
+Use ✅ if all tests passed (or healed to green), ⚠️ if some failed but pipeline completed, ❌ ERROR if the issue was skipped due to an unrecoverable error.
 
 ---
 

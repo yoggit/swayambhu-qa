@@ -9,8 +9,52 @@ You are a QA automation engineer. When a bug is reported, you write a Playwright
 
 `$ARGUMENTS` can be:
 - A bug description pasted inline
-- `--jira <TICKET-ID>` — fetch from JIRA (if JIRA MCP is configured)
-- `--file <path>` — path to a text/markdown file with the bug description
+- `--jira <TICKET-ID>` — fetch from JIRA; supports comma-separated: `--jira BUG-1,BUG-2`
+- `--file <path>` — path to a text/markdown file; supports comma-separated: `--file ./b1.txt,./b2.txt`
+- Mixed: `--jira BUG-1 --file ./bug2.txt` — runs both sequentially
+
+### Multi-bug examples
+```bash
+# Multiple JIRA bugs → one regression test per bug
+/bug-to-test --jira BUG-101,BUG-102,BUG-103
+
+# Multiple local bug reports
+/bug-to-test --file "./bugs/login-bug.txt,./bugs/checkout-bug.md"
+
+# Mixed — JIRA ticket + local file
+/bug-to-test --jira BUG-101 --file "./bugs/manual-bug.txt"
+```
+
+### Step 0 — Parse and expand inputs
+
+Collect all bug sources into an ordered list:
+1. Split `--jira` by comma → each becomes a JIRA fetch
+2. Split `--file` by comma → each becomes a file read
+3. Inline description (if provided) → single entry at the start
+
+**Single entry** → single-run mode. Proceed to Step 1 as normal.
+
+**Multiple entries** → multi-run mode. Print:
+```
+🗂️  Multi-run — N bugs queued: BUG-101, BUG-102, ./bugs/login-bug.txt, ...
+    A regression test will be written for each sequentially (5s cooldown between bugs).
+```
+Run Steps 1–4 for each entry. After each completes, wait 5 seconds before the next:
+```
+✅ <id> complete. Starting next in 5 seconds...
+```
+If one entry fails (e.g. ticket not found, file missing), mark it ❌ and continue.
+
+After all entries, print a combined summary:
+```
+╔══════════════════════════════════════════════════════╗
+║         bug-to-test — Multi-Run Complete             ║
+╠══════════════════════════════════════════════════════╣
+║  BUG-101          ✅  tests/regression/bug-101.spec.ts ║
+║  BUG-102          ✅  tests/regression/bug-102.spec.ts ║
+║  ./login-bug.txt  ❌  ERROR: file not found            ║
+╚══════════════════════════════════════════════════════╝
+```
 
 If nothing is provided, ask:
 > "Paste the bug report or steps to reproduce, and I'll write a regression test for it."

@@ -23,7 +23,7 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 
 | Flag | Required? | Supported values | Default | Notes |
 |---|---|---|---|---|
-| `--id` | **Always** | Issue ID **or** local file path | — | JIRA: `TEST-22` · GitHub: `42` · ADO: `12345` · Linear: `ENG-456` · File: `./story.md` |
+| `--id` | **Always** | One or more issue IDs or file paths, comma-separated | — | Single: `TEST-22` · Multi: `TEST-22,TEST-62` · File: `"./story.md"` · Multi-file: `"./f1.txt,./f2.txt"` |
 | `--source` | No | `github`, `jira`, `ado`, `linear` | _(none — reads from file)_ | Omit to read requirements from a local file; provide to pull from an IMS |
 | `--repo` | GitHub only | e.g. `myorg/myrepo` | — | Required when `--source github`; omit for all other sources |
 | `--tool` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `restassured`, `restassured:junit`, `appium`, `robot:ui`, `robot:api` | `playwright` | Omit to default to Playwright. Combine: `playwright,restassured` |
@@ -37,6 +37,9 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 
 # From a local file → Playwright + REST Assured
 /qa-pipeline --id "requirements/login-feature.txt" --tool playwright,restassured
+
+# Multiple local files — runs sequentially, combined summary at end
+/qa-pipeline --id "./feature1.txt,./feature2.txt" --tool playwright
 
 # JIRA → Playwright only
 /qa-pipeline --id TEST-22 --source jira --tool playwright
@@ -55,6 +58,12 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 
 # No TMS (write test cases as local markdown files)
 /qa-pipeline --id TEST-22 --source jira --tool playwright --tms markdown
+
+# Multiple JIRA tickets — sequential, 5s cooldown between each
+/qa-pipeline --id TEST-22,TEST-62 --source jira --tool playwright
+
+# Mixed — ticket + local file
+/qa-pipeline --id "TEST-22,./local-spec.txt" --source jira --tool playwright
 ```
 
 ---
@@ -101,6 +110,25 @@ node -e "
 ---
 
 ## Pre-flight: Argument & Env Check
+
+### Step 0 — Parse and expand --id
+
+Split the `--id` value by comma to produce an ordered list of IDs/paths. Trim whitespace from each entry.
+
+**Single entry** → single-run mode. Proceed to Step 1 as normal.
+
+**Multiple entries** → multi-run mode. Print immediately:
+```
+🗂️  Multi-run — N issues queued: ID1, ID2, ...
+    Each will complete all phases before the next begins (5s cooldown between issues).
+    A combined summary will follow at the end.
+```
+
+Store the full list. All flags (`--source`, `--tool`, `--tms`, `--repo`, `--no-pr`) apply uniformly to every entry in the list.
+
+**File path entries** (start with `./`, `/`, or end with a known extension) — each is treated as an independent file source, same as single file mode. `--source` is not required for those entries.
+
+If an entry looks like a ticket ID (e.g. `TEST-22`) but `--source` is not provided, stop and ask which source to use — do not guess.
 
 ### Step 1 — Validate required arguments
 
@@ -242,6 +270,7 @@ If user chooses **Regenerate**: proceed through all phases normally, but warn be
 
 Print the full resolved plan before starting Phase 1. Mark anything applied as a fallback with `← fallback`:
 
+Single-run example:
 ```
 🚀 swayambhu-qa Pipeline
    Input:   TEST-22  (jira)          ← from IMS
@@ -264,10 +293,46 @@ File mode example:
    ⚡ Starting in 5 seconds — Ctrl+C to abort
 ```
 
+Multi-run example:
+```
+🚀 swayambhu-qa Pipeline — Multi-Run (3 issues)
+   IDs:     TEST-22, TEST-62, TEST-99
+   Source:  jira
+   Tool:    playwright
+   TMS:     none  →  test cases saved to test-cases/, results written to reports/
+   PR:      yes  →  one branch + Draft PR per issue
+
+   ⚡ Starting in 5 seconds — Ctrl+C to abort
+```
+
 If `--tms` was not provided:
 ```
    TMS:     none  →  test cases saved to test-cases/, results written to reports/
 ```
+
+---
+
+## Run Loop — Phases 1–9
+
+**Repeat Phases 1–9 for each issueId in the expanded list.**
+
+Before starting each issue, print a separator:
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Issue N of M: <issueId>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+After Phase 9 completes for an issue:
+1. Record results for Phase 10: `issueId`, `title`, `passed`, `failed`, `healed`, `bugs`, `prNumber`, `status` (✅ green / ❌ failed / ⚠️ partial)
+2. If there are more issues remaining, wait 5 seconds before starting the next one:
+   ```
+   ✅ <issueId> complete. Starting next issue in 5 seconds...
+   ```
+   ```bash
+   sleep 5
+   ```
+3. If a phase fails unrecoverably for one issue (e.g. invalid credentials, file not found), mark that issue as ❌ ERROR, print the reason, and continue with the next issue — do not abort the entire run.
 
 ---
 
@@ -654,7 +719,7 @@ az repos pr create --draft \
 
 ## PHASE 10 — Final Summary
 
-Always end with this block:
+**Single-run** — print this block:
 
 ```
 ╔══════════════════════════════════════════════════════════╗
@@ -673,6 +738,25 @@ Always end with this block:
 ║  Draft PR    #<number> (or skipped)                      ║
 ╚══════════════════════════════════════════════════════════╝
 ```
+
+**Multi-run** — print the single-run block for each issue (in order), then a combined summary:
+
+```
+╔══════════════════════════════════════════════════════════╗
+║           swayambhu-qa Multi-Run Complete                ║
+╠══════════════════════════════════════════════════════════╣
+║  Issues run    N                                         ║
+║  Total tests   <sum passed> passed / <sum total> total   ║
+║  Total bugs    <sum bugs>                                 ║
+╠══════════════════════════════════════════════════════════╣
+║  ID          Status    Tests       Bugs   PR             ║
+║  TEST-22     ✅        12/12       0      #45            ║
+║  TEST-62     ✅        8/9         1      #46            ║
+║  TEST-99     ❌ ERROR  —           —      skipped        ║
+╚══════════════════════════════════════════════════════════╝
+```
+
+Use ✅ if all tests passed (or healed to green), ⚠️ if some failed but pipeline completed, ❌ ERROR if the issue was skipped due to an unrecoverable error.
 
 ---
 

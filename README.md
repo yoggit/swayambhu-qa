@@ -120,6 +120,32 @@ Ticket / File → /qa-pipeline --id QA-42 --source jira --tool playwright,restas
 /automate-from-tms --id QA-42 --source jira --test-mgmt testRail --tool playwright
 ```
 
+### Multi-run — process multiple tickets or files in one command
+
+All four primary agents support comma-separated IDs and file paths. Runs are sequential with a 5-second cooldown between items.
+
+```bash
+# Run the full pipeline for two JIRA tickets back-to-back
+/qa-pipeline --id "TEST-22,TEST-62" --source jira --tool playwright
+
+# Mixed: two tickets + a local spec file in one command
+/qa-pipeline --id "TEST-22,TEST-62,./docs/extra-feature.md" --source jira --tool playwright
+
+# Create test cases for three tickets at once
+/create-test-cases "QA-42,QA-43,QA-44" --source jira --tms xray
+
+# Automate TCs from two issues + a local TC markdown file
+/automate-from-tms --id "QA-42,QA-43,./test-cases/TC-login.md" --source jira --test-mgmt xray --tool playwright
+
+# Turn multiple JIRA bugs into regression tests
+/bug-to-test --jira BUG-101,BUG-102,BUG-103
+
+# Mixed: JIRA bug + local bug report file
+/bug-to-test --jira BUG-101 --file "./bugs/manual-bug.txt"
+```
+
+→ [Why only these four agents support multi-run](/guide/agents#multi-run-mode)
+
 ## Setup
 
 swayambhu-qa is an add-on for your existing project — it connects your issue tracker, test runner, and TMS. You keep your existing Playwright / REST Assured / Selenium setup exactly as it is.
@@ -377,7 +403,7 @@ npx swayambhu-update-tms --id TEST-22 --tms xray --results reports/results-TEST2
 
 | Flag | Required? | Supported values | Default | When to omit |
 |---|---|---|---|---|
-| `--id <id>` | **Always** | Any issue ID | — | Never. JIRA: `TEST-22`, GitHub: `42`, ADO: `12345`, Linear: `ENG-456` |
+| `--id <id>` | **Always** | Issue ID, file path, or comma-separated mix | — | Single: `TEST-22`, `./story.md` · Multi: `"TEST-22,TEST-62"`, `"QA-42,./spec.txt"` |
 | `--source <src>` | No | `github` ✅, `jira` ✅, `ado` 🔜, `linear` 🔜 | `github` | Omit if using GitHub Issues |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
 | `--tool <tool>` | No | `playwright` ✅, `restassured` ✅, `cypress` 🔜, `selenium` 🔜, `appium` 🔜, `robot:ui` 🔜 | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
@@ -580,7 +606,7 @@ The following are planned or in progress. Contributions welcome — open an issu
 | Feature | Status |
 |---|---|
 | Multi-tool combined runs (`playwright,restassured`) | ✅ Supported |
-| Multi-issue runs (`--id TEST-22,TEST-62`) | 🔜 Planned |
+| Multi-issue runs (`--id TEST-22,TEST-62`) | ✅ Supported |
 | CI/CD integration (GitHub Actions) | 🔜 Planned |
 | Documentation site | 🔜 Planned |
 

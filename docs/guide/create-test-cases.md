@@ -19,7 +19,27 @@ Reads a ticket and generates test case documents only — no automation code wri
 
 # GitHub → push TCs to Xray
 /create-test-cases --id 42 --repo myorg/myrepo --tms xray
+
+# Local file — no IMS or credentials needed
+/create-test-cases --id "./story.md"
 ```
+
+## Multi-run — multiple tickets or files in one command
+
+Pass a comma-separated list of issue IDs and/or file paths. Each entry runs sequentially with a 5-second cooldown between items.
+
+```bash
+# Three JIRA tickets at once
+/create-test-cases "QA-42,QA-43,QA-44" --source jira --tms xray
+
+# Two tickets + one local spec file (no credentials needed for the file entry)
+/create-test-cases "QA-42,QA-43,./local-spec.txt" --source jira
+
+# Multiple local files — no IMS at all
+/create-test-cases "./feature-a.md,./feature-b.md"
+```
+
+A combined summary is printed after all items complete. If one item fails, it is marked ❌ and the next item starts automatically.
 
 ## What it does
 

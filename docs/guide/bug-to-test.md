@@ -16,7 +16,27 @@ Takes a bug report and writes a regression test that fails on the bug and passes
 
 # JIRA bug → regression test
 /bug-to-test --id BUG-456 --source jira
+
+# Local bug report file — no IMS needed
+/bug-to-test --file "./bugs/login-bug.txt"
 ```
+
+## Multi-run — multiple bugs in one command
+
+`--jira` and `--file` both accept comma-separated values. You can also mix them. Each bug runs sequentially with a 5-second cooldown between items.
+
+```bash
+# Three JIRA bugs → three regression tests
+/bug-to-test --jira BUG-101,BUG-102,BUG-103
+
+# Multiple local bug report files
+/bug-to-test --file "./bugs/login-bug.txt,./bugs/checkout-bug.md"
+
+# Mixed: JIRA bug + local file
+/bug-to-test --jira BUG-101 --file "./bugs/manual-bug.txt"
+```
+
+A combined summary is printed after all items complete. If one item fails (ticket not found, file missing), it is marked ❌ and the next item starts automatically.
 
 ## What it does
 

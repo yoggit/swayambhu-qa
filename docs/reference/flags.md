@@ -4,7 +4,7 @@
 
 | Flag | Required? | Supported values | Default | Notes |
 |---|---|---|---|---|
-| `--id <id>` | **Always** | Issue ID **or** local file path | — | IMS: `TEST-22`, `42`, `ENG-456` · File: `./story.md`, `req.docx`, `brief.pdf` |
+| `--id <id>` | **Always** | Issue ID, file path, or comma-separated mix | — | Single: `TEST-22`, `./story.md` · Multi: `TEST-22,TEST-62`, `"QA-42,./spec.txt"` |
 | `--source <src>` | No | `github` ✅, `jira` ✅, `ado` 🔜, `linear` 🔜 | _(none — reads from file)_ | Omit to read from a local file; provide to pull from an IMS |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Only needed with `--source github` |
 | `--tool <tool>` | No | `playwright` ✅, `restassured` ✅, `cypress` 🔜, `selenium` 🔜 | `playwright` | Combine with commas: `playwright,restassured` |

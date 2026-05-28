@@ -23,7 +23,27 @@ Reads existing test cases from your TMS and generates automation code for them �
 
 # TCs from Xray → Playwright + REST Assured
 /automate-from-tms --id QA-42 --source jira --test-mgmt xray --tool playwright,restassured
+
+# Local TC markdown file — no TMS or IMS credentials needed
+/automate-from-tms --id "./test-cases/TC-login.md" --test-mgmt markdown --tool playwright
 ```
+
+## Multi-run — multiple issues or files in one command
+
+`--id` accepts a comma-separated list of issue IDs and/or local TC file paths. Each item runs all steps (read TCs → generate code → run → heal → log bugs → update TMS) sequentially, with a 5-second cooldown between items.
+
+```bash
+# Two JIRA issues, back-to-back
+/automate-from-tms --id "QA-42,QA-43" --source jira --test-mgmt xray --tool playwright
+
+# Two tickets + one local TC file (no credentials needed for the file entry)
+/automate-from-tms --id "QA-42,QA-43,./test-cases/TC-login.md" --source jira --test-mgmt xray --tool playwright
+
+# Multiple local TC files — no IMS or TMS credentials needed
+/automate-from-tms --id "./test-cases/TC-login.md,./test-cases/TC-checkout.md" --test-mgmt markdown --tool playwright
+```
+
+Note: `--suite` and `--case` remain single-scope flags and do not support comma-separated multi-run. Only `--id` supports multi-run.
 
 ## TC selection priority
 

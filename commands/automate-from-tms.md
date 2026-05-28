@@ -41,6 +41,12 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 # All TCs linked to a JIRA issue → automate with Playwright
 /automate-from-tms --id QA-42 --source jira --test-mgmt testRail --tool playwright
 
+# Multiple JIRA issues — sequential, 5s cooldown between each
+/automate-from-tms --id QA-42,QA-43 --source jira --test-mgmt xray --tool playwright
+
+# Mixed — tickets + local markdown TC files
+/automate-from-tms --id "QA-42,./test-cases/TC-login.md" --source jira --test-mgmt xray --tool playwright
+
 # Specific TestRail suite → Cypress + REST Assured
 /automate-from-tms --suite "Login Tests" --test-mgmt testRail --tool cypress,restassured
 
@@ -55,7 +61,7 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 ```
 
 ### Arguments
-- `--id` — ticket ID to find linked test cases (e.g. `QA-42`, `ENG-456`, `42`)
+- `--id` — one or more ticket IDs or local TC file paths, comma-separated (e.g. `QA-42`, `QA-42,QA-43`, `"QA-42,./test-cases/TC-login.md"`)
 - `--suite` — test suite/folder name in TMS (e.g. `"Login Tests"`)
 - `--case` — comma-separated TC IDs (e.g. `TC-1-01,TC-1-03`) — most granular
 - `--source` — issue tracker for bug logging (default: `github`)
@@ -68,6 +74,41 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 ---
 
 ## Argument Resolution
+
+### Step 0 — Parse and expand --id
+
+Split the `--id` value by comma. Trim whitespace from each entry. For each entry, detect its type:
+
+- **File path** — starts with `./`, `/`, or ends with `.md`/`.txt` → read TCs from local markdown file, no TMS credentials needed for this entry
+- **Ticket ID** — everything else → fetch linked TCs from TMS using `--test-mgmt` and `--source`
+
+Note: `--suite` and `--case` are always single-scope flags (they apply once, not per-iteration). Only `--id` supports comma-separated multi-run.
+
+**Single entry** → single-run mode. Proceed normally.
+
+**Multiple entries** → multi-run mode. Print:
+```
+🗂️  Multi-run — N items queued: QA-42, QA-43, ./test-cases/TC-login.md, ...
+    Automation will be generated for each sequentially (5s cooldown between items).
+    A combined summary will follow.
+```
+
+Run all steps for each entry. After each completes, wait 5 seconds before the next:
+```
+✅ <id> complete. Starting next in 5 seconds...
+```
+If one entry fails unrecoverably, mark it ❌ and continue.
+
+After all entries are done, print a combined summary:
+```
+╔═══════════════════════════════════════════════════════╗
+║      automate-from-tms — Multi-Run Complete           ║
+╠═══════════════════════════════════════════════════════╣
+║  QA-42              ✅  12/12 passed  Bugs: 0  PR #45 ║
+║  QA-43              ✅   8/9 passed   Bugs: 1  PR #46 ║
+║  ./TC-login.md      ❌  ERROR: file not readable      ║
+╚═══════════════════════════════════════════════════════╝
+```
 
 If neither `--id`, `--suite`, nor `--case` is provided, ask:
 > "Which test cases should I automate? Provide one of:

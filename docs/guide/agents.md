@@ -117,3 +117,73 @@ Generates a structured QA report from test results — suitable for posting to J
 ```
 
 → [Full reference](/guide/qa-report)
+
+---
+
+## Multi-run mode
+
+Four agents support running against multiple issues or files in a single command. The others don't — here's why.
+
+### Which agents support multi-run
+
+| Agent | Multi-run? | Example |
+|---|---|---|
+| `/qa-pipeline` | ✅ Yes | `--id TEST-22,TEST-62` |
+| `/create-test-cases` | ✅ Yes | `QA-42,QA-43,./local-spec.txt` |
+| `/automate-from-tms` | ✅ Yes | `--id QA-42,QA-43,./test-cases/TC-login.md` |
+| `/bug-to-test` | ✅ Yes | `--jira BUG-101,BUG-102 --file ./bug3.txt` |
+| `/heal-tests` | ❌ No | — |
+| `/analyze-flaky` | ❌ No | — |
+| `/generate-tests` | ❌ No | — |
+| `/qa-report` | ❌ No | — |
+
+### Why only these four?
+
+**`/qa-pipeline`, `/create-test-cases`, `/automate-from-tms`, `/bug-to-test`** all share the same input model: they take an **issue ID or file path** as their primary input. Repeating that input is a natural and common need — a QA lead wants to automate three tickets at once, or a team has a batch of bug reports to convert to regression tests. Multi-run is simply "run the same agent N times, sequentially, with results collected."
+
+The other agents have a fundamentally different input model:
+
+- **`/heal-tests`** — takes a **failing spec file**, not an issue ID. It already handles every failing test within that spec in one run. Running it across multiple spec files is handled by the agent naturally, not by a separate multi-run loop.
+
+- **`/analyze-flaky`** — takes a **test results JSON**. Flakiness analysis is cross-run by design: the agent reads multiple execution histories from one results file and reasons across all of them. There is no meaningful "batch" version — you aggregate results first, then analyze.
+
+- **`/generate-tests`** — takes a **live URL**. Multi-URL support is possible but rarely needed: you'd normally produce one focused spec per URL. For multiple pages, call the agent once per URL.
+
+- **`/qa-report`** — aggregates test results into one report. Reports are already a many-to-one operation — one report covers all tests in a run. Running the reporter twice against different inputs would produce two separate reports, not a combined one.
+
+### How multi-run works
+
+All four agents run sequentially with a 5-second cooldown between items:
+
+```
+🗂️  Multi-run — 3 items queued: QA-42, QA-43, ./local-spec.txt
+    Processing sequentially (5s cooldown between items).
+
+--- Item 1 of 3: QA-42 ---
+[... full agent run ...]
+✅ QA-42 complete. Starting next in 5 seconds...
+
+--- Item 2 of 3: QA-43 ---
+[... full agent run ...]
+✅ QA-43 complete. Starting next in 5 seconds...
+```
+
+If one item fails (ticket not found, file missing), it is marked ❌ and the agent continues with the next. A combined summary is printed after all items complete.
+
+### Mixed mode — ticket IDs + file paths in one command
+
+All four agents accept a mix of issue IDs and local file paths in the same command. File paths are detected automatically by prefix (`./`, `/`) or extension (`.md`, `.txt`, `.docx`, `.doc`, `.pdf`). No IMS credentials are required for file entries.
+
+```bash
+# Two JIRA tickets + one local spec file
+/qa-pipeline --id "TEST-22,TEST-62,./docs/my-feature.md" --source jira --tool playwright
+
+# JIRA ticket + local file (no credentials needed for the file entry)
+/create-test-cases "QA-42,./local-spec.txt" --source jira
+
+# Ticket + local TC markdown file
+/automate-from-tms --id "QA-42,./test-cases/TC-login.md" --source jira --test-mgmt xray --tool playwright
+
+# JIRA bug + local bug report file
+/bug-to-test --jira BUG-101 --file "./bugs/manual-bug.txt"
+```

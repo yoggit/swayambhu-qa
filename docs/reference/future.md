@@ -37,5 +37,5 @@ Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa
 |---|---|
 | Multi-tool combined runs (`playwright,restassured`) | ✅ Supported |
 | Re-run detection (no duplicate TCs in TMS) | ✅ Supported |
-| Multi-issue runs (`--id TEST-22,TEST-62`) | 🔜 Planned |
+| Multi-issue runs (`--id TEST-22,TEST-62`) | ✅ Supported |
 | CI/CD integration (GitHub Actions) | 🔜 Planned |
