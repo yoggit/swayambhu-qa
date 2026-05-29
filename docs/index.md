@@ -77,6 +77,12 @@ npm install --save-dev @swayambhu-qa/core
 npx @swayambhu-qa/core init
 ```
 
+Already installed? Upgrade to latest:
+
+```bash
+npm install --save-dev @swayambhu-qa/core@latest
+```
+
 Then open Claude Code and run:
 
 ```bash

@@ -27,6 +27,12 @@ Or download the desktop app from [claude.ai/code](https://claude.ai/code).
 npm install --save-dev @swayambhu-qa/core
 ```
 
+Already installed? Upgrade to latest:
+
+```bash
+npm install --save-dev @swayambhu-qa/core@latest
+```
+
 ## Step 2 — Initialize
 
 ```bash

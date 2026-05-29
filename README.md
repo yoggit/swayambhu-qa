@@ -171,6 +171,12 @@ export ANTHROPIC_API_KEY=sk-ant-...
 npm install --save-dev @swayambhu-qa/core
 ```
 
+Already installed? Upgrade to latest:
+
+```bash
+npm install --save-dev @swayambhu-qa/core@latest
+```
+
 ### 2. Initialize
 
 ```bash
