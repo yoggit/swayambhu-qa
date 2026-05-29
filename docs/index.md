@@ -25,7 +25,7 @@ features:
     details: Pipeline, create test cases, generate from URL, automate from TMS, heal failures, bug-to-regression, analyze flaky, and QA report — each agent handles one job well.
   - icon: 🔧
     title: 5 test frameworks supported
-    details: Playwright, Cypress, Selenium (TestNG / JUnit / Cucumber), REST Assured, and Robot Framework (UI + API). Mix UI and API tools in one run — playwright,restassured or cypress,restassured.
+    details: Playwright, Cypress, Selenium (TestNG / JUnit / Cucumber), REST Assured (TestNG / JUnit / Cucumber), and Robot Framework (UI + API). Mix UI and API tools in one run — playwright,restassured or cypress,restassured.
   - icon: 🩹
     title: Self-healing on failures
     details: When tests fail due to selector drift or timing, the pipeline auto-fixes them and re-runs. Real bugs get logged to your issue tracker.
@@ -94,6 +94,6 @@ Then open Claude Code and run:
 | Category | What works |
 |---|---|
 | Issue sources | JIRA ✅, GitHub Issues ✅, Local file (`.md` `.txt` `.docx` `.doc` `.pdf`) ✅ |
-| Test tools | Playwright ✅, REST Assured ✅, Selenium (TestNG / JUnit / Cucumber) ✅, Cypress ✅, Robot Framework (UI / API) ✅ |
+| Test tools | Playwright ✅, Cypress ✅, Selenium (TestNG / JUnit / Cucumber) ✅, REST Assured (TestNG / JUnit / Cucumber) ✅, Robot Framework (UI / API) ✅ |
 | TMS | Xray ✅, Markdown (local) ✅ |
 | Combined runs | `--tool playwright,restassured` ✅ |

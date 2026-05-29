@@ -7,8 +7,9 @@
  *   selenium:testng         → mvn test (Surefire XML, TestNG runner)
  *   selenium:junit          → mvn test (Surefire XML, JUnit runner)
  *   selenium:cucumber       → mvn test (Cucumber JSON report)
- *   restassured             → mvn test (Surefire XML)
- *   restassured:junit       → mvn test (Surefire XML)
+ *   restassured             → mvn test (Surefire XML, TestNG runner — default)
+ *   restassured:testng      → mvn test (Surefire XML, TestNG runner)
+ *   restassured:junit       → mvn test (Surefire XML, JUnit runner)
  *   restassured:cucumber    → mvn test (Cucumber JSON)
  *
  * For Playwright: --spec is the .spec.ts file path.
@@ -527,7 +528,7 @@ async function main() {
   }
 
   else {
-    console.error(`Unknown tool: "${tool}". Supported: playwright, cypress, selenium, selenium:testng, selenium:junit, selenium:cucumber, restassured, restassured:junit, restassured:cucumber, robot:ui, robot:api, robot:android, robot:ios`);
+    console.error(`Unknown tool: "${tool}". Supported: playwright, cypress, selenium, selenium:testng, selenium:junit, selenium:cucumber, restassured, restassured:junit, restassured:testng, restassured:cucumber, robot:ui, robot:api, robot:android, robot:ios`);
     process.exit(1);
   }
 

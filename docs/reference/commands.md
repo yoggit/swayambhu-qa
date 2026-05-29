@@ -41,8 +41,9 @@ Full pipeline: ticket → test cases → automation → heal → bugs → TMS �
 /qa-pipeline --id TEST-22 --source jira --tool selenium:junit
 /qa-pipeline --id TEST-22 --source jira --tool selenium:cucumber
 
-# REST Assured (API)
+# REST Assured (API) — defaults to TestNG
 /qa-pipeline --id TEST-22 --source jira --tool restassured
+/qa-pipeline --id TEST-22 --source jira --tool restassured:testng
 /qa-pipeline --id TEST-22 --source jira --tool restassured:junit
 /qa-pipeline --id TEST-22 --source jira --tool restassured:cucumber
 
@@ -141,6 +142,8 @@ Read existing test cases from TMS → generate automation → run → heal → l
 /automate-from-tms --id TEST-22 --tool selenium:junit
 /automate-from-tms --id TEST-22 --tool selenium:cucumber
 /automate-from-tms --id TEST-22 --tool restassured
+/automate-from-tms --id TEST-22 --tool restassured:testng
+/automate-from-tms --id TEST-22 --tool restassured:junit
 /automate-from-tms --id TEST-22 --tool restassured:cucumber
 /automate-from-tms --id TEST-22 --tool robot:ui
 /automate-from-tms --id TEST-22 --tool robot:api
@@ -288,7 +291,8 @@ Generate a shareable QA summary and post it to JIRA.
 | `selenium:testng` | UI | Selenium + TestNG | ✅ |
 | `selenium:junit` | UI | Selenium + JUnit 5 | ✅ |
 | `selenium:cucumber` | UI | Selenium + Cucumber (BDD) | ✅ |
-| `restassured` | API | REST Assured + Java | ✅ |
+| `restassured` | API | REST Assured + TestNG (default) | ✅ |
+| `restassured:testng` | API | REST Assured + TestNG | ✅ |
 | `restassured:junit` | API | REST Assured + JUnit 5 | ✅ |
 | `restassured:cucumber` | API | REST Assured + Cucumber (BDD) | ✅ |
 | `robot` | UI | Robot Framework + SeleniumLibrary | ✅ (defaults to `robot:ui`) |

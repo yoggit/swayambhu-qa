@@ -26,7 +26,7 @@ No human involvement between steps unless a step explicitly says **⏸ PAUSE**.
 | `--id` | **Always** | One or more issue IDs or file paths, comma-separated | — | Single: `TEST-22` · Multi: `TEST-22,TEST-62` · File: `"./story.md"` · Multi-file: `"./f1.txt,./f2.txt"` |
 | `--source` | No | `github`, `jira`, `ado`, `linear` | _(none — reads from file)_ | Omit to read requirements from a local file; provide to pull from an IMS |
 | `--repo` | GitHub only | e.g. `myorg/myrepo` | — | Required when `--source github`; omit for all other sources |
-| `--tool` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `restassured`, `restassured:junit`, `appium`, `robot:ui`, `robot:api` | `playwright` | Omit to default to Playwright. Combine: `playwright,restassured` |
+| `--tool` | No | `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `selenium:cucumber`, `restassured`, `restassured:testng`, `restassured:junit`, `restassured:cucumber`, `appium`, `robot:ui`, `robot:api` | `playwright` | Omit to default to Playwright. Combine: `playwright,restassured` |
 | `--tms` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally. Add `--tms xray` (or `testrail`/`zephyr`) only if credentials are in `.env` |
 | `--no-pr` | No | _(flag, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add to skip for local runs or no git remote |
 
@@ -209,17 +209,18 @@ _Invalid value (e.g. `--source bitbucket`):_
 _Missing:_
 > ❌ `--tool` is required. Which test runner should I use?
 > - UI only → `--tool playwright` / `cypress` / `selenium` / `selenium:testng` / `selenium:junit`
-> - API only → `--tool restassured` / `restassured:junit`
+> - API only → `--tool restassured` / `restassured:testng` / `restassured:junit` / `restassured:cucumber`
 > - UI + API → `--tool playwright,restassured`
 > - Mobile → `--tool appium`
 > - Robot Framework → `--tool robot:ui` / `robot:api` / `robot:android` / `robot:ios`
 
 _Invalid value (e.g. `--tool mocha`):_
-> ❌ `--tool mocha` is not supported. Supported: `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `selenium:cucumber`, `restassured`, `restassured:junit`, `restassured:cucumber`, `appium`, `robot:ui`, `robot:api`, `robot:android`, `robot:ios`. Combine multiple with commas.
+> ❌ `--tool mocha` is not supported. Supported: `playwright`, `cypress`, `selenium`, `selenium:testng`, `selenium:junit`, `selenium:cucumber`, `restassured`, `restassured:testng`, `restassured:junit`, `restassured:cucumber`, `appium`, `robot:ui`, `robot:api`, `robot:android`, `robot:ios`. Combine multiple with commas.
 
 _Tool variant fallbacks (do not stop — apply silently and note in plan):_
 - `--tool robot` with no variant → treat as `robot:ui`
 - `--tool selenium` with no variant → treat as `selenium:testng`
+- `--tool restassured` with no variant → treat as `restassured:testng`
 
 **`--tms`** — optional. If invalid value, stop:
 > ❌ `--tms jenkins` is not supported. Supported: `xray`, `testrail`, `zephyr`. Omit `--tms` entirely to use markdown mode (no external TMS needed).
@@ -380,7 +381,7 @@ Check whether the project has the minimum setup for the selected `--tool`. If an
 | `playwright` | `playwright.config.ts` or `playwright.config.js` | `npm install --save-dev @playwright/test && npx playwright install` |
 | `cypress` | `cypress.config.ts` or `cypress.config.js` | `npm install --save-dev cypress` |
 | `selenium` / `selenium:testng` / `selenium:junit` / `selenium:cucumber` | `pom.xml` | `mvn test-compile` |
-| `restassured` / `restassured:junit` / `restassured:cucumber` | `pom.xml` | `mvn test-compile` |
+| `restassured` / `restassured:testng` / `restassured:junit` / `restassured:cucumber` | `pom.xml` | `mvn test-compile` |
 | `robot:ui` / `robot:api` | `requirements.txt` containing `robotframework` | `pip install -r requirements.txt` |
 
 If `package.json` does not exist and a Node-based tool is selected (playwright, cypress), create it first.
