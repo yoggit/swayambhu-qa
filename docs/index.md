@@ -24,8 +24,8 @@ features:
     title: 8 specialized agents
     details: Pipeline, create test cases, generate from URL, automate from TMS, heal failures, bug-to-regression, analyze flaky, and QA report — each agent handles one job well.
   - icon: 🔧
-    title: Playwright + REST Assured
-    details: UI tests in Playwright TypeScript. API tests in REST Assured Java. Run them together with a single flag — playwright,restassured.
+    title: 5 test frameworks supported
+    details: Playwright, Cypress, Selenium (TestNG / JUnit / Cucumber), REST Assured, and Robot Framework (UI + API). Mix UI and API tools in one run — playwright,restassured or cypress,restassured.
   - icon: 🩹
     title: Self-healing on failures
     details: When tests fail due to selector drift or timing, the pipeline auto-fixes them and re-runs. Real bugs get logged to your issue tracker.
