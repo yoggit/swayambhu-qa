@@ -95,10 +95,14 @@ Choose **Re-run** to skip Phases 1–3 and go straight to running the existing s
 
 ## Zero Setup Mode
 
-If you run `/qa-pipeline` without `--id`, the pipeline doesn't error — it creates a sample feature file for you to start with.
+If you run `/qa-pipeline` without `--id`, the pipeline doesn't error — it creates a sample feature file for you to start with. Works with any supported `--tool`.
 
 ```bash
 /qa-pipeline --tool playwright
+/qa-pipeline --tool cypress
+/qa-pipeline --tool selenium
+/qa-pipeline --tool restassured
+/qa-pipeline --tool robot:ui
 ```
 
 What happens:
