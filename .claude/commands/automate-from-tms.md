@@ -47,8 +47,8 @@ This is the **reverse flow** of the normal pipeline — it starts from existing 
 # Mixed — tickets + local markdown TC files
 /automate-from-tms --id "QA-42,./test-cases/TC-login.md" --source jira --test-mgmt xray --tool playwright
 
-# Specific TestRail suite → Cypress + REST Assured
-/automate-from-tms --suite "Login Tests" --test-mgmt testRail --tool cypress,restassured
+# Specific Xray suite → Cypress + REST Assured
+/automate-from-tms --suite "Login Tests" --test-mgmt xray --tool cypress,restassured
 
 # Specific TC IDs → Selenium TestNG
 /automate-from-tms --case TC-1-01,TC-1-03,TC-1-05 --test-mgmt markdown --tool selenium:testng
@@ -194,6 +194,14 @@ Validate: `npx playwright test --list tests/generated/<feature-slug>.spec.ts`
 Write `cypress/e2e/generated/<feature-slug>.cy.ts`.
 Map TC steps → `cy.*` commands. Map expected results → `cy.should()` assertions.
 
+**TC ID embedding — REQUIRED for result mapping:**
+
+Prefix each `it()` title with `[TC-ISSUEID-SEQ]`:
+```typescript
+it('[TC-QA42-01] should login with valid credentials', () => { ... });
+it('[TC-QA42-02] should show error for invalid password', () => { ... });
+```
+
 Validate: `npx cypress run --spec <file> --headless 2>&1 | head -20`
 
 ---
@@ -201,7 +209,25 @@ Validate: `npx cypress run --spec <file> --headless 2>&1 | head -20`
 ### 3-SELENIUM (testng / junit / cucumber)
 Write Java test class in `src/test/java/com/swayambhuqa/tests/generated/`.
 Map TC steps → WebDriver actions. Map expected results → Assert/assertEquals.
-For cucumber: generate `.feature` file from TC titles + steps, then step definitions.
+
+**TC ID embedding — REQUIRED for result mapping:**
+
+For TestNG / JUnit: embed the TC ID in the method name using underscores:
+```java
+// TC-QA42-01 → method: TC_QA42_01_<description>
+@Test
+public void TC_QA42_01_loginWithValidCredentials() { ... }
+```
+
+For Cucumber: add a `@TC-<id>` tag on each scenario and configure the JSON report:
+```gherkin
+@TC-QA42-01
+Scenario: User logs in with valid credentials
+  ...
+```
+```java
+@CucumberOptions(plugin = {"json:target/cucumber-reports/cucumber.json"})
+```
 
 Validate: `mvn test-compile -q 2>&1 | tail -5`
 
@@ -232,6 +258,20 @@ Map TC steps → Robot keywords using appropriate library:
 - RequestsLibrary for API steps
 - AppiumLibrary for mobile steps
 
+**TC ID embedding — REQUIRED for result mapping:**
+
+Start each test case name with `TC-ISSUEID-SEQ`:
+```robot
+*** Test Cases ***
+TC-QA42-01 Login With Valid Credentials
+    Open Browser    ${BASE_URL}    Chrome
+    ...
+
+TC-QA42-02 Login Shows Error For Invalid Password
+    Open Browser    ${BASE_URL}    Chrome
+    ...
+```
+
 Validate: `robot --dryrun tests/robot/generated/<feature-slug>.robot 2>&1 | tail -10`
 
 ---
@@ -247,17 +287,27 @@ npx playwright test tests/generated/<feature-slug>.spec.ts --project=chromium --
 
 **Cypress:**
 ```bash
-npx cypress run --spec cypress/e2e/generated/<feature-slug>.cy.ts --headless
+npx swayambhu-run-tests --id <issueId> --spec cypress/e2e/generated/<feature-slug>.cy.ts --tool cypress
 ```
 
-**Selenium / REST Assured / Appium:**
+**Selenium (TestNG / JUnit):**
 ```bash
-mvn test -Dtest=<ClassName> -q 2>&1 | tail -20
+npx swayambhu-run-tests --id <issueId> --spec com.swayambhuqa.tests.generated.<Feature>Test --tool selenium:testng
 ```
 
-**Robot:**
+**Selenium Cucumber:**
 ```bash
-robot --outputdir reports/robot tests/robot/generated/<feature-slug>.robot
+npx swayambhu-run-tests --id <issueId> --spec com.swayambhuqa.tests.generated.<Feature>Runner --tool selenium:cucumber
+```
+
+**REST Assured (TestNG / JUnit):**
+```bash
+npx swayambhu-run-tests --id <issueId> --spec com.swayambhuqa.tests.generated.<Feature>ApiTest --tool restassured
+```
+
+**Robot Framework:**
+```bash
+npx swayambhu-run-tests --id <issueId> --spec tests/robot/generated/<feature-slug>.robot --tool robot:ui
 ```
 
 Collect: passed, failed, flaky per tool.

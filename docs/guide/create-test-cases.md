@@ -8,6 +8,10 @@ Reads a ticket and generates test case documents only — no automation code wri
 /create-test-cases --id <id> --source <src> [--tms <tms>]
 ```
 
+::: tip All command combinations
+Every `--tool`, `--source`, and `--tms` option in one place → [Command Combinations](/reference/commands)
+:::
+
 ## Examples
 
 ```bash

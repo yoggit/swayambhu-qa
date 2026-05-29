@@ -77,10 +77,11 @@ Ticket / File → /qa-pipeline --id QA-42 --source jira --tool playwright,restas
 |---|---|---|
 | Playwright + TypeScript | `--tool playwright` | ✅ |
 | REST Assured + Java | `--tool restassured` / `restassured:junit` / `restassured:cucumber` | ✅ |
-| Cypress + TypeScript | `--tool cypress` | 🔜 Planned |
-| Selenium + Java | `--tool selenium` / `selenium:testng` / `selenium:junit` / `selenium:cucumber` | 🔜 Planned |
+| Cypress + TypeScript | `--tool cypress` | ✅ |
+| Selenium + Java | `--tool selenium` / `selenium:testng` / `selenium:junit` / `selenium:cucumber` | ✅ |
 | Appium (Mobile) | `--tool appium` | 🔜 Planned |
-| Robot Framework | `--tool robot:ui` / `robot:api` / `robot:android` / `robot:ios` | 🔜 Planned |
+| Robot Framework (UI / API) | `--tool robot:ui` / `robot:api` | ✅ |
+| Robot Framework (Mobile) | `--tool robot:android` / `robot:ios` | 🔜 Planned |
 
 ### Valid Combos (UI + API)
 ```bash

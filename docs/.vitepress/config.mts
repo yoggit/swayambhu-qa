@@ -16,7 +16,7 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Agents', link: '/guide/agents' },
-      { text: 'Reference', link: '/reference/flags' },
+      { text: 'Reference', link: '/reference/commands' },
       { text: 'GitHub', link: 'https://github.com/yoggit/swayambhu-qa' },
     ],
 
@@ -54,6 +54,7 @@ export default defineConfig({
       {
         text: 'Reference',
         items: [
+          { text: 'Command Combinations', link: '/reference/commands' },
           { text: 'All Flags', link: '/reference/flags' },
           { text: 'Output Folders', link: '/reference/output' },
           { text: 'CI / GitHub Actions', link: '/reference/ci' },

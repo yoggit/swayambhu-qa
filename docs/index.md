@@ -38,6 +38,12 @@ features:
   - icon: 🔁
     title: Re-run aware
     details: Already pushed test cases to your TMS? The pipeline detects that and skips re-creating duplicates — just runs the existing tests and updates execution results.
+  - icon: 🚀
+    title: Zero Setup Mode
+    details: No ticket? No problem. Run /qa-pipeline --tool playwright with no --id and the pipeline generates a sample feature file, shows it to you, and waits for your go-ahead.
+  - icon: 🏗️
+    title: Project Scaffolding
+    details: Empty folder? The pipeline detects no test framework and auto-generates package.json, playwright.config.ts, pom.xml, or requirements.txt — then installs everything before starting.
 ---
 
 ## How It Works
@@ -88,6 +94,6 @@ Then open Claude Code and run:
 | Category | What works |
 |---|---|
 | Issue sources | JIRA ✅, GitHub Issues ✅, Local file (`.md` `.txt` `.docx` `.doc` `.pdf`) ✅ |
-| Test tools | Playwright ✅, REST Assured ✅ |
+| Test tools | Playwright ✅, REST Assured ✅, Selenium (TestNG / JUnit / Cucumber) ✅, Cypress ✅, Robot Framework (UI / API) ✅ |
 | TMS | Xray ✅, Markdown (local) ✅ |
 | Combined runs | `--tool playwright,restassured` ✅ |

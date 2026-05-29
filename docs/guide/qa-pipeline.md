@@ -10,6 +10,10 @@ The full QA pipeline — from a single ticket to a passing test suite, logged bu
 
 `--id` accepts either an **IMS issue ID** (with `--source`) or a **local file path** (without `--source`). See [File Source](/guide/file-source) for supported formats.
 
+::: tip All command combinations
+Every `--tool`, `--source`, and `--tms` option in one place → [Command Combinations](/reference/commands)
+:::
+
 ## Common examples
 
 ```bash
@@ -88,6 +92,54 @@ If `tc-mapping-<issueId>.json` already exists (TCs were pushed to TMS on a previ
 > Re-run tests against existing TCs, or regenerate everything from scratch?
 
 Choose **Re-run** to skip Phases 1–3 and go straight to running the existing specs.
+
+## Zero Setup Mode
+
+If you run `/qa-pipeline` without `--id`, the pipeline doesn't error — it creates a sample feature file for you to start with.
+
+```bash
+/qa-pipeline --tool playwright
+```
+
+What happens:
+
+1. A file `./sample-feature.txt` is written in your project with a User Login feature — 5 acceptance criteria, a UI URL, an API URL, and 3 endpoints.
+2. The pipeline shows you what was created and pauses:
+
+```
+📄 No --id provided — I've created a sample feature file to get you started:
+
+   ./sample-feature.txt
+
+   It describes a User Login feature with 5 acceptance criteria, UI and API endpoints.
+   This is the same format you can use for any real feature.
+
+   ➡️  To proceed with this sample, reply: yes
+   ✏️  To use your own feature instead:
+       1. Edit or replace ./sample-feature.txt (or create any .md / .txt file)
+       2. Reply with the file path, e.g: ./my-feature.txt
+```
+
+3. Reply `yes` to run with the sample, or give a file path to use your own.
+
+This is useful for trying out the pipeline on a fresh project before wiring up JIRA or GitHub.
+
+## Project Scaffolding
+
+If you open an empty folder (no `package.json`, no `pom.xml`, no test framework installed) and run `/qa-pipeline`, the pipeline detects this and sets up the project for you before doing anything else.
+
+What gets generated depends on `--tool`:
+
+| Tool | Files created | Install run |
+|---|---|---|
+| `playwright` | `package.json`, `playwright.config.ts` | `npm install && npx playwright install --with-deps chromium` |
+| `cypress` | `package.json`, `cypress.config.ts` | `npm install` |
+| `selenium`, `restassured` | `pom.xml` (with all dependencies pre-wired) | `mvn test-compile -q` |
+| `robot:ui`, `robot:api` | `requirements.txt` | `pip install -r requirements.txt -q` |
+
+In all cases, the pipeline also creates `reports/`, `test-cases/`, and the generated test output folder.
+
+After scaffolding completes, the pipeline continues from Phase 1 — no manual setup needed.
 
 ## All flags
 

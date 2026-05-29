@@ -187,3 +187,9 @@ All four agents accept a mix of issue IDs and local file paths in the same comma
 # JIRA bug + local bug report file
 /bug-to-test --jira BUG-101 --file "./bugs/manual-bug.txt"
 ```
+
+---
+
+::: tip All command combinations
+Every agent, every `--tool`, `--source`, and `--tms` option in one place → [Command Combinations](/reference/commands)
+:::

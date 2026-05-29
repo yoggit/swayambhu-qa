@@ -8,9 +8,10 @@ Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa
 |---|---|
 | Playwright + TypeScript | ✅ Supported |
 | REST Assured + Java | ✅ Supported |
-| Cypress + TypeScript | 🔜 Planned |
-| Selenium (TestNG / JUnit / Cucumber) | 🔜 Planned |
-| Robot Framework (UI / API / Mobile) | 🔜 Planned |
+| Cypress + TypeScript | ✅ Supported |
+| Selenium (TestNG / JUnit / Cucumber) | ✅ Supported |
+| Robot Framework (UI / API) | ✅ Supported |
+| Robot Framework (Mobile — AppiumLibrary) | 🔜 Planned |
 | Appium (Android / iOS) | 🔜 Planned |
 
 ## Issue Source Support
@@ -39,6 +40,8 @@ Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa
 | Re-run detection (no duplicate TCs in TMS) | ✅ Supported |
 | Multi-issue runs (`--id TEST-22,TEST-62`) | ✅ Supported |
 | CI/CD integration (GitHub Actions) | 🔜 Planned |
+| Zero Setup Mode — sample story generation when no `--id` is provided | ✅ Supported |
+| Project scaffolding — auto-generate `package.json`, `playwright.config.ts`, `pom.xml` etc. for empty projects | ✅ Supported |
 
 ## AI Tool Agnostic Support
 

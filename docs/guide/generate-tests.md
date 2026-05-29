@@ -8,6 +8,10 @@ Takes a live URL, scrapes the page, and writes a Playwright spec file. No ticket
 /generate-tests <url> [--name <feature-name>] [--screenshot]
 ```
 
+::: tip All command combinations
+Every `--tool` and `--url` option in one place → [Command Combinations](/reference/commands)
+:::
+
 ## Examples
 
 ```bash

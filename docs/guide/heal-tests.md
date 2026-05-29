@@ -8,6 +8,10 @@ Auto-fixes broken selectors and timing issues in a failing Playwright spec file.
 /heal-tests [<spec-file>]
 ```
 
+::: tip All command combinations
+Every `--tool` and `--id` option in one place → [Command Combinations](/reference/commands)
+:::
+
 ## Examples
 
 ```bash

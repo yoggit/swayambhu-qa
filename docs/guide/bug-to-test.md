@@ -8,6 +8,10 @@ Takes a bug report and writes a regression test that fails on the bug and passes
 /bug-to-test --id <id> --source <src>
 ```
 
+::: tip All command combinations
+Every `--tool` and `--source` option in one place → [Command Combinations](/reference/commands)
+:::
+
 ## Examples
 
 ```bash

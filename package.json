@@ -12,6 +12,7 @@
   "main": "dist/mcp.js",
   "bin": {
     "swayambhu-qa": "dist/cli.js",
+    "core": "dist/cli.js",
     "swayambhu-fetch": "dist/scripts/fetch-issue.js",
     "swayambhu-scrape": "dist/scripts/scrape-app.js",
     "swayambhu-push-tms": "dist/scripts/push-to-tms.js",

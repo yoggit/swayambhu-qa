@@ -1,5 +1,9 @@
 # All Flags Reference
 
+::: tip Looking for example commands?
+See every agent × tool × source combination → [Command Combinations](/reference/commands)
+:::
+
 ## `/qa-pipeline` flags
 
 | Flag | Required? | Supported values | Default | Notes |

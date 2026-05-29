@@ -9,6 +9,10 @@ Reads existing test cases from your TMS and generates automation code for them â
                    [--source <src>] [--test-mgmt <tms>] [--tool <tool>]
 ```
 
+::: tip All command combinations
+Every `--tool`, `--source`, and `--test-mgmt` option in one place â†’ [Command Combinations](/reference/commands)
+:::
+
 ## Examples
 
 ```bash

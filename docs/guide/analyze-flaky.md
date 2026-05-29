@@ -8,6 +8,10 @@ Reads test results and identifies flaky tests — tests that pass sometimes and 
 /analyze-flaky [<results-file>]
 ```
 
+::: tip All command combinations
+Every `--tool` and `--id` option in one place → [Command Combinations](/reference/commands)
+:::
+
 ## Examples
 
 ```bash

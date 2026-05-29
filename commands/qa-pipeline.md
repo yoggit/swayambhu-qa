@@ -113,6 +113,60 @@ node -e "
 
 ### Step 0 — Parse and expand --id
 
+#### If --id is not provided at all → Zero Setup Mode
+
+Before doing anything else, check whether `--id` was given. If it was **not** provided:
+
+1. **Generate a sample feature file.** Write the following content to `./sample-feature.txt` in the current working directory:
+
+```
+Feature: User Login
+
+As a registered user
+I want to be able to log in to the application
+So that I can access my account and perform tasks securely.
+
+Acceptance Criteria:
+1. User can log in with a valid email and password and is redirected to the dashboard
+2. User sees a clear error message when entering invalid credentials
+3. User account is locked after 5 consecutive failed login attempts
+4. User can log out and is redirected to the login page
+5. Session expires after 30 minutes of inactivity
+
+Test URL: http://localhost:3000
+API URL: http://localhost:3000/api
+
+Endpoints:
+POST /api/auth/login   — body: { email, password } — returns: { token, user }
+POST /api/auth/logout  — header: Authorization: Bearer <token>
+GET  /api/me           — header: Authorization: Bearer <token> — returns current user
+```
+
+2. **Tell the user what was created and offer a choice:**
+
+```
+📄 No --id provided — I've created a sample feature file to get you started:
+
+   ./sample-feature.txt
+
+   It describes a User Login feature with 5 acceptance criteria, UI and API endpoints.
+   This is the same format you can use for any real feature.
+
+   ➡️  To proceed with this sample, reply: yes
+   ✏️  To use your own feature instead:
+       1. Edit or replace ./sample-feature.txt (or create any .md / .txt file)
+       2. Reply with the file path, e.g: ./my-feature.txt
+```
+
+3. **⏸ PAUSE — wait for the user's response:**
+   - If the user replies **yes** (or any confirmation): set `--id ./sample-feature.txt` and continue
+   - If the user replies with a file path: set `--id <that path>` and continue
+   - If the user replies with anything else that looks like a description: generate a new feature file from it, show the user, pause again
+
+---
+
+#### If --id is provided → normal mode
+
 Split the `--id` value by comma to produce an ordered list of IDs/paths. Trim whitespace from each entry.
 
 **Single entry** → single-run mode. Proceed to Step 1 as normal.
@@ -132,8 +186,7 @@ If an entry looks like a ticket ID (e.g. `TEST-22`) but `--source` is not provid
 
 ### Step 1 — Validate required arguments
 
-**`--id`** — required. Stop if missing:
-> ❌ `--id` is required. Provide an issue ID (e.g. `TEST-22`) with `--source`, or a file path (e.g. `./story.md`) without `--source`.
+**`--id`** — resolved by Step 0 (either provided by the user or set to `./sample-feature.txt` after Zero Setup Mode). By this point it is always set.
 
 **`--source`** — optional. Determines where requirements are read from:
 
@@ -312,6 +365,255 @@ If `--tms` was not provided:
 
 ---
 
+## PHASE 0 — Project Scaffolding
+
+Run this phase **once** before the Run Loop, after all pre-flight checks pass.
+
+Check whether the project has the minimum setup for the selected `--tool`. If any required file is missing, create it. This phase is skipped silently if all required files already exist.
+
+---
+
+### Detection — what to check per tool
+
+| Tool | Required files | Install command |
+|---|---|---|
+| `playwright` | `playwright.config.ts` or `playwright.config.js` | `npm install --save-dev @playwright/test && npx playwright install` |
+| `cypress` | `cypress.config.ts` or `cypress.config.js` | `npm install --save-dev cypress` |
+| `selenium` / `selenium:testng` / `selenium:junit` / `selenium:cucumber` | `pom.xml` | `mvn test-compile` |
+| `restassured` / `restassured:junit` / `restassured:cucumber` | `pom.xml` | `mvn test-compile` |
+| `robot:ui` / `robot:api` | `requirements.txt` containing `robotframework` | `pip install -r requirements.txt` |
+
+If `package.json` does not exist and a Node-based tool is selected (playwright, cypress), create it first.
+
+---
+
+### Scaffolding content per tool
+
+#### Playwright
+
+**`package.json`** (only if missing):
+```json
+{
+  "name": "qa-tests",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
+```
+
+**`playwright.config.ts`** (only if missing):
+```typescript
+import { defineConfig } from '@playwright/test';
+export default defineConfig({
+  testDir: './tests',
+  reporter: [['json', { outputFile: 'reports/pw-results.json' }]],
+  use: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+  },
+});
+```
+
+---
+
+#### Cypress
+
+**`package.json`** (only if missing):
+```json
+{
+  "name": "qa-tests",
+  "version": "1.0.0",
+  "devDependencies": {
+    "cypress": "^13.0.0"
+  }
+}
+```
+
+**`cypress.config.ts`** (only if missing):
+```typescript
+import { defineConfig } from 'cypress';
+export default defineConfig({
+  e2e: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.cy.ts',
+  },
+});
+```
+
+---
+
+#### Selenium (TestNG / JUnit / Cucumber)
+
+**`pom.xml`** (only if missing):
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.swayambhuqa</groupId>
+  <artifactId>qa-tests</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <selenium.version>4.18.1</selenium.version>
+    <testng.version>7.9.0</testng.version>
+    <junit.version>5.10.2</junit.version>
+    <cucumber.version>7.15.0</cucumber.version>
+    <webdrivermanager.version>5.7.0</webdrivermanager.version>
+  </properties>
+
+  <dependencies>
+    <!-- Selenium WebDriver -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+
+    <!-- WebDriverManager — auto-downloads chromedriver/geckodriver -->
+    <dependency>
+      <groupId>io.github.bonigarcia</groupId>
+      <artifactId>webdrivermanager</artifactId>
+      <version>${webdrivermanager.version}</version>
+    </dependency>
+
+    <!-- TestNG -->
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit 5 (include alongside TestNG — Surefire auto-detects) -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Cucumber (Java + TestNG + JUnit glue) -->
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit-platform-engine</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <testFailureIgnore>true</testFailureIgnore>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
+---
+
+#### REST Assured (TestNG / JUnit / Cucumber)
+
+**`pom.xml`** (only if missing):
+Same as Selenium pom.xml above, plus add:
+```xml
+    <!-- REST Assured -->
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>5.4.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>json-path</artifactId>
+      <version>5.4.0</version>
+      <scope>test</scope>
+    </dependency>
+```
+
+If both `--tool selenium,restassured` are selected, generate one combined `pom.xml` with all dependencies.
+
+---
+
+#### Robot Framework (UI / API)
+
+**`requirements.txt`** (only if missing):
+```
+robotframework>=6.0
+robotframework-seleniumlibrary>=6.0
+robotframework-requests>=0.9
+webdriver-manager>=4.0
+```
+
+---
+
+### Folder structure
+
+Create these directories if they don't exist (regardless of tool):
+```bash
+mkdir -p reports test-cases
+```
+
+Per tool:
+- Playwright: `mkdir -p tests/generated`
+- Cypress: `mkdir -p cypress/e2e/generated`
+- Selenium / REST Assured: `mkdir -p src/test/java/com/swayambhuqa/tests/generated`
+- Robot: `mkdir -p tests/robot/generated`
+
+---
+
+### Run installs
+
+After creating missing files, run the install command for the tool:
+- Playwright: `npm install && npx playwright install --with-deps chromium`
+- Cypress: `npm install`
+- Selenium / REST Assured: `mvn test-compile -q`
+- Robot: `pip install -r requirements.txt -q`
+
+If the install fails, stop and show the exact error:
+> ❌ Project setup failed: `<error output>`
+> Fix the error above, then re-run `/qa-pipeline`.
+
+---
+
+### Report what was scaffolded
+
+After Phase 0 completes, print a short summary of what was created:
+```
+🏗️  Project scaffolded for Playwright
+   Created: package.json, playwright.config.ts, tests/generated/, reports/
+   Installed: @playwright/test, Chromium browser
+   ✅ Ready — proceeding to Phase 1
+```
+
+If nothing was missing, print nothing and proceed silently.
+
+---
+
 ## Run Loop — Phases 1–9
 
 **Repeat Phases 1–9 for each issueId in the expanded list.**
@@ -478,10 +780,46 @@ Write `cypress/e2e/generated/<feature-slug>.cy.ts`:
 - Locator priority: `cy.get('[data-testid="..."]')` → `cy.contains()` → `cy.get('.class')`
 - No `cy.wait(<number>)` — use `cy.intercept()` or `cy.should()` retry
 
+**TC ID embedding — REQUIRED for result mapping:**
+
+Prefix each `it()` title with `[TC-ISSUEID-SEQ]`:
+```typescript
+it('[TC-TEST22-01] should login with valid credentials', () => { ... });
+it('[TC-TEST22-02] should show error for invalid password', () => { ... });
+```
+
 ### Selenium (`--tool selenium[:testng|junit|cucumber]`)
 
 Write `src/test/java/com/swayambhuqa/tests/generated/<Feature>Test.java`.
 Runner defaults to TestNG unless `:junit` or `:cucumber` specified.
+
+**TC ID embedding — REQUIRED for result mapping:**
+
+For TestNG / JUnit: embed the TC ID in the method name using underscores:
+```java
+// TC-TEST22-01 → method name: TC_TEST22_01_<description>
+@Test
+public void TC_TEST22_01_loginWithValidCredentials() { ... }
+
+@Test
+public void TC_TEST22_02_loginWithInvalidPassword() { ... }
+```
+
+For Cucumber: add a `@TC-<id>` tag on each scenario:
+```gherkin
+@TC-TEST22-01
+Scenario: User logs in with valid credentials
+  ...
+
+@TC-TEST22-02
+Scenario: User sees error with invalid password
+  ...
+```
+And ensure the Cucumber runner writes a JSON report to `target/cucumber-reports/cucumber.json`:
+```java
+@CucumberOptions(plugin = {"json:target/cucumber-reports/cucumber.json"})
+```
+
 Validate: `mvn test-compile -q 2>&1 | tail -5`
 
 ### REST Assured (`--tool restassured[:testng|junit|cucumber]`)
@@ -500,6 +838,21 @@ Validate: `mvn test-compile -q 2>&1 | tail -5`
 
 Write `tests/robot/generated/<feature-slug>.robot`.
 Import: SeleniumLibrary (ui) / RequestsLibrary (api) / AppiumLibrary (android|ios).
+
+**TC ID embedding — REQUIRED for result mapping:**
+
+Start each test case name with `TC-ISSUEID-SEQ`:
+```robot
+*** Test Cases ***
+TC-TEST22-01 Login With Valid Credentials
+    Open Browser    ${BASE_URL}    Chrome
+    ...
+
+TC-TEST22-02 Login Shows Error For Invalid Password
+    Open Browser    ${BASE_URL}    Chrome
+    ...
+```
+
 Validate: `robot --dryrun tests/robot/generated/<feature-slug>.robot 2>&1 | tail -5`
 
 ---
@@ -519,18 +872,37 @@ each TC's native TMS key, then writes `reports/results-<issueId>.json` with one 
 
 **Cypress:**
 ```bash
-npx cypress run --spec cypress/e2e/generated/<feature-slug>.cy.ts --headless
+npx swayambhu-run-tests --id <issueId> --spec cypress/e2e/generated/<feature-slug>.cy.ts --tool cypress
 ```
 
-**Selenium / REST Assured / Appium:**
+**Selenium (TestNG / JUnit):**
 ```bash
-mvn test -Dtest=<Feature>Test,<Feature>ApiTest -q 2>&1 | tail -20
+npx swayambhu-run-tests --id <issueId> --spec com.swayambhuqa.tests.generated.<Feature>Test --tool selenium:testng
 ```
 
-**Robot:**
+**Selenium Cucumber:**
 ```bash
-robot --outputdir reports/robot tests/robot/generated/<feature-slug>.robot
+npx swayambhu-run-tests --id <issueId> --spec com.swayambhuqa.tests.generated.<Feature>Runner --tool selenium:cucumber
 ```
+
+**REST Assured (TestNG / JUnit):**
+```bash
+npx swayambhu-run-tests --id <issueId> --spec com.swayambhuqa.tests.generated.<Feature>ApiTest --tool restassured
+```
+
+**REST Assured Cucumber:**
+```bash
+npx swayambhu-run-tests --id <issueId> --spec com.swayambhuqa.tests.generated.<Feature>ApiRunner --tool restassured:cucumber
+```
+
+**Robot Framework:**
+```bash
+npx swayambhu-run-tests --id <issueId> --spec tests/robot/generated/<feature-slug>.robot --tool robot:ui
+```
+
+All Maven-based tools (Selenium, REST Assured) parse Surefire XML reports from `target/surefire-reports/`
+(or Cucumber JSON from `target/cucumber-reports/cucumber.json`) and write `reports/results-<issueId>.json`
+with one entry per TC, ready for Phase 8 TMS update.
 
 After running, classify every test as: ✅ passed | ❌ failed | ⚠️ flaky (passed on retry).
 

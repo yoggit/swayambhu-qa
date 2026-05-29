@@ -8,6 +8,10 @@ Generates a structured QA report from test results — suitable for posting to J
 /qa-report [--id <id>] [--source <src>]
 ```
 
+::: tip All command combinations
+Every `--source` and `--no-post` option in one place → [Command Combinations](/reference/commands)
+:::
+
 ## Examples
 
 ```bash
