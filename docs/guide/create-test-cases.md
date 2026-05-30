@@ -1,6 +1,6 @@
 # /create-test-cases
 
-Reads a ticket and generates test case documents only — no automation code written. Useful when a QA lead wants to review and approve TCs in Xray before any automation starts.
+Reads a ticket and generates test case documents only — no automation code written. Useful when a QA lead wants to review and approve TCs in Xray or TestRail before any automation starts.
 
 ## Usage
 
@@ -54,7 +54,7 @@ A combined summary is printed after all items complete. If one item fails, it is
 
 ## After review — automate them
 
-Once TCs are approved in Xray, use `/automate-from-tms` to generate the automation code:
+Once TCs are approved in Xray or TestRail, use `/automate-from-tms` to generate the automation code:
 
 ```bash
 /automate-from-tms --id TEST-22 --source jira --test-mgmt xray --tool playwright

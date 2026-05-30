@@ -33,11 +33,14 @@ Every `--tool`, `--source`, and `--tms` option in one place → [Command Combina
 # Skip PR creation
 /qa-pipeline --id TEST-22 --source jira --tool playwright --no-pr
 
-# Use local markdown instead of Xray (no TMS credentials needed)
+# Use local markdown (no TMS credentials needed)
 /qa-pipeline --id TEST-22 --source jira --tool playwright --tms markdown
 
 # Push results to Xray
 /qa-pipeline --id TEST-22 --source jira --tool playwright --tms xray
+
+# Push results to TestRail
+/qa-pipeline --id TEST-22 --source jira --tool playwright --tms testRail
 ```
 
 ## Multi-run — multiple tickets or files in one command

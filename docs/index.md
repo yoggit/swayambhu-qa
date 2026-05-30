@@ -31,7 +31,7 @@ features:
     details: When tests fail due to selector drift or timing, the pipeline auto-fixes them and re-runs. Real bugs get logged to your issue tracker.
   - icon: 📋
     title: TMS integration
-    details: Push test cases to Xray and pull back results automatically. Or use markdown mode — no TMS credentials needed to get started.
+    details: Push test cases to Xray or TestRail and pull back results automatically. Or use markdown mode — no TMS credentials needed to get started.
   - icon: 📄
     title: No IMS? No problem.
     details: No JIRA, no GitHub, no credentials. Pass a local .md, .txt, .docx, .doc, or .pdf file as input and the pipeline reads your requirements directly from it.
@@ -101,5 +101,5 @@ Then open Claude Code and run:
 |---|---|
 | Issue sources | JIRA ✅, GitHub Issues ✅, Azure DevOps ✅, Linear ✅, Local file (`.md` `.txt` `.docx` `.doc` `.pdf`) ✅ |
 | Test tools | Playwright ✅, Cypress ✅, Selenium (TestNG / JUnit / Cucumber) ✅, REST Assured (TestNG / JUnit / Cucumber) ✅, Robot Framework (UI / API) ✅ |
-| TMS | Xray ✅, Markdown (local) ✅ |
+| TMS | Xray ✅, TestRail ✅, Markdown (local) ✅ |
 | Combined runs | `--tool playwright,restassured` ✅ |
