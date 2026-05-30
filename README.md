@@ -608,7 +608,6 @@ The following are planned or in progress. Contributions welcome — open an issu
 | Zero Setup Mode | ✅ Supported |
 | Project scaffolding | ✅ Supported |
 | Documentation site | ✅ Supported |
-| CI/CD integration (GitHub Actions) | 🔜 Planned |
 
 </details>
 

@@ -57,7 +57,6 @@ export default defineConfig({
           { text: 'Command Combinations', link: '/reference/commands' },
           { text: 'All Flags', link: '/reference/flags' },
           { text: 'Output Folders', link: '/reference/output' },
-          { text: 'CI / GitHub Actions', link: '/reference/ci' },
           { text: 'Future Enhancements', link: '/reference/future' },
         ],
       },
