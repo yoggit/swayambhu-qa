@@ -145,7 +145,28 @@ export async function pushToTestRail(opts: {
     console.error(`  Created: C${created.id} — ${tc.title}`);
   }
 
-  return { tms: 'testRail', issueId: opts.issueId, suiteName: opts.suiteName, pushedIds };
+  return { tms: 'testRail', issueId: opts.issueId, suiteName: opts.suiteName, pushedIds, suiteId: String(suite.id) };
+}
+
+// ─── CREATE RUN ───────────────────────────────────────────────────────────────
+
+export async function createTestRailRun(opts: {
+  issueId: string;
+  suiteId: string;
+  caseIds: number[];
+  name?: string;
+}): Promise<string> {
+  const { projectId } = getConfig();
+  const run = await trFetch<{ id: number }>(`/add_run/${projectId}`, {
+    method: 'POST',
+    body: JSON.stringify({
+      suite_id: parseInt(opts.suiteId),
+      name: opts.name || `swayambhu-qa — ${opts.issueId}`,
+      case_ids: opts.caseIds,
+      include_all: false,
+    }),
+  });
+  return String(run.id);
 }
 
 // ─── UPDATE ───────────────────────────────────────────────────────────────────

@@ -410,8 +410,8 @@ npx swayambhu-update-tms --id TEST-22 --tms xray --results reports/results-TEST2
 | `--id <id>` | **Always** | Issue ID, file path, or comma-separated mix | — | Single: `TEST-22`, `./story.md` · Multi: `"TEST-22,TEST-62"`, `"QA-42,./spec.txt"` |
 | `--source <src>` | No | `github` ✅, `jira` ✅, `ado` ✅, `linear` ✅ | `github` | Omit if using GitHub Issues |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
-| `--tool <tool>` | No | `playwright` ✅, `cypress` ✅, `selenium` ✅, `restassured` ✅, `robot:ui` ✅, `robot:api` ✅, `appium` 🔜 | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
-| `--tms <tms>` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally with no external TMS needed. Add `--tms xray` (or `testrail`/`zephyr`) only if you have credentials configured in `.env` |
+| `--tool <tool>` | No | `playwright` ✅, `cypress` ✅, `selenium` ✅, `restassured` ✅, `robot:ui` ✅, `robot:api` ✅ | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
+| `--tms <tms>` | No | `xray` ✅, `testrail` ✅, `markdown` ✅ | `markdown` | Omit to write results locally. Add `--tms xray` or `--tms testrail` if you have credentials in `.env` |
 | `--no-pr` | No | _(flag only, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add `--no-pr` to skip PR for local runs or when no git remote is configured |
 | `--url <url>` | No | Any URL | From issue / `.env` | Omit if the issue has a `Test URL:` line or `BASE_URL` is set in `.env` |
 | `--api-url <url>` | No | Any URL | From issue / `.env` | Omit if the issue has an `API URL:` line or `API_BASE_URL` is set in `.env` |
@@ -580,11 +580,10 @@ The following are planned or in progress. Contributions welcome — open an issu
 | Tool | Status |
 |---|---|
 | Playwright + TypeScript | ✅ Supported |
-| REST Assured + Java | ✅ Supported |
-| Cypress + TypeScript | 🔜 Planned |
-| Selenium (TestNG / JUnit / Cucumber) | 🔜 Planned |
-| Robot Framework (UI / API / Mobile) | 🔜 Planned |
-| Appium (Android / iOS) | 🔜 Planned |
+| REST Assured (TestNG / JUnit / Cucumber) | ✅ Supported |
+| Cypress + TypeScript | ✅ Supported |
+| Selenium (TestNG / JUnit / Cucumber) | ✅ Supported |
+| Robot Framework (UI / API) | ✅ Supported |
 
 ### Issue Source Support
 | Source | Status |
@@ -599,16 +598,17 @@ The following are planned or in progress. Contributions welcome — open an issu
 |---|---|
 | Xray (JIRA plugin) | ✅ Supported |
 | Markdown (local files) | ✅ Supported |
-| TestRail | 🔜 Planned |
-| Zephyr Scale | 🔜 Planned |
+| TestRail | ✅ Supported |
 
 ### Pipeline Features
 | Feature | Status |
 |---|---|
 | Multi-tool combined runs (`playwright,restassured`) | ✅ Supported |
 | Multi-issue runs (`--id TEST-22,TEST-62`) | ✅ Supported |
+| Zero Setup Mode | ✅ Supported |
+| Project scaffolding | ✅ Supported |
+| Documentation site | ✅ Supported |
 | CI/CD integration (GitHub Actions) | 🔜 Planned |
-| Documentation site | 🔜 Planned |
 
 </details>
 

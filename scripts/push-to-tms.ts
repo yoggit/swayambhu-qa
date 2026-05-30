@@ -105,6 +105,8 @@ async function main() {
       testCases.forEach((tc, i) => {
         if (result.pushedIds[i]) mapping[tc.id] = result.pushedIds[i];
       });
+      // Store suite ID for TestRail — needed to create the test run in Phase 8
+      if (result.suiteId) mapping['__suiteId'] = result.suiteId;
       const mappingPath = path.join('reports', `tc-mapping-${issueId}.json`);
       fs.mkdirSync('reports', { recursive: true });
       fs.writeFileSync(mappingPath, JSON.stringify(mapping, null, 2));

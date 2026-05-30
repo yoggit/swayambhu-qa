@@ -272,7 +272,7 @@ Generate a shareable QA summary and post it to JIRA.
 | `--source` | All | `jira` ✅, `github` ✅, `ado` ✅, `linear` ✅ |
 | `--repo` | All | `owner/repo` — required with `--source github` |
 | `--tool` | `qa-pipeline`, `create-test-cases`, `automate-from-tms`, `generate-tests`, `heal-tests`, `bug-to-test`, `analyze-flaky` | See table below |
-| `--tms` | `qa-pipeline`, `create-test-cases` | `xray` ✅, `markdown` ✅, `testrail` 🔜, `zephyr` 🔜 |
+| `--tms` | `qa-pipeline`, `create-test-cases` | `xray` ✅, `markdown` ✅, `testrail` ✅ |
 | `--test-mgmt` | `automate-from-tms` | `xray` ✅, `markdown` ✅ |
 | `--url` | `generate-tests` | Any UI URL |
 | `--api-url` | `generate-tests`, `qa-pipeline` | Any API / Swagger URL |

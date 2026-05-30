@@ -33,7 +33,7 @@ dotenv.config();
 
 import { logger } from './logger';
 
-import { updateTestRailResults } from './tms/testrail';
+import { updateTestRailResults, createTestRailRun } from './tms/testrail';
 import { updateXrayResults } from './tms/xray';
 import { updateZephyrResults } from './tms/zephyr';
 import { updateMarkdownResults } from './tms/markdown';
@@ -91,13 +91,31 @@ async function main() {
     let result: any;
 
     switch (tms) {
-      case 'testRail':
-        if (!runId) {
-          console.error('Error: --run-id is required for TestRail status updates');
-          process.exit(1);
+      case 'testRail': {
+        let resolvedRunId = runId;
+        if (!resolvedRunId) {
+          // Auto-create a run from the tc-mapping file (written by push-to-tms in Phase 3)
+          const mappingPath = `reports/tc-mapping-${issueId}.json`;
+          if (!fs.existsSync(mappingPath)) {
+            console.error(`Error: --run-id not provided and no tc-mapping found at ${mappingPath}`);
+            process.exit(1);
+          }
+          const mapping: Record<string, string> = JSON.parse(fs.readFileSync(mappingPath, 'utf-8'));
+          const suiteId = mapping['__suiteId'];
+          if (!suiteId) {
+            console.error('Error: tc-mapping is missing __suiteId — re-run Phase 3 to regenerate it');
+            process.exit(1);
+          }
+          const caseIds = Object.entries(mapping)
+            .filter(([k]) => k !== '__suiteId')
+            .map(([, v]) => parseInt(v.replace(/^C/i, '')))
+            .filter((n) => !isNaN(n));
+          resolvedRunId = await createTestRailRun({ issueId, suiteId, caseIds });
+          console.error(`  🏃 TestRail run created: R${resolvedRunId}`);
         }
-        result = await updateTestRailResults({ runId, results });
+        result = await updateTestRailResults({ runId: resolvedRunId, results });
         break;
+      }
 
       case 'xray':
         result = await updateXrayResults({ issueId, results });

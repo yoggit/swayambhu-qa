@@ -27,7 +27,7 @@ Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa
 |---|---|
 | Xray (JIRA plugin) | ✅ Supported |
 | Markdown (local files) | ✅ Supported |
-| TestRail | 🔜 Planned |
+| TestRail | ✅ Supported |
 
 ## Pipeline Features
 

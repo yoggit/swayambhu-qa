@@ -50,6 +50,7 @@ export interface TMSPushResult {
   issueId: string;
   suiteName?: string;
   pushedIds: string[];     // Native TMS IDs of created TCs
+  suiteId?: string;        // TestRail: suite ID, stored in tc-mapping for run creation in Phase 8
 }
 
 export interface TMSReadResult {
