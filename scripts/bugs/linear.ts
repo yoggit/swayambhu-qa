@@ -3,23 +3,47 @@
  *
  * Required env vars:
  *   LINEAR_API_KEY     lin_api_xxx
- *   LINEAR_TEAM_ID     the team ID to create bugs in (find via Linear API or settings)
  *
  * Optional env vars:
- *   LINEAR_BUG_LABEL_ID   Label ID for "Bug" label in your Linear workspace
+ *   LINEAR_TEAM_ID       Override team for bug creation (default: derived from issue key)
+ *   LINEAR_BUG_LABEL_ID  Label ID for "Bug" label in your Linear workspace
  */
 
 import { BugReport, CreatedBug } from './types';
 
 const LINEAR_API = 'https://api.linear.app/graphql';
 
+async function resolveTeamId(apiKey: string, issueId?: string): Promise<string> {
+  // Prefer explicit override
+  if (process.env.LINEAR_TEAM_ID) return process.env.LINEAR_TEAM_ID;
+
+  // Derive team key from issue identifier: "Q4-5" → "Q4"
+  const teamKey = issueId?.match(/^([A-Z0-9]+)-\d+$/i)?.[1]?.toUpperCase();
+  if (teamKey) {
+    const res = await fetch(LINEAR_API, {
+      method: 'POST',
+      headers: { Authorization: apiKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `query($key: String!) { teams(filter: { key: { eq: $key } }) { nodes { id } } }`,
+        variables: { key: teamKey },
+      }),
+    });
+    const data = (await res.json()) as { data?: { teams?: { nodes: { id: string }[] } } };
+    const id = data.data?.teams?.nodes?.[0]?.id;
+    if (id) return id;
+  }
+
+  throw new Error('Cannot determine Linear team — set LINEAR_TEAM_ID in .env or pass an issue ID');
+}
+
 export async function logLinearBug(bug: BugReport): Promise<CreatedBug> {
   const apiKey = process.env.LINEAR_API_KEY;
-  const teamId = process.env.LINEAR_TEAM_ID;
 
-  if (!apiKey || !teamId) {
-    throw new Error('Linear bug logging requires: LINEAR_API_KEY, LINEAR_TEAM_ID');
+  if (!apiKey) {
+    throw new Error('Linear bug logging requires: LINEAR_API_KEY');
   }
+
+  const teamId = await resolveTeamId(apiKey, bug.issueId);
 
   const description = buildLinearDescription(bug);
   const labelId = process.env.LINEAR_BUG_LABEL_ID;

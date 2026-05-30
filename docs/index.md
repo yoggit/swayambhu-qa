@@ -99,7 +99,7 @@ Then open Claude Code and run:
 
 | Category | What works |
 |---|---|
-| Issue sources | JIRA ✅, GitHub Issues ✅, Local file (`.md` `.txt` `.docx` `.doc` `.pdf`) ✅ |
+| Issue sources | JIRA ✅, GitHub Issues ✅, Azure DevOps ✅, Linear ✅, Local file (`.md` `.txt` `.docx` `.doc` `.pdf`) ✅ |
 | Test tools | Playwright ✅, Cypress ✅, Selenium (TestNG / JUnit / Cucumber) ✅, REST Assured (TestNG / JUnit / Cucumber) ✅, Robot Framework (UI / API) ✅ |
 | TMS | Xray ✅, Markdown (local) ✅ |
 | Combined runs | `--tool playwright,restassured` ✅ |

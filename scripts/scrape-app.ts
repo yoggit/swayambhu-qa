@@ -58,9 +58,9 @@ if (!url) { console.error('Usage: npx ts-node scripts/scrape-app.ts --url <url> 
   // Initial state
   const initial = await collectElements();
 
-  // Click each button and collect newly revealed elements
+  // Click each button and collect newly revealed elements (cap at 15 to avoid slow pages like Swagger UI)
   const afterInteraction: any[] = [];
-  const buttonTexts = initial.buttons.map((b: any) => b.text).filter(Boolean);
+  const buttonTexts = initial.buttons.map((b: any) => b.text).filter(Boolean).slice(0, 15);
 
   for (const btnText of buttonTexts) {
     try {

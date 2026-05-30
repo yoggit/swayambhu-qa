@@ -10,7 +10,7 @@ Two URLs matter — one for UI tests, one for API tests. The agent resolves each
 
 ## UI URL
 
-Used by Playwright, Cypress, Selenium, Appium. The browser opens this URL.
+Used by Playwright, Cypress, Selenium, and Robot Framework (UI). The browser opens this URL.
 
 **In the ticket description:**
 ```

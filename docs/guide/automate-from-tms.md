@@ -69,7 +69,7 @@ Most granular wins. If you provide `--case`, the suite and issue flags are ignor
 
 - Your QA team manually wrote test cases in TestRail months ago — now you want to automate them
 - You ran `/create-test-cases` which pushed TCs to Xray — now you want the automation code
-- A new engineer wants to automate a specific subset of existing TCs from Zephyr
+- A new engineer wants to automate a specific subset of existing TCs from Xray or local markdown
 
 ## vs `/generate-tests`
 

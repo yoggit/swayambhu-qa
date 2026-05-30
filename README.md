@@ -69,27 +69,24 @@ Ticket / File → /qa-pipeline --id QA-42 --source jira --tool playwright,restas
 | Local file (`.md`, `.txt`, `.docx`, `.doc`, `.pdf`) | `--id ./story.md` _(no `--source` needed)_ | ✅ |
 | GitHub Issues | `--id 42 --source github` | ✅ |
 | JIRA / Atlassian | `--id TEST-22 --source jira` | ✅ |
-| Azure DevOps | `--id 12345 --source ado` | 🔜 Planned |
-| Linear | `--id ENG-456 --source linear` | 🔜 Planned |
+| Azure DevOps | `--id 12345 --source ado` | ✅ |
+| Linear | `--id ENG-456 --source linear` | ✅ |
 
 ### Test Automation (`--tool`)
 | Tool | Flag | Status |
 |---|---|---|
 | Playwright + TypeScript | `--tool playwright` | ✅ |
-| REST Assured + Java | `--tool restassured` / `restassured:junit` / `restassured:cucumber` | ✅ |
+| REST Assured + Java | `--tool restassured` / `restassured:testng` / `restassured:junit` / `restassured:cucumber` | ✅ |
 | Cypress + TypeScript | `--tool cypress` | ✅ |
 | Selenium + Java | `--tool selenium` / `selenium:testng` / `selenium:junit` / `selenium:cucumber` | ✅ |
-| Appium (Mobile) | `--tool appium` | 🔜 Planned |
 | Robot Framework (UI / API) | `--tool robot:ui` / `robot:api` | ✅ |
-| Robot Framework (Mobile) | `--tool robot:android` / `robot:ios` | 🔜 Planned |
 
 ### Valid Combos (UI + API)
 ```bash
 --tool playwright,restassured
 --tool cypress,restassured
 --tool selenium,restassured
---tool appium,restassured
---tool robot:ui,api
+--tool robot:ui,robot:api
 ```
 
 ## Example Commands
@@ -411,9 +408,9 @@ npx swayambhu-update-tms --id TEST-22 --tms xray --results reports/results-TEST2
 | Flag | Required? | Supported values | Default | When to omit |
 |---|---|---|---|---|
 | `--id <id>` | **Always** | Issue ID, file path, or comma-separated mix | — | Single: `TEST-22`, `./story.md` · Multi: `"TEST-22,TEST-62"`, `"QA-42,./spec.txt"` |
-| `--source <src>` | No | `github` ✅, `jira` ✅, `ado` 🔜, `linear` 🔜 | `github` | Omit if using GitHub Issues |
+| `--source <src>` | No | `github` ✅, `jira` ✅, `ado` ✅, `linear` ✅ | `github` | Omit if using GitHub Issues |
 | `--repo <owner/repo>` | GitHub only | e.g. `myorg/myrepo` | — | Omit for JIRA, ADO, Linear — only needed with `--source github` |
-| `--tool <tool>` | No | `playwright` ✅, `restassured` ✅, `cypress` 🔜, `selenium` 🔜, `appium` 🔜, `robot:ui` 🔜 | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
+| `--tool <tool>` | No | `playwright` ✅, `cypress` ✅, `selenium` ✅, `restassured` ✅, `robot:ui` ✅, `robot:api` ✅, `appium` 🔜 | `playwright` | Omit to default to Playwright. Combine with commas: `playwright,restassured` |
 | `--tms <tms>` | No | `xray`, `testrail`, `zephyr`, `markdown` | `markdown` | Omit to write results locally with no external TMS needed. Add `--tms xray` (or `testrail`/`zephyr`) only if you have credentials configured in `.env` |
 | `--no-pr` | No | _(flag only, no value)_ | _(PR is created)_ | Omit to get a Draft PR. Add `--no-pr` to skip PR for local runs or when no git remote is configured |
 | `--url <url>` | No | Any URL | From issue / `.env` | Omit if the issue has a `Test URL:` line or `BASE_URL` is set in `.env` |
@@ -467,39 +464,35 @@ Fill in only what your team uses — leave everything else blank:
 ANTHROPIC_API_KEY=sk-ant-...           # https://console.anthropic.com/settings/keys
 
 # ── App URLs (fallback when not set in the issue description) ──────────────
-BASE_URL=https://myapp.com             # UI tests — Playwright, Cypress, Selenium, Appium
+BASE_URL=https://myapp.com             # UI tests — Playwright, Cypress, Selenium, Robot UI
 API_BASE_URL=https://api.myapp.com     # API tests — REST Assured, Robot API, Playwright API
 
 # ── JIRA / Atlassian ───────────────────────────────────────────────────────
 JIRA_BASE_URL=https://yourcompany.atlassian.net
 JIRA_EMAIL=your.email@company.com
-JIRA_API_TOKEN=your_token              # https://id.atlassian.com/manage-profile/security/api-tokens
+JIRA_API_TOKEN=your_token              # id.atlassian.com/manage-profile/security/api-tokens
 JIRA_PROJECT_KEY=QA
 
 # ── Xray (JIRA plugin — Test Management) ──────────────────────────────────
-XRAY_CLIENT_ID=your_client_id          # JIRA → Apps → Xray → API Keys
+XRAY_CLIENT_ID=your_client_id          # JIRA → Apps → Xray → API Keys → Generate
 XRAY_CLIENT_SECRET=your_client_secret
 XRAY_PROJECT_KEY=QA
 
 # ── Azure DevOps ───────────────────────────────────────────────────────────
 ADO_ORG=yourorg
 ADO_PROJECT=YourProject
-ADO_PAT=your_pat                       # dev.azure.com → User Settings → Personal Access Tokens
+ADO_PAT=your_pat                       # dev.azure.com → profile icon → Personal Access Tokens
 
 # ── Linear ─────────────────────────────────────────────────────────────────
 LINEAR_API_KEY=lin_api_xxx             # linear.app → Settings → API → Personal API keys
-LINEAR_TEAM_ID=your_team_id
+# LINEAR_TEAM_ID=uuid_of_team          # Optional: override bug team (auto-resolved from issue key)
+# LINEAR_BUG_LABEL_ID=uuid_of_label    # Optional: auto-tag bugs with "Bug" label
 
 # ── TestRail ───────────────────────────────────────────────────────────────
 TESTRAIL_URL=https://yourcompany.testrail.io
 TESTRAIL_USER=your.email@company.com
-TESTRAIL_API_KEY=your_key
+TESTRAIL_API_KEY=your_key              # TestRail → My Settings → API Keys
 TESTRAIL_PROJECT_ID=1
-
-# ── Zephyr Scale ───────────────────────────────────────────────────────────
-ZEPHYR_BASE_URL=https://yourcompany.atlassian.net
-ZEPHYR_API_TOKEN=your_token
-ZEPHYR_PROJECT_KEY=QA
 ```
 
 </details>
@@ -598,8 +591,8 @@ The following are planned or in progress. Contributions welcome — open an issu
 |---|---|
 | JIRA | ✅ Supported |
 | GitHub Issues | ✅ Supported |
-| Azure DevOps | 🔜 Planned |
-| Linear | 🔜 Planned |
+| Azure DevOps | ✅ Supported |
+| Linear | ✅ Supported |
 
 ### Test Management System Support
 | TMS | Status |

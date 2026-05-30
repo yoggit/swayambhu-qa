@@ -269,7 +269,7 @@ Generate a shareable QA summary and post it to JIRA.
 | Flag | Agents | Supported values |
 |---|---|---|
 | `--id` | All | Issue ID, file path, comma-separated mix |
-| `--source` | All | `jira` ✅, `github` ✅, `ado` 🔜, `linear` 🔜 |
+| `--source` | All | `jira` ✅, `github` ✅, `ado` ✅, `linear` ✅ |
 | `--repo` | All | `owner/repo` — required with `--source github` |
 | `--tool` | `qa-pipeline`, `create-test-cases`, `automate-from-tms`, `generate-tests`, `heal-tests`, `bug-to-test`, `analyze-flaky` | See table below |
 | `--tms` | `qa-pipeline`, `create-test-cases` | `xray` ✅, `markdown` ✅, `testrail` 🔜, `zephyr` 🔜 |
@@ -298,6 +298,3 @@ Generate a shareable QA summary and post it to JIRA.
 | `robot` | UI | Robot Framework + SeleniumLibrary | ✅ (defaults to `robot:ui`) |
 | `robot:ui` | UI | Robot Framework + SeleniumLibrary | ✅ |
 | `robot:api` | API | Robot Framework + RequestsLibrary | ✅ |
-| `robot:android` | Mobile | Robot Framework + AppiumLibrary | 🔜 |
-| `robot:ios` | Mobile | Robot Framework + AppiumLibrary | 🔜 |
-| `appium` | Mobile | Appium | 🔜 |

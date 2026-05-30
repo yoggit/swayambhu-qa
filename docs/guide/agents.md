@@ -60,7 +60,7 @@ Takes a live URL, scrapes the page, and writes a Playwright spec file directly â
 
 ### `/automate-from-tms`
 
-Reads existing test cases from your TMS (Xray, TestRail, Zephyr, or local markdown files) and generates automation code, runs it, heals failures, and logs bugs.
+Reads existing test cases from your TMS (Xray, TestRail, or local markdown files) and generates automation code, runs it, heals failures, and logs bugs.
 
 ```bash
 /automate-from-tms --id QA-42 --source jira --test-mgmt xray --tool playwright

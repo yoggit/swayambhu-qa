@@ -11,8 +11,6 @@ Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa
 | Cypress + TypeScript | ✅ Supported |
 | Selenium (TestNG / JUnit / Cucumber) | ✅ Supported |
 | Robot Framework (UI / API) | ✅ Supported |
-| Robot Framework (Mobile — AppiumLibrary) | 🔜 Planned |
-| Appium (Android / iOS) | 🔜 Planned |
 
 ## Issue Source Support
 
@@ -20,8 +18,8 @@ Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa
 |---|---|
 | JIRA | ✅ Supported |
 | GitHub Issues | ✅ Supported |
-| Azure DevOps | 🔜 Planned |
-| Linear | 🔜 Planned |
+| Azure DevOps | ✅ Supported |
+| Linear | ✅ Supported |
 
 ## Test Management System
 
@@ -30,7 +28,6 @@ Contributions welcome — open an issue or PR at [github.com/yoggit/swayambhu-qa
 | Xray (JIRA plugin) | ✅ Supported |
 | Markdown (local files) | ✅ Supported |
 | TestRail | 🔜 Planned |
-| Zephyr Scale | 🔜 Planned |
 
 ## Pipeline Features
 
